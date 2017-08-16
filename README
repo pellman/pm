@@ -1,0 +1,4 @@
+This is pm library, version 1.0.
+You may expand "pm" as "puzzling modules" if you wish.
+The main modules of the library provide interfaces for parsing of strings and streams with regular expressions and grammars.
+All information can be found in manuals located in this folder (russian version - man_ru.pdf, english version - man_en.pdf).
