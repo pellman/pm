@@ -1,0 +1,5 @@
+/*! \file include/pm/regexp/expressions.hpp
+ *  \brief Подключает все файлы интерфейсов создания \ref ConRegexp "регулярных выражений".
+ *  
+ *  \ingroup ModuleRegexp
+ */

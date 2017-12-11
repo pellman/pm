@@ -1,0 +1,173 @@
+/*! \file include/pm/grammar/grammar.hpp
+ *  \brief Содержит класс \ref ConGrammar "грамматики" pm::grammar::Grammar.
+ *  
+ *  \ingroup ModuleGrammar
+ */
+
+/*! \class pm::grammar::Grammar
+ *  \brief Класс \ref ConGrammar "грамматики".
+ *  
+ *  \ingroup ModuleGrammar
+ *  
+ *  *Эта грамматика* - это объект, документируемый метод которого вызывается.
+ *  
+ *  Особые свойства класса
+ *  ==
+ *  
+ *  \ref ConBaseValidState "Нестандартно-корректен".
+ *  
+ *  Неявные методы
+ *  ==
+ *  
+ *  Конструктор по умолчанию: Grammar()
+ *  --
+ *  
+ *  Инициализировать грамматику по умолчанию.
+ *  
+ *  Конструктор копирования: `Grammar(const Grammar & g)`
+ *  --
+ *  
+ *  Инициализировать грамматику, содержащую копию всего, что содержится в \p g.
+ *  
+ *  Конструктор перемещения: `Grammar(Grammar && g)`
+ *  --
+ *  
+ *  Инициализировать грамматику, содержащую перемещение всего, что содержится в \p g.
+ *  
+ *  Копирующее присваивание: `Grammar & operator =(const Grammar & g)`
+ *  --
+ *  
+ *  Перенаполнить грамматику копией всего, что содержится в \p g.
+ *  
+ *  Перемещающее присваивание: `Grammar & operator =(Grammar && g)`
+ *  --
+ *  
+ *  Перенаполнить грамматику перемещением всего, что содержится в \p g.
+ *  
+ *  Деструктор: `Grammar()`
+ *  --
+ *  
+ *  Стандартное значение.
+ */
+
+/*! \fn size_t pm::grammar::Grammar::add()
+ *  \brief Добавить в грамматику новое действие "неуспех" и вернуть его индекс.
+ *  
+ *  Возвращаемый индекс отличен от всех индексов, возвращавшихся ранее при добавлении действий.
+ */
+
+/*! \fn size_t pm::grammar::Grammar::add(const Action & a)
+ *  \brief Добавить в грамматику действие \p a и вернуть его индекс.
+ *  
+ *  Возвращаемый индекс отличен от всех индексов, возвращавшихся ранее при добавлении действий.
+ */
+
+/*! \fn size_t pm::grammar::Grammar::add(Action && a)
+ *  \brief Добавить в грамматику действие \p a и вернуть его индекс.
+ *  
+ *  Возвращаемый индекс отличен от всех индексов, возвращавшихся ранее при добавлении действий.
+ */
+
+/*! \fn size_t pm::grammar::Grammar::add(Args && ... args)
+ *  \brief Добавить в грамматику действие ac(\p args ...) и вернуть его индекс.
+ *  
+ *  Возвращаемый индекс отличен от всех индексов, возвращавшихся ранее при добавлении действий.
+ *  
+ *  Позволяет не вместо add(ac(x, y, ...)) писать add(x, y, ...): на несколько символов меньше.
+ *  
+ *  Эквивалентно вызову add(ac(std::forward<Args>(args) ...))
+ */
+
+/*! \fn void pm::grammar::Grammar::set_main(size_t i)
+ *  \brief Объявить i-е действие главным.
+ *  
+ *  \pre Индекс \p i был получен ранее при добавлении действия в грамматику.
+ */
+
+/*! \fn void pm::grammar::Grammar::set_main_data(size_t i)
+ *  \brief Объявить i-е данные совокупности главными.
+ */
+
+/*! \fn void pm::grammar::Grammar::set_skip(const regexp::Regexp & re)
+ *  \brief Установить \p re пробельным регулярным выражением.
+ */
+
+/*! \fn void pm::grammar::Grammar::set_skip(regexp::Regexp && re)
+ *  \brief Установить \p re пробельным регулярным выражением.
+ */
+
+/*! \fn void pm::grammar::Grammar::unset_main()
+ *  \brief Объявить неуспех главным грамматическим действием.
+ */
+
+/*! \fn void pm::grammar::Grammar::unset_main_data()
+ *  \brief Объявить 0-е данные совокупности главными.
+ */
+
+/*! \fn void pm::grammar::Grammar::unset_skip()
+ *  \brief Удалить пробельное регулярное выражение из грамматики.
+ */
+
+/*! \fn bool pm::grammar::Grammar::gmatch(stream::Stream & s, const Context & gcontext = default_context) const
+ *  \brief Метод грамматического разбора возвратного потока \p s в контексте \p gcontext.
+ */
+
+/*! \fn bool pm::grammar::Grammar::gmatch(std::istream & s, const Context & gcontext = default_context) const
+ *  \brief Метод грамматического разбора стандартного потока ввода \p s в контексте \p gcontext.
+ */
+
+/*! \fn bool pm::grammar::Grammar::gmatch(const std::string & s, const Context & gcontext = default_context) const
+ *  \brief Метод грамматического разбора строки \p s в контексте \p gcontext.
+ */
+
+/*! \fn bool pm::grammar::Grammar::gmatch_full(stream::Stream & s, const Context & gcontext) const
+ *  \brief Метод полного грамматического разбора возвратного потока \p s в контексте \p gcontext.
+ */
+
+/*! \fn bool pm::grammar::Grammar::match_full(stream::Stream & s, const regexp::Context & context) const
+ *  \brief Метод полного регулярного разбора возвратного потока \p s в контексте \p gcontext.
+ */
+
+/*! \fn Action & pm::grammar::Grammar::action(size_t i)
+ *  \brief Вернуть i-е действие этой грамматики.
+ *  
+ *  \pre Индекс \p i был получен ранее при добавлении действия в грамматику.
+ */
+
+/*! \fn const Action & pm::grammar::Grammar::action(size_t i) const
+ *  \brief Вернуть i-е действие этой грамматики.
+ *  
+ *  \pre Индекс \p i был получен ранее при добавлении действия в грамматику.
+ */
+
+/*! \fn bool pm::grammar::Grammar::has_skip() const
+ *  \brief Вернуть `true` <=> в этой грамматике содержится пробельное регулярное выражение.
+ */
+
+/*! \fn Action & pm::grammar::Grammar::main_action()
+ *  \brief Вернуть главное грамматическое действие этой грамматики.
+ */
+
+/*! \fn const Action & pm::grammar::Grammar::main_action() const
+ *  \brief Вернуть главное грамматическое действие этой грамматики.
+ */
+
+/*! \fn size_t pm::grammar::Grammar::main_data() const
+ *  \brief Вернуть индекс главных данных этой грамматики.
+ */
+
+/*! \fn size_t pm::grammar::Grammar::main_index() const
+ *  \brief Вернуть индекс главного грамматического действия этой грамматики.
+ */
+
+/*! \fn regexp::Regexp & pm::grammar::Grammar::skip()
+ *  \brief Вернуть пробельное регулярное выражение этой грамматики.
+ *  
+ *  \pre Эта грамматика содержит пробельное регулярное выражение.
+ */
+
+/*! \fn const regexp::Regexp & pm::grammar::Grammar::skip() const
+ *  \brief Вернуть пробельное регулярное выражение этой грамматики.
+ *  
+ *  \pre Эта грамматика содержит пробельное регулярное выражение.
+ */

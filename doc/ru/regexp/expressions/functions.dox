@@ -1,0 +1,44 @@
+/*! \file include/pm/regexp/expressions/functions.hpp
+ *  \brief Интерфейс создания \ref ConRegexp "основной части функциональных выражений".
+ *  
+ *  \ingroup ModuleRegexp
+ *  
+ *  Описание функции, возвращающей регулярное выражение, содержит
+ *  - \ref ConRegexp "вид" возвращаемого выражения;
+ *  - \ref ConPredefinedRegexps "название" возвращаемого выражения;
+ *  
+ *  Общее требование по использованию возвращаемых выражений:
+ *  применение содержащейся \ref ConDataFunctions "функции над данными" согласно методу полного разбора выражения корректно.
+ */
+
+/*! \fn Regexp pm::regexp::ac(const type_abuse::BinFun & f)
+ *  \brief Функциональное выражение: двуместная чистая функция \p f над текущими данными.
+ */
+
+/*! \fn Regexp pm::regexp::ac(type_abuse::BinFun && f)
+ *  \brief Функциональное выражение: двуместная чистая функция \p f над текущими данными.
+ */
+
+/*! \fn Regexp pm::regexp::as(const type_abuse::BinFun & f)
+ *  \brief Функциональное выражение: двуместная чистая функция \p f над сохранёнными данными.
+ */
+
+/*! \fn Regexp pm::regexp::as(type_abuse::BinFun && f)
+ *  \brief Функциональное выражение: двуместная чистая функция \p f над сохранёнными данными.
+ */
+
+/*! \fn Regexp pm::regexp::mc(const type_abuse::UnFun & f)
+ *  \brief Функциональное выражение: одноместная чистая функция \p f над текущими данными.
+ */
+
+/*! \fn Regexp pm::regexp::mc(type_abuse::UnFun && f)
+ *  \brief Функциональное выражение: одноместная чистая функция \p f над текущими данными.
+ */
+
+/*! \fn Regexp pm::regexp::ms(const type_abuse::UnFun & f)
+ *  \brief Функциональное выражение: одноместная чистая функция \p f над сохранёнными данными.
+ */
+
+/*! \fn Regexp pm::regexp::ms(type_abuse::UnFun && f)
+ *  \brief Функциональное выражение: одноместная чистая функция \p f над сохранёнными данными.
+ */

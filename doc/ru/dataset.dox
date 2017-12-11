@@ -1,0 +1,4 @@
+/*! \file include/pm/dataset.hpp
+ *  \brief Подключает реализацию всех семантических и синтаксических понятий, относящихся к \ref ConDataset "совокупностям данных и функциям над ними".
+ *  \ingroup ModuleDataset
+ */

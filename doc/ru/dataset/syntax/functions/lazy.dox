@@ -1,0 +1,43 @@
+/*! \file include/pm/dataset/syntax/functions/lazy.hpp
+ *  \brief Содержит \ref ConDataset "ленивый интерфейс создания определений конкретных функций над совокупностью".
+ *  
+ *  \ingroup ModuleDataset
+ *  
+ *  В описании глобальной функции, возвращающей определение функции над совокупностью, описывается собственно возвращаемое определение.
+ */
+
+/*! \fn Function pm::dataset::syntax::dref(const std::function<void(Args ...)> & f, Names && ... names)
+ *  \brief Определение конкретной ссылочной функции над совокупностью: \f$ (f, [names ...]) \f$.
+ */
+
+/*! \fn Function pm::dataset::syntax::dref(std::function<void(Args ...)> && f, Names && ... names)
+ *  \brief Определение конкретной ссылочной функции над совокупностью: \f$ (f, [names ...]) \f$.
+ */
+
+/*! \fn Function pm::dataset::syntax::dren(const std::function<Ret(Args ...)> & f, Names && ... names)
+ *  \brief Определение конкретной переустанавливающей функции над совокупностью: \f$ (f, [names ...]) \f$.
+ */
+
+/*! \fn Function pm::dataset::syntax::dren(std::function<Ret(Args ...)> && f, Names && ... names)
+ *  \brief Определение конкретной переустанавливающей функции над совокупностью: \f$ (f, [names ...]) \f$.
+ */
+
+/*! \fn Function pm::dataset::syntax::dret(const std::function<Ret(Args ...)> & f, Names && ... names)
+ *  \brief Определение конкретной устанавливающей функции над совокупностью: \f$ (f, [names ...]) \f$.
+ */
+
+/*! \fn Function pm::dataset::syntax::dret(std::function<Ret(Args ...)> && f, Names && ... names)
+ *  \brief Определение конкретной устанавливающей функции над совокупностью: \f$ (f, [names ...]) \f$.
+ */
+
+/*! \fn Function pm::dataset::syntax::dgref(Any (*f)(Args ...), Names && ... names)
+ *  \brief Определение конкретной ссылочной функции над совокупностью: \f$ (f, [names ...]) \f$.
+ */
+
+/*! \fn Function pm::dataset::syntax::dgren(Ret (*f)(Args ...), Names && ... names)
+ *  \brief Определение конкретной переустанавливающей функции над совокупностью: \f$ (f, [names ...]) \f$.
+ */
+
+/*! \fn Function pm::dataset::syntax::dgret(Ret (*f)(Args ...), Names && ... names)
+ *  \brief Определение конкретной устанавливающей функции над совокупностью: \f$ (f, [names ...]) \f$.
+ */

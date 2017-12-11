@@ -1,17 +1,10 @@
-add_library(stream_ol OBJECT
-  buffer.cpp
-  stream.cpp
+file(GLOB src_stream
+  "*.cpp"
 )
-set(stream_source_features
-  cxx_auto_type
+add_library(ol_stream OBJECT EXCLUDE_FROM_ALL
+  ${src_stream}
 )
-set(stream_header_features
-  cxx_deleted_functions
-  cxx_rvalue_references
-)
-target_compile_features(stream_ol PRIVATE
-  ${stream_source_features}
-)
-target_compile_features(stream_ol PUBLIC
-  ${stream_header_features}
+set(part_stream
+  $<TARGET_OBJECTS:ol_stream>
+  CACHE INTERNAL "КОСТЫЛЬ, нельзя так просто заалиасить объектную библиотеку"
 )

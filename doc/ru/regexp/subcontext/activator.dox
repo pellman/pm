@@ -1,0 +1,118 @@
+/*! \file include/pm/regexp/subcontext/activator.hpp
+ *  \brief Содержит класс, производный от \ref ConTrickyPointers "стабильных указателей" на \ref ConRegexp "флаг активности подконтекста", pm::regexp::subcontext::Activator.
+ *  
+ *  \ingroup ModuleRegexp
+ */
+
+/*! \class pm::regexp::subcontext::Activator
+ *  \brief Класс, производный от \ref ConTrickyPointers "стабильных указателей" на \ref ConRegexp "флаг активности подконтекста".
+ *  
+ *  \ingroup ModuleRegexp
+ *  
+ *  **Запрещено** направлять указатели этого класса на объекты, тип которых отличен от `bool`.
+ *  
+ *  Особые свойства класса
+ *  ==
+ *  
+ *  \ref ConBaseValidState "Нестандартно-корректен".
+ *  
+ *  Неявные методы
+ *  ==
+ *  
+ *  Конструктор копирования: `Activator(const Activator & ptr)`
+ *  --
+ *  
+ *  Инициализировать указатель, направленный на флаг, связанный с указателем \p ptr.
+ *  
+ *  Конструктор перемещения: `Activator(Activator && ptr)`
+ *  --
+ *  
+ *  Инициализировать указатель, направленный на флаг, связанный с указателем \p ptr.
+ *  
+ *  Копирующее присваивание: `Activator & operator =(const Activator & ptr)`
+ *  --
+ *  
+ *  Перенаправить указатель на флаг, связанный с \p ptr.
+ *  
+ *  Перемещающее присваивание: `Activator & operator =(Activator && ptr)`
+ *  --
+ *  
+ *  Перенаправить указатель на флаг, связанный с \p ptr.
+ *  
+ *  Деструктор: `~Activator()`
+ *  --
+ *  
+ *  Стандартное значение. Уничтожение указателя приводит к сборке мусора согласно документации стабильных указателей.
+ */
+
+/*! \fn pm::regexp::subcontext::Activator::Activator()
+ *  \brief Инициализировать указатель, направленный новый опущенный флаг.
+ */
+
+/*! \fn pm::regexp::subcontext::Activator::Activator(bool act)
+ *  \brief Инициализировать указатель, направленный на новый флаг, имеющий значение \p act.
+ */
+
+/*! \fn pm::regexp::subcontext::Activator::Activator(const SPtr<bool> & ptr)
+ *  \brief Инициализировать указатель, направленный на данные, связанные с указателем \p ptr.
+ */
+
+/*! \fn pm::regexp::subcontext::Activator::Activator(SPtr<bool> && ptr)
+ *  \brief Инициализировать указатель, направленный на данные, связанные с указателем \p ptr.
+ */
+
+/*! \fn void pm::regexp::subcontext::Activator::detach_activate()
+ *  \brief Открепить указатель и затем присвоить (новому) связанному флагу значение `true` (флаг поднят), но без фактического копирования флага при откреплении.
+ *  
+ *  Эквивалентно вызову `detach_set(true)`.
+ */
+
+/*! \fn void pm::regexp::subcontext::Activator::detach_deactivate()
+ *  \brief Открепить указатель и затем присвоить (новому) связанному флагу значение `false` (флаг опущен), но без фактического копирования флага при откреплении.
+ *  
+ *  Эквивалентно вызову `detach_set(false)`.
+ */
+
+/*! \fn void pm::regexp::subcontext::Activator::detach_unset()
+ *  \brief Открепить указатель и затем присвоить (новому) связанному флагу значение `false` (флаг опущен), но без фактического копирования флага при откреплении.
+ *  
+ *  Эквивалентно вызову `detach_set(false)`.
+ *  
+ *  Этим методом скрывается метод pm::type_abuse::SPtr<bool>::detach_unset(), вместо значения `false` устанавливающий неопределённое значение.
+ */
+
+/*! \fn void pm::regexp::subcontext::Activator::activate() const
+ *  \brief Поднять связанный флаг.
+ *  
+ *  Эквивалентно вызову `set(true)`.
+ */
+
+/*! \fn void pm::regexp::subcontext::Activator::deactivate() const
+ *  \brief Опустить связанный флаг.
+ *  
+ *  Эквивалентно вызову `set(false)`.
+ */
+
+/*! \fn void pm::regexp::subcontext::Activator::unset() const
+ *  \brief Опустить связанный флаг.
+ *  
+ *  Эквивалентно вызову `set(false)`.
+ *  
+ *  Этим методом скрывается метод pm::type_abuse::SPtr<bool>::unset(), вместо значения `false` устанавливающий неопределённое значение.
+ */
+
+/*! \fn Activator pm::regexp::subcontext::Activator::clone() const
+ *  \brief Вернуть клона этого указателя.
+ */
+
+/*! \fn bool pm::regexp::subcontext::Activator::active() const
+ *  \brief Вернуть `true` <=> связанный флаг поднят.
+ *  
+ *  Эквивалентно разыменованию указателя.
+ */
+
+/*! \fn bool pm::regexp::subcontext::Activator::inactive() const
+ *  \brief Вернуть `true` <=> связанный флаг опущен.
+ *  
+ *  Эквивалентно отрицанию разыменования указателя.
+ */

@@ -1,0 +1,46 @@
+/*! \file include/pm/dataset/functions/lazy.hpp
+ *  \brief Содержит \ref ConDataset "ленивый интерфейс создания конкретных функций над совокупностью".
+ *  
+ *  \ingroup ModuleDataset
+ *  
+ *  В описании глобальной функции, возвращающей функцию над совокупностью, описывается собственно возвращаемая функция.
+ *  
+ *  Общее требование к применению возвращаемых функций:
+ *  все их применения к совокупности данных должны быть корректны.
+ */
+
+/*! \fn Function pm::dataset::dref(const std::function<void(Args ...)> & f, Targets ... targets)
+ *  \brief Конкретная ссылочная функция над совокупностью: \f$ (f, [targets ...]) \f$.
+ */
+
+/*! \fn Function pm::dataset::dref(std::function<void(Args ...)> && f, Targets ... targets)
+ *  \brief Конкретная ссылочная функция над совокупностью: \f$ (f, [targets ...]) \f$.
+ */
+
+/*! \fn Function pm::dataset::dren(const std::function<Ret(Args ...)> & f, Targets ... targets)
+ *  \brief Конкретная переустанавливающая функция над совокупностью: \f$ (f, [targets ...]) \f$.
+ */
+
+/*! \fn Function pm::dataset::dren(std::function<Ret(Args ...)> && f, Targets ... targets)
+ *  \brief Конкретная переустанавливающая функция над совокупностью: \f$ (f, [targets ...]) \f$.
+ */
+
+/*! \fn Function pm::dataset::dret(const std::function<Ret(Args ...)> & f, Targets ... targets)
+ *  \brief Конкретная устанавливающая функция над совокупностью: \f$ (f, [targets ...]) \f$.
+ */
+
+/*! \fn Function pm::dataset::dret(std::function<Ret(Args ...)> && f, Targets ... targets)
+ *  \brief Конкретная устанавливающая функция над совокупностью: \f$ (f, [targets ...]) \f$.
+ */
+
+/*! \fn Function pm::dataset::dgref(Any (*f)(Args ...), Targets ... targets)
+ *  \brief Конкретная ссылочная функция над совокупностью: \f$ (f, [targets ...]) \f$.
+ */
+
+/*! \fn Function pm::dataset::dgren(Ret (*f)(Args ...), Targets ... targets)
+ *  \brief Конкретная переустанавливающая функция над совокупностью: \f$ (f, [targets ...]) \f$.
+ */
+
+/*! \fn Function pm::dataset::dgret(Ret (*f)(Args ...), Targets ... targets)
+ *  \brief Конкретная устанавливающая функция над совокупностью: \f$ (f, [targets ...]) \f$.
+ */

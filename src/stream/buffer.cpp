@@ -1,6 +1,6 @@
 /*
     This file is part of the pm library package.
-    Copyright (C) 2017 Vladislav Podymov
+    Copyright (C) 2017, 2018 Vladislav Podymov
     
     This library is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
     
     To contact author, email to <vpod@cs.msu.ru>
  */
-#include "stream/buffer.hpp"
+#include "pm/stream/buffer.hpp"
 
 namespace pm {
 namespace stream {

@@ -1,0 +1,97 @@
+/*! \file include/pm/stream/stream.hpp
+ *  \brief Содержит класс \ref ConUngettableStream "возвратного потока" pm::stream::Stream.
+ *  
+ *  \ingroup ModuleStream
+ */
+
+/*! \class pm::stream::Stream
+ *  \brief Класс \ref ConUngettableStream "возвратного потока".
+ *  
+ *  \ingroup ModuleStream
+ *  
+ *  Особые свойства класса
+ *  ==
+ *  
+ *  \ref ConBaseValidState "Нестандартно-корректен".
+ *  
+ *  Неявные методы
+ *  ==
+ *  
+ *  Конструктор по умолчанию: `Stream()`
+ *  --
+ *  
+ *  Удалён.
+ *  
+ *  Конструктор копирования: `Stream(const Stream &)`
+ *  --
+ *  
+ *  Удалён.
+ *  
+ *  Конструктор перемещения: `Stream(Stream &&)`
+ *  --
+ *  
+ *  Удалён.
+ *  
+ *  Копирующее присваивание: `Stream & operator =(const Stream &)`
+ *  --
+ *  
+ *  Удалён.
+ *  
+ *  Перемещающее присваивание: `Stream & operator =(Stream &&)`
+ *  --
+ *  
+ *  Удалён.
+ *  
+ *  Деструктор: `~Stream()`
+ *  --
+ *  
+ *  Стандартное значение.
+ *  
+ */
+
+/*! \fn pm::stream::Stream::Stream(std::istream & s)
+ *  \brief Инициализировать возвратный поток, содержащий ссылку на стандартный поток ввода \p s и пустой буфер.
+ */
+
+/*! \fn pm::stream::Stream::Stream(std::istream & s, size_t buffer_size)
+ *  \brief Инициализировать возвратный поток, содержащий ссылку на стандартный поток ввода \p s, и пустой буфер, настроенный согласно техническому параметру \p buffer_size.
+ *  
+ *  В текущей реализации буфер - это список строк фиксированной длины \p buffer_size, и при возврате символов и строк элементы списка подходящим образом наполняются и по необходимости добавляются.
+ *  Можно "играться" со значением параметра \p buffer_size, для варьирования частоты и размера строк, добавляемых в список (кроме некоторых исключительных случаев, больше размер - меньше частота).
+ */
+
+/*! \fn bool pm::stream::Stream::get(char & c)
+ *  \brief Прочитать символ из потока. При успешном чтении записать символ в переменную \p c. Вернуть `true` <=> чтение успешно.
+ */
+
+/*! \fn size_t pm::stream::Stream::get(std::string & s, size_t size)
+ *  \brief Прочитать строку длины не более \p size из потока. Записать прочитанную строку в переменную \p s. Вернуть длину прочитанной строки.
+ */
+
+/*! \fn bool pm::stream::Stream::get_strict(std::string & s, size_t size)
+ *  \brief Прочитать строку длины \p size из потока. Записать прочитанную строку в переменную \p s. Вернуть `true` <=> чтение успешно.
+ */
+
+/*! \fn bool pm::stream::Stream::skip()
+ *  \brief Прочитать символ из потока. Вернуть `true` <=> чтение успешно.
+ */
+
+/*! \fn size_t pm::stream::Stream::skip(size_t size)
+ *  \brief Прочитать строку длины не более \p size из потока. Вернуть длину прочитанной строки.
+ */
+
+/*! \fn bool pm::stream::Stream::skip_strict(size_t size)
+ *  \brief Прочитать строку длины \p size из потока. Вернуть `true` <=> чтение успешно.
+ */
+
+/*! \fn void pm::stream::Stream::unget(char c)
+ *  \brief Вернуть символ \p c в поток.
+ */
+
+/*! \fn void pm::stream::Stream::unget(const std::string & s)
+ *  \brief Вернуть строку \p s в поток.
+ */
+
+/*! \fn bool pm::stream::Stream::finished() const
+ *  \brief Вернуть `true` <=> буфер пуст и стандартный поток ввода, которым инициализирован возвратный поток, закрыт.
+ */

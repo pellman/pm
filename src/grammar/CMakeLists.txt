@@ -1,31 +1,19 @@
-add_library(grammar_ol OBJECT
-  action.cpp
-  context.cpp
-  grammar.cpp
-  node.cpp
-  context/adataset.cpp
-  syntax/action.cpp
-  syntax/grammar.cpp
-  syntax/interpreter.cpp
+add_subdirectory("actions")
+add_subdirectory("syntax")
+
+file(GLOB src_grammar_base
+  "*.cpp"
 )
-set(grammar_source_features
-  cxx_auto_type
-  cxx_range_for
+add_library(ol_grammar_base OBJECT EXCLUDE_FROM_ALL
+  ${src_grammar_base}
 )
-set(grammar_header_features
-  cxx_defaulted_functions
-  cxx_generalized_initializers
-  cxx_uniform_initialization
-  cxx_nonstatic_member_init
-  cxx_override
-  cxx_right_angle_brackets
-  cxx_rvalue_references
+set(part_grammar_base
+  $<TARGET_OBJECTS:ol_grammar_base>
+  CACHE INTERNAL "КОСТЫЛЬ, нельзя так просто заалиасить объектную библиотеку"
 )
-target_compile_features(grammar_ol PRIVATE
-  ${grammar_source_features}
-)
-target_compile_features(grammar_ol PUBLIC
-  ${grammar_header_features}
-  ${type_abuse_features}
-  ${utils_features}
+set(part_grammar
+  ${part_grammar_actions}
+  ${part_grammar_base}
+  ${part_grammar_syntax}
+  CACHE INTERNAL "КОСТЫЛЬ, нельзя так просто заалиасить объектную библиотеку"
 )

@@ -1,0 +1,199 @@
+/*! \file include/pm/dataset/syntax/functions/typical.hpp
+ *  \brief Содержит \ref ConDataset "типичный интерфейс создания определений конкретных функций над совокупностью".
+ *  
+ *  \ingroup ModuleDataset
+ *  
+ *  В описании глобальной функции, возвращающей определение функции над совокупностью, описывается собственно возвращаемое определение.
+ */
+
+/*! \fn Function pm::dataset::syntax::clone(const std::string & target, const std::string & source)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::clone(), [\p target, \p source]).
+ */
+
+/*! \fn Function pm::dataset::syntax::clone(const std::string & target, std::string && source)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::clone(), [\p target, \p source]).
+ */
+
+/*! \fn Function pm::dataset::syntax::clone(std::string && target, const std::string & source)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::clone(), [\p target, \p source]).
+ */
+
+/*! \fn Function pm::dataset::syntax::clone(std::string && target, std::string && source)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::clone(), [\p target, \p source]).
+ */
+
+/*! \fn Function pm::dataset::syntax::set(const std::string & target, Args && ... args)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::set<\p NewStoredValue>(std::forward<Args>(\p args) ...), [\p target]).
+ */
+
+/*! \fn Function pm::dataset::syntax::set(std::string && target, Args && ... args)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::set<\p NewStoredValue>(std::forward<Args>(\p args) ...), [\p target]).
+ */
+
+/*! \fn Function pm::dataset::syntax::swap(const std::string & target1, const std::string & target2)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::swap(), [\p target1, \p target2]).
+ */
+
+/*! \fn Function pm::dataset::syntax::swap(const std::string & target1, std::string && target2)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::swap(), [\p target1, \p target2]).
+ */
+
+/*! \fn Function pm::dataset::syntax::swap(std::string && target1, const std::string & target2)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::swap(), [\p target1, \p target2]).
+ */
+
+/*! \fn Function pm::dataset::syntax::swap(std::string && target1, std::string && target2)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::swap(), [\p target1, \p target2]).
+ */
+
+/*! \fn Function pm::dataset::syntax::unset(const std::string & target)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::unset(), [\p target]).
+ */
+
+/*! \fn Function pm::dataset::syntax::unset(std::string && target)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::unset(), [\p target]).
+ */
+
+/*! \fn Function pm::dataset::syntax::add(const std::string & target_left, const std::string & target_right)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::add<\p Left, \p Right>(), [\p target_left, \p target_right]).
+ */
+
+/*! \fn Function pm::dataset::syntax::add(const std::string & target_left, std::string && target_right)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::add<\p Left, \p Right>(), [\p target_left, \p target_right]).
+ */
+
+/*! \fn Function pm::dataset::syntax::add(std::string && target_left, const std::string & target_right)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::add<\p Left, \p Right>(), [\p target_left, \p target_right]).
+ */
+
+/*! \fn Function pm::dataset::syntax::add(std::string && target_left, std::string && target_right)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::add<\p Left, \p Right>(), [\p target_left, \p target_right]).
+ */
+
+/*! \fn Function pm::dataset::syntax::add(const std::string & target, Right && i)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::add<\p Left>(std::forward<Right>(i)), [\p target]).
+ */
+
+/*! \fn Function pm::dataset::syntax::add(std::string && target, Right && i)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::add<\p Left>(std::forward<Right>(i)), [\p target]).
+ */
+
+/*! \fn Function pm::dataset::syntax::div(const std::string & target_left, const std::string & target_right)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::div<\p Left, \p Right>(), [\p target_left, \p target_right]).
+ */
+
+/*! \fn Function pm::dataset::syntax::div(const std::string & target_left, std::string && target_right)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::div<\p Left, \p Right>(), [\p target_left, \p target_right]).
+ */
+
+/*! \fn Function pm::dataset::syntax::div(std::string && target_left, const std::string & target_right)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::div<\p Left, \p Right>(), [\p target_left, \p target_right]).
+ */
+
+/*! \fn Function pm::dataset::syntax::div(std::string && target_left, std::string && target_right)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::div<\p Left, \p Right>(), [\p target_left, \p target_right]).
+ */
+
+/*! \fn Function pm::dataset::syntax::div(const std::string & target, Right && i)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::div<\p Left>(std::forward<Right>(i)), [\p target]).
+ */
+
+/*! \fn Function pm::dataset::syntax::div(std::string && target, Right && i)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::div<\p Left>(std::forward<Right>(i)), [\p target]).
+ */
+
+/*! \fn Function pm::dataset::syntax::mod(const std::string & target_left, const std::string & target_right)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::mod<\p Left, \p Right>(), [\p target_left, \p target_right]).
+ */
+
+/*! \fn Function pm::dataset::syntax::mod(const std::string & target_left, std::string && target_right)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::mod<\p Left, \p Right>(), [\p target_left, \p target_right]).
+ */
+
+/*! \fn Function pm::dataset::syntax::mod(std::string && target_left, const std::string & target_right)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::mod<\p Left, \p Right>(), [\p target_left, \p target_right]).
+ */
+
+/*! \fn Function pm::dataset::syntax::mod(std::string && target_left, std::string && target_right)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::mod<\p Left, \p Right>(), [\p target_left, \p target_right]).
+ */
+
+/*! \fn Function pm::dataset::syntax::mod(const std::string & target, Right && i)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::mod<\p Left>(std::forward<Right>(i)), [\p target]).
+ */
+
+/*! \fn Function pm::dataset::syntax::mod(std::string && target, Right && i)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::mod<\p Left>(std::forward<Right>(i)), [\p target]).
+ */
+
+/*! \fn Function pm::dataset::syntax::mul(const std::string & target_left, const std::string & target_right)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::mul<\p Left, \p Right>(), [\p target_left, \p target_right]).
+ */
+
+/*! \fn Function pm::dataset::syntax::mul(const std::string & target_left, std::string && target_right)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::mul<\p Left, \p Right>(), [\p target_left, \p target_right]).
+ */
+
+/*! \fn Function pm::dataset::syntax::mul(std::string && target_left, const std::string & target_right)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::mul<\p Left, \p Right>(), [\p target_left, \p target_right]).
+ */
+
+/*! \fn Function pm::dataset::syntax::mul(std::string && target_left, std::string && target_right)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::mul<\p Left, \p Right>(), [\p target_left, \p target_right]).
+ */
+
+/*! \fn Function pm::dataset::syntax::mul(const std::string & target, Right && i)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::mul<\p Left>(std::forward<Right>(i)), [\p target]).
+ */
+
+/*! \fn Function pm::dataset::syntax::mul(std::string && target, Right && i)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::mul<\p Left>(std::forward<Right>(i)), [\p target]).
+ */
+
+/*! \fn Function pm::dataset::syntax::sub(const std::string & target_left, const std::string & target_right)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::sub<\p Left, \p Right>(), [\p target_left, \p target_right]).
+ */
+
+/*! \fn Function pm::dataset::syntax::sub(const std::string & target_left, std::string && target_right)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::sub<\p Left, \p Right>(), [\p target_left, \p target_right]).
+ */
+
+/*! \fn Function pm::dataset::syntax::sub(std::string && target_left, const std::string & target_right)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::sub<\p Left, \p Right>(), [\p target_left, \p target_right]).
+ */
+
+/*! \fn Function pm::dataset::syntax::sub(std::string && target_left, std::string && target_right)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::sub<\p Left, \p Right>(), [\p target_left, \p target_right]).
+ */
+
+/*! \fn Function pm::dataset::syntax::sub(const std::string & target, Right && i)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::sub<\p Left>(std::forward<Right>(i)), [\p target]).
+ */
+
+/*! \fn Function pm::dataset::syntax::sub(std::string && target, Right && i)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::sub<\p Left>(std::forward<Right>(i)), [\p target]).
+ */
+
+/*! \fn Function pm::dataset::syntax::char_to_digit(const std::string & target)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::char_to_digit<\p Int>(), [\p target]).
+ */
+
+/*! \fn Function pm::dataset::syntax::char_to_digit(std::string && target)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::char_to_digit<\p Int>(), [\p target]).
+ */
+
+/*! \fn Function pm::dataset::syntax::char_to_string(const std::string & target)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::char_to_string(), [\p target]).
+ */
+
+/*! \fn Function pm::dataset::syntax::char_to_string(std::string && target)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::char_to_string(), [\p target]).
+ */
+
+/*! \fn Function pm::dataset::syntax::convert(const std::string & target)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::convert<\p To, \p From>(), [\p target]).
+ */
+
+/*! \fn Function pm::dataset::syntax::convert(std::string && target)
+ *  \brief Определение конкретной чистой функции (pm::type_abuse::funs::convert<\p To, \p From>(), [\p target]).
+ */

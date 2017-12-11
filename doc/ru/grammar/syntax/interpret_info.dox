@@ -1,0 +1,19 @@
+/*! \file include/pm/grammar/syntax/interpret_info.hpp
+ *  \brief Содержит структуру данных, хранящую отображения имён действий и данных, получаемые по итогам \ref ConGrammar "интерпретации определения грамматики": pm::grammar::syntax::InterpretInfo.
+ *  
+ *  \ingroup ModuleGrammar
+ */
+
+/*! \class pm::grammar::syntax::InterpretInfo
+ *  \brief Структура данных, хранящая отображения имён действий и данных, получаемые по итогам \ref ConGrammar "интерпретации определения грамматики".
+ *  
+ *  \ingroup ModuleGrammar
+ */
+
+/*! \var std::map<std::string, size_t> pm::grammar::syntax::InterpretInfo::actions
+ *  \brief Отображение \f$ \varphi_n \f$ имён определений грамматических действий в индексы соответствующих действий грамматики, получаемой по итогам интерпретации определения грамматики.
+ */
+
+/*! \var dataset::syntax::Set pm::grammar::syntax::InterpretInfo::data
+ *  \brief Определение совокупности данных, хранящее отображение \f$ \varphi_d \f$ имён данных в индексы совокупности данных, получаемое по итогам интерпретации определения грамматики.
+ */

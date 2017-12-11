@@ -1,0 +1,5 @@
+/*! \file include/pm/grammar/syntax.hpp
+ *  \brief Подключает все файлы \ref ConGrammar "синтаксической части" грамматик.
+ *  
+ *  \ingroup ModuleGrammar
+ */

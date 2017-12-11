@@ -1,0 +1,4 @@
+/*! \file include/pm/grammar.hpp
+ *  \brief Подключает реализацию всех семантических и синтаксических понятий, относящихся к \ref ConGrammar "грамматикам".
+ *  \ingroup ModuleGrammar
+ */

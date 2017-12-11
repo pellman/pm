@@ -1,6 +1,6 @@
 /*
     This file is part of the pm library package.
-    Copyright (C) 2017 Vladislav Podymov
+    Copyright (C) 2017, 2018 Vladislav Podymov
     
     This library is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -17,60 +17,56 @@
     
     To contact author, email to <vpod@cs.msu.ru>
  */
-#include "dataset/set.hpp"
+#include "pm/dataset/set.hpp"
 
 namespace pm {
 namespace dataset {
 
-Set::Set(size_t size) {
-  v_.reserve(size);
-  for(size_t i = 0; i < size; ++i) {
-    v_.push_back(type_abuse::DRef());
-  }
-}
-
 void Set::detach() {
-  for(auto & data : v_) {
-    data.detach();
-  }
+  ptr_.detach();
+  detach_all_data_();
 }
 
 void Set::detach_receive(const Set & set) {
-  for(size_t i = 0; i < v_.size(); ++i) {
-    v_[i].detach_receive(set.v_[i]);
-  }
-}
-
-void Set::detach_unset() {
-  for(auto & data : v_) {
-    data.detach_unset();
-  }
+  ptr_.receive(set.ptr_);
+  detach_all_data_();
 }
 
 void Set::receive(const Set & set) const {
-  for(size_t i = 0; i < v_.size(); ++i) {
-    v_[i].receive(set.v_[i]);
-  }
-}
-
-void Set::unset() const {
-  for(const auto & data : v_) {
-    data.unset();
+  resize_(set.ptr_.val().size());
+  const auto & thisv = ptr_.val();
+  const auto & setv = set.ptr_.val();
+  for(auto thisit = thisv.begin(), setit = setv.begin(); thisit != thisv.end(); ++thisit, ++setit) {
+    thisit->receive(*setit);
   }
 }
 
 Set Set::clone() const {
-  Set res(0);
-  res.v_.reserve(v_.size());
-  for(const auto & data : v_) {
-    res.v_.push_back(data.clone());
-  }
+  Set res = *this;
+  res.detach();
   return res;
 }
 
-void Set::send(const Set & set) const {
-  for(size_t i = 0; i < v_.size(); ++i) {
-    v_[i].send(set.v_[i]);
+const type_abuse::DPtr & Set::data(size_t i) const {
+  if(ptr_.val().size() <= i) resize_(i+1);
+  return ptr_.val()[i];
+}
+
+void Set::detach_all_data_() const {
+  for(auto & d : ptr_.val()) {
+    d.detach();
+  }
+}
+
+void Set::resize_(size_t size) const {
+  auto & v = ptr_.val();
+  if(v.size() > size) {
+    v.resize(size);
+  }
+  else {
+    for(size_t i = v.size(); i < size; ++i) {
+      v.push_back(type_abuse::DPtr());
+    }
   }
 }
 

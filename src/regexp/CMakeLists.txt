@@ -1,46 +1,17 @@
-add_library(regexp_ol OBJECT
-  context.cpp
-  literal.cpp
-  regexp.cpp
-  basic/anylet.cpp
-  basic/anyletbut.cpp
-  basic/anyletbutset.cpp
-  basic/anystr.cpp
-  basic/enclose.cpp
-  basic/end.cpp
-  basic/fail.cpp
-  basic/let.cpp
-  basic/letset.cpp
-  basic/range.cpp
-  basic/str.cpp
-  composition/concat.cpp
-  function/ca.cpp
-  function/cm.cpp
-  function/cx.cpp
-  function/ma.cpp
-  function/mm.cpp
-  function/mx.cpp
-  function/nc.cpp
-  function/nm.cpp
-  function/nx.cpp
-  function/xa.cpp
-  function/xm.cpp
+add_subdirectory("expressions")
+
+file(GLOB src_regexp_base
+  "*.cpp"
 )
-set(regexp_source_features
-  cxx_auto_type
+add_library(ol_regexp_base OBJECT EXCLUDE_FROM_ALL
+  ${src_regexp_base}
 )
-set(regexp_header_features
-  cxx_generalized_initializers
-  cxx_uniform_initialization
-  cxx_override
-  cxx_rvalue_references
-  cxx_variadic_templates
+set(part_regexp_base
+  $<TARGET_OBJECTS:ol_regexp_base>
+  CACHE INTERNAL "КОСТЫЛЬ, нельзя так просто заалиасить объектную библиотеку"
 )
-target_compile_features(regexp_ol PRIVATE
-  ${regexp_source_features}
-  ${utils_features}
-)
-target_compile_features(regexp_ol PUBLIC
-  ${regexp_header_features}
-  ${type_abuse_features}
+set(part_regexp
+  ${part_regexp_base}
+  ${part_regexp_expressions}
+  CACHE INTERNAL "КОСТЫЛЬ, нельзя так просто заалиасить объектную библиотеку"
 )

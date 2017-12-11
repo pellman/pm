@@ -1,0 +1,25 @@
+/*! \file include/pm/dataset/syntax/functions/operators.hpp
+ *  \brief Содержит \ref ConDataset "операторный интерфейс создания определения композиции функций над совокупностью".
+ *  
+ *  \ingroup ModuleDataset
+ *  
+ *  В описании оператора, возвращающего определение функции над совокупностью, описывается собственно возвращаемое определение.
+ *  
+ *  Не рекомендуется создавать определение композиции функций, содержаще себя прямо или косвенно в качестве подопределения, так как это может приводить к **утечкам памяти**.
+ */
+
+/*! \fn Function pm::dataset::syntax::operator *(const Function & f1, const Function & f2)
+ *  \brief Определение композиции функций {\p f1, \p f2}.
+ */
+
+/*! \fn Function pm::dataset::syntax::operator *(const Function & f1, Function && f2)
+ *  \brief Определение композиции функций {\p f1, \p f2}.
+ */
+
+/*! \fn Function pm::dataset::syntax::operator *(Function && f1, const Function & f2)
+ *  \brief Определение композиции функций {\p f1, \p f2}.
+ */
+
+/*! \fn Function pm::dataset::syntax::operator *(Function && f1, Function && f2)
+ *  \brief Определение композиции функций {\p f1, \p f2}.
+ */

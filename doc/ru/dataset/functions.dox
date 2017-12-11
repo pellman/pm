@@ -1,0 +1,5 @@
+/*! \file include/pm/dataset/functions.hpp
+ *  \brief Подключает весь интерфейс создания \ref ConDataset "функций над совокупностью".
+ *  
+ *  \ingroup ModuleDataset
+ */

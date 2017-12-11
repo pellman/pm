@@ -1,0 +1,121 @@
+/*! \file include/pm/grammar/syntax/actions/base.hpp
+ *  \brief Базовый интерфейс создания \ref ConGrammar "готовых определений грамматических действий".
+ *  
+ *  \ingroup ModuleGrammar
+ *  
+ *  Описание функции, возвращающей определение грамматического действия, содержит название возвращаемого определения.
+ *  
+ *  Общая рекомендация по использованию готовых определений грамматических действий: не рекомендуется создавать определения, содержащие себя прямо или косвенно в качестве подопределений, так как это может привести к **утечкам памяти**.
+ */
+
+/*! \fn Action pm::grammar::syntax::ac(const dataset::syntax::Function & f)
+ *  \brief Определение функции \p f.
+ */
+
+/*! \fn Action pm::grammar::syntax::ac(dataset::syntax::Function && f)
+ *  \brief Определение функции \p f.
+ */
+
+/*! \fn Action pm::grammar::syntax::ac(const Action & action, const dataset::syntax::Function & f_fail)
+ *  \brief Определение \p action с функцией отката \p f_fail.
+ */
+
+/*! \fn Action pm::grammar::syntax::ac(const Action & action, dataset::syntax::Function && f_fail)
+ *  \brief Определение \p action с функцией отката \p f_fail.
+ */
+
+/*! \fn Action pm::grammar::syntax::ac(Action && action, const dataset::syntax::Function & f_fail)
+ *  \brief Определение \p action с функцией отката \p f_fail.
+ */
+
+/*! \fn Action pm::grammar::syntax::ac(Action && action, dataset::syntax::Function && f_fail)
+ *  \brief Определение \p action с функцией отката \p f_fail.
+ */
+
+/*! \fn Action pm::grammar::syntax::ac(const regexp::Regexp & r)
+ *  \brief Определение регулярного выражения \p r.
+ */
+
+/*! \fn Action pm::grammar::syntax::ac(regexp::Regexp && r)
+ *  \brief Определение регулярного выражения \p r.
+ */
+
+/*! \fn Action pm::grammar::syntax::ac(const regexp::Regexp & r, const std::string & data_name)
+ *  \brief Определение регулярного выражения \p r с именем данных \p data_name.
+ */
+
+/*! \fn Action pm::grammar::syntax::ac(const regexp::Regexp & r, std::string && data_name)
+ *  \brief Определение регулярного выражения \p r с именем данных \p data_name.
+ */
+
+/*! \fn Action pm::grammar::syntax::ac(regexp::Regexp && r, const std::string & data_name)
+ *  \brief Определение регулярного выражения \p r с именем данных \p data_name.
+ */
+
+/*! \fn Action pm::grammar::syntax::ac(regexp::Regexp && r, std::string && data_name)
+ *  \brief Определение регулярного выражения \p r с именем данных \p data_name.
+ */
+
+/*! \fn Action pm::grammar::syntax::ac(const std::string & action_name)
+ *  \brief Имя \p action_name.
+ */
+
+/*! \fn Action pm::grammar::syntax::ac(std::string && action_name)
+ *  \brief Имя \p action_name.
+ */
+
+/*! \fn Action pm::grammar::syntax::ac_false()
+ *  \brief Определение неуспеха.
+ */
+
+/*! \fn Action pm::grammar::syntax::ac_true()
+ *  \brief Определение успеха.
+ */
+
+/*! \fn Action pm::grammar::syntax::alt(const std::list<Action> & actions)
+ *  \brief Определение альтернативы над \p actions.
+ */
+
+/*! \fn Action pm::grammar::syntax::alt(std::list<Action> && actions)
+ *  \brief Определение альтернативы над \p actions.
+ */
+
+/*! \fn Action pm::grammar::syntax::alt(Actions && ... actions)
+ *  \brief Определение альтернативы над (\p actions ...).
+ *  
+ *  Позволяет alt({a1, ..., ak}) писать alt(a1, ..., ak): на одну пару скобок меньше.
+ *  
+ *  Эквивалентно вызову alt(std::list<Action>{std::forward<Actions>(indexes) ...})
+ */
+
+/*! \fn Action pm::grammar::syntax::opt(const Action & a)
+ *  \brief Определение опционала над \p a.
+ */
+
+/*! \fn Action pm::grammar::syntax::opt(Action && a)
+ *  \brief Определение опционала над \p a.
+ */
+
+/*! \fn Action pm::grammar::syntax::rule(const std::list<Action> & actions)
+ *  \brief Определение альтернативы над \p actions.
+ */
+
+/*! \fn Action pm::grammar::syntax::rule(std::list<Action> && actions)
+ *  \brief Определение альтернативы над \p actions.
+ */
+
+/*! \fn Action pm::grammar::syntax::rule(Actions && ... actions)
+ *  \brief Определение альтернативы над (\p actions ...).
+ *  
+ *  Позволяет rule({a1, ..., ak}) писать rule(a1, ..., ak): на одну пару скобок меньше.
+ *  
+ *  Эквивалентно вызову rule(std::list<Action>{std::forward<Actions>(actions) ...})
+ */
+
+/*! \fn Action pm::grammar::syntax::star(const Action & a)
+ *  \brief Определение звезды Клини над \p a.
+ */
+
+/*! \fn Action pm::grammar::syntax::star(Action && a)
+ *  \brief Определение звезды Клини над \p a.
+ */

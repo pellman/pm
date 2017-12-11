@@ -1,0 +1,81 @@
+/*! \file include/pm/type_abuse/functions.hpp
+ *  \brief Содержит несколько полезных глобальных функций: одноместных и двуместных \ref ConDataFunctions "чистых функций над данными".
+ *  
+ *  \ingroup ModuleTypeAbuse
+ */
+
+/*! \fn void pm::type_abuse::clone(const DPtr & ptr1, const DPtr & ptr2)
+ *  \brief Перезаписать указатель \p ptr1 указателем \p ptr2.
+ *  
+ *  \pre Если данные указателя \p ptr2 в момент вызова непусты, то тип этих данных копируем.
+ */
+
+/*! \fn void pm::type_abuse::swap(const DPtr & ptr1, const DPtr & ptr2)
+ *  \brief Обменять содержимое указателей \p ptr1 и \p ptr2.
+ */
+
+/*! \fn void pm::type_abuse::unset(const DPtr & ptr)
+ *  \brief Сбросить указатель \p ptr.
+ */
+
+/*! \fn void pm::type_abuse::add(const DPtr & ptr1, const DPtr & ptr2)
+ *  \brief Выполнить присваивание `*ptr1 += *ptr2`.
+ *  
+ *  \pre Данные указателя \p ptr1 в момент вызова непусты и имеют тип \p Left.
+ *  \pre Данные указателя \p ptr2 в момент вызова непусты и имеют тип \p Right.
+ *  \pre Выполняемое присваивание корректно для типов \p Left, \p Right.
+ */
+
+/*! \fn void pm::type_abuse::div(const DPtr & ptr1, const DPtr & ptr2)
+ *  \brief Выполнить присваивание `*ptr1 /= *ptr2`.
+ *  
+ *  \pre Данные указателя \p ptr1 в момент вызова непусты и имеют тип \p Left.
+ *  \pre Данные указателя \p ptr2 в момент вызова непусты и имеют тип \p Right.
+ *  \pre Выполняемое присваивание корректно для типов \p Left, \p Right.
+ */
+
+/*! \fn void pm::type_abuse::mod(const DPtr & ptr1, const DPtr & ptr2)
+ *  \brief Выполнить присваивание `*ptr1 %= *ptr2`.
+ *  
+ *  \pre Данные указателя \p ptr1 в момент вызова непусты и имеют тип \p Left.
+ *  \pre Данные указателя \p ptr2 в момент вызова непусты и имеют тип \p Right.
+ *  \pre Выполняемое присваивание корректно для типов \p Left, \p Right.
+ */
+
+/*! \fn void pm::type_abuse::mul(const DPtr & ptr1, const DPtr & ptr2)
+ *  \brief Выполнить присваивание `*ptr1 *= *ptr2`.
+ *  
+ *  \pre Данные указателя \p ptr1 в момент вызова непусты и имеют тип \p Left.
+ *  \pre Данные указателя \p ptr2 в момент вызова непусты и имеют тип \p Right.
+ *  \pre Выполняемое присваивание корректно для типов \p Left, \p Right.
+ */
+
+/*! \fn void pm::type_abuse::sub(const DPtr & ptr1, const DPtr & ptr2)
+ *  \brief Выполнить присваивание `*ptr1 -= *ptr2`.
+ *  
+ *  \pre Данные указателя \p ptr1 в момент вызова непусты и имеют тип \p Left.
+ *  \pre Данные указателя \p ptr2 в момент вызова непусты и имеют тип \p Right.
+ *  \pre Выполняемое присваивание корректно для типов \p Left, \p Right.
+ */
+
+/*! \fn void pm::type_abuse::convert(const DPtr & ptr)
+ *  \brief Переустановить указатель \p ptr в тип \p To от значения `*ptr` (как rvalue).
+ *  
+ *  \pre Данные указателя \p ptr в момент вызова непусты и имеют тип \p From.
+ *  \pre Тип \p To инициализируем от значения типа \p From.
+ */
+
+/*! \fn void pm::type_abuse::char_to_digit(const DPtr & ptr)
+ *  \brief Переустановить указатель \p ptr в тип \p Int от значения `(*ptr - '0')`.
+ *  
+ *  \pre Данные указателя \p ptr в момент вызова непусты и имеют тип `char`.
+ *  \pre Тип \p Int допускает инициализацию от значения типа `char`.
+ */
+
+/*! \fn void pm::type_abuse::char_to_string(const DPtr & ptr)
+ *  \brief Переустановить указатель \p ptr в тип `std::string` от аргументов `(1, *ptr)`.
+ *  
+ *  `std::string(1, c)` - это строка длины `1`, содержащая единственный символ `c`.
+ *  
+ *  \pre Данные указателя \p ptr в момент вызова непусты и имеют тип `char`.
+ */

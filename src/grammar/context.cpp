@@ -1,6 +1,6 @@
 /*
     This file is part of the pm library package.
-    Copyright (C) 2017 Vladislav Podymov
+    Copyright (C) 2017, 2018 Vladislav Podymov
     
     This library is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -17,32 +17,12 @@
     
     To contact author, email to <vpod@cs.msu.ru>
  */
-#include "grammar/context.hpp"
+#include "pm/grammar/context.hpp"
 
 namespace pm {
 namespace grammar {
 
-Context default_context(0);
-
-void Context::detach() {
-  asc.detach();
-  adc.detach();
-}
-
-void Context::detach_receive(const Context & sdc) {
-  asc.detach_receive(sdc.asc);
-  adc.detach_receive(sdc.adc);
-}
-
-void Context::receive(const Context & sdc) const {
-  asc.receive(sdc.asc);
-  adc.receive(sdc.adc);
-}
-
-void Context::send(const Context & sdc) const {
-  asc.send(sdc.asc);
-  adc.send(sdc.adc);
-}
+Context default_context;
 
 } // namespace grammar
 } // namespace pm

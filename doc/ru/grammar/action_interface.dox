@@ -1,0 +1,47 @@
+/*! \file include/pm/grammar/action_interface.hpp
+ *  \brief Содержит класс \ref ConGrammar "интерфейса грамматического действия" pm::grammar::ActionInterface.
+ *  
+ *  \ingroup ModuleGrammar
+ */
+
+/*! \class pm::grammar::ActionInterface
+ *  \brief Класс \ref ConGrammar "интерфейса грамматического действия".
+ *  
+ *  \ingroup ModuleGrammar
+ *  
+ *  Неявные методы
+ *  ==
+ *  
+ *  Конструктор по умолчанию: `ActionInterface()`
+ *  --
+ *  
+ *  Тривиальная инициализация (нечего инициализировать).
+ *  
+ *  Конструктор копирования: `ActionInterface(const ActionInterface & r)`
+ *  --
+ *  
+ *  Тривиальное копирование (нечего копировать).
+ *  
+ *  Конструктор перемещения: `ActionInterface(ActionInterface && r)`
+ *  --
+ *  
+ *  Тривиальное перемещение (нечего перемещать).
+ *  
+ *  Копирующее присваивание: `ActionInterface & operator =(const ActionInterface & r)`
+ *  --
+ *  
+ *  Тривиальное присваивание (нечего присваивать).
+ *  
+ *  Перемещающее присваивание: `ActionInterface & operator =(ActionInterface && r)`
+ *  --
+ *  
+ *  Тривиальное присваивание (нечего присваивать).
+ */
+
+/*! \fn virtual pm::grammar::ActionInterface::~ActionInterface()
+ *  \brief Виртуальный деструктор. Перегружается производным классом при наследовании.
+ */
+
+/*! \fn virtual bool pm::grammar::ActionInterface::gamatch_full(stream::Stream & s, const Grammar & g, const Context & gcontext) const
+ *  \brief Метод полного разбора потока \p s на грамматике \p g в контексте \p context. Перегружается производным классом при наследовании. Неперегруженный - немедленно возвращает `false` (неуспех).
+ */

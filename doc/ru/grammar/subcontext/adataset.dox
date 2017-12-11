@@ -1,0 +1,139 @@
+/*! \file include/pm/grammar/subcontext/adataset.hpp
+ *  \brief Содержит класс \ref ConGrammar "подконтекста грамматических данных" pm::grammar::subcontext::ADataSet.
+ *  
+ *  \ingroup ModuleGrammar
+ */
+
+/*! \class pm::grammar::subcontext::ADataSet
+ *  \brief Класс \ref ConGrammar "подконтекста грамматических данных".
+ *  
+ *  \ingroup ModuleGrammar
+ *  
+ *  Непосредственно содержит
+ *  - два поля: стабильный указатель на флаг активности данных cact и совокупность данных cdataset;
+ *  - методы, позволяющие производить схожие операции над обоими полями сразу;
+ *  - методы доступа к флагу и данным совокупности.
+ *  
+ *  С учётом вложенности полей содержит следующие \ref ConTrickyPointers "хитрые указатели":
+ *  - стабильный указатель типа pm::grammar::Activator, производного от pm::type_abuse::SPtr<bool>, на флаг активности данных: `(*this).cact`;
+ *  - указатели типа pm::type_abuse::DPtr на данные совокупности: `(*this).cdataset.data(i)` - i-й указатель на данные совокупности.
+ *  
+ *  *Этот подконтекст* - это объект, документируемый метод которого вызывается.
+ *  
+ *  **Запрещено** направлять указатель на флаг активности данных на объекты, тип которых отличен от `bool`.
+ *  
+ *  Особые свойства класса
+ *  ==
+ *  
+ *  \ref ConBaseValidState "Нестандартно-корректен".
+ *  
+ *  Неявные методы
+ *  ==
+ *  
+ *  Конструктор по умолчанию: `ADataSet()`
+ *  --
+ *  
+ *  Инициализировать подконтекст по умолчанию: новая совокупность данных по умолчанию, новый опущенный флаг активности.
+ *  
+ *  Конструктор копирования: `ADataSet(const ADataSet & cadataset)`
+ *  --
+ *  
+ *  Инициализировать подконтекст, все указатели которого направлены на соответствующие данные подконтекста \p cadata.
+ *  
+ *  Конструктор перемещения: `ADataSet(ADataSet && cadata)`
+ *  --
+ *  
+ *  Инициализировать подконтекст, все указатели которого направлены на соответствующие данные подконтекста \p cadata.
+ *  
+ *  Копирующее присваивание: `ADataSet & operator =(const ADataSet & cadataset)`
+ *  --
+ *  
+ *  Перенаправить все указатели этого подконтекста на соответствующие данные подконтекста \p cadata.
+ *  
+ *  Перемещающее присваивание: `ADataSet & operator =(ADataSet && cadataset)`
+ *  --
+ *  
+ *  Перенаправить все указатели этого подконтекста на соответствующие данные подконтекста \p cadata.
+ *  
+ *  Деструктор: `~ADataSet()`
+ *  --
+ *  
+ *  Стандартное значение.
+ *  При уничтожении указателей этого подконтекста производится сборка мусора.
+ */
+
+/*! \fn void pm::grammar::subcontext::ADataSet::detach()
+ *  \brief Открепить все указатели этого подконтекста.
+ *  
+ *  \pre Для любого индекса `i` верно: если `i`-е данные совокупности этого подконтекста непусты, то тип этих данных копируем.
+ */
+
+/*! \fn void pm::grammar::subcontext::ADataSet::detach_receive(const ADataSet & cadataset)
+ *  \brief Открепить все указатели этого подконтекста и затем перезаписать их соответствующими указателями подконтекста \p cadataset.
+ *  
+ *  \pre Для любого индекса `i` верно: если `i`-е данные совокупности подконтекста \p cadataset непусты, то тип этих данных копируем.
+ */
+
+/*! \fn void pm::grammar::subcontext::ADataSet::detach_unset(bool act)
+ *  \brief Открепить все указатели этого подконтекста и затем сбросить все указатели совокупности и присвоить флагу активности значение \p act, но без фактического копирования данных при откреплении.
+ */
+
+/*! \fn void pm::grammar::subcontext::ADataSet::activate() const
+ *  \brief Активировать этот подконтекст.
+ */
+
+/*! \fn void pm::grammar::subcontext::ADataSet::deactivate() const
+ *  \brief Деактивировать этот подконтекст.
+ */
+
+/*! \fn void pm::grammar::subcontext::ADataSet::receive(const ADataSet & cadataset) const
+ *  \brief Перезаписать все указатели этого подконтекста соответствующими указателями подконтекста \p cadataset.
+ *  
+ *  \pre Для любого индекса `i` верно: если `i`-е данные совокупности подконтекста \p cadataset непусты, то тип этих данных копируем.
+ */
+
+/*! \fn void pm::grammar::subcontext::ADataSet::swap(const ADataSet & cadataset) const
+ *  \brief Обменять содержимое всех указателей этого подконтекста и соответствующих указателей подконтекста \p cadataset.
+ */
+
+/*! \fn void pm::grammar::subcontext::ADataSet::unset(bool act) const
+ *  \brief Сбросить все указатели совокупности и присвоить флагу активации значение \p act.
+ */
+
+/*! \fn ADataSet pm::grammar::subcontext::ADataSet::clone() const
+ *  \brief Вернуть подконтекст, указатели которого являются клонами соответствующих указателей этого подконтекста.
+ *  
+ *  \pre Для любого индекса `i` верно: если `i`-е данные совокупности этого подконтекста непусты, то тип этих данных копируем.
+ */
+
+/*! \fn void pm::grammar::subcontext::ADataSet::send(const ADataSet & cadataset) const
+ *  \brief Перезаписать все указатели подконтекста \p cadataset соответствующими указателями этого подконтекста.
+ *  
+ *  \pre Для любого индекса `i` верно: если `i`-е данные совокупности этого подконтекста непусты, то тип этих данных копируем.
+ */
+
+/*! \fn bool pm::grammar::subcontext::ADataSet::active() const
+ *  \brief Вернуть `true` <=> этот подконтекст активен.
+ */
+
+/*! \fn const type_abuse::DPtr & pm::grammar::subcontext::ADataSet::data(size_t i) const
+ *  \brief Вернуть указатель на i-е данные совокупности.
+ */
+
+/*! \fn bool pm::grammar::subcontext::ADataSet::inactive() const
+ *  \brief Вернуть `true` <=> этот подконтекст неактивен.
+ */
+
+/*! \fn StoredType & pm::grammar::subcontext::ADataSet::val(size_t i) const
+ *  \brief Вернуть i-е данные совокупности.
+ *  
+ *  \pre i-е данные совокупности в момент вызова непусты и имеют тип \p StoredType.
+ */
+
+/*! \var Activator pm::grammar::subcontext::ADataSet::cact
+ *  \brief Стабильный указатель на флаг активности данных.
+ */
+
+/*! \var Data pm::grammar::subcontext::ADataSet::cds
+ *  \brief Совокупность данных.
+ */

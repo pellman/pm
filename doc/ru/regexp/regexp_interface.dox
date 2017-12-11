@@ -1,0 +1,59 @@
+/*! \file include/pm/regexp/regexp_interface.hpp
+ *  \brief Содержит класс \ref ConRegexp "интерфейса регулярного выражения" pm::regexp::RegexpInterface.
+ *  
+ *  \ingroup ModuleRegexp
+ */
+
+/*! \class pm::regexp::RegexpInterface
+ *  \brief Класс \ref ConRegexp "интерфейса регулярного выражения".
+ *  
+ *  \ingroup ModuleRegexp
+ *  
+ *  Неявные методы
+ *  ==
+ *  
+ *  Конструктор по умолчанию: `RegexpInterface()`
+ *  --
+ *  
+ *  Тривиальная инициализация (нечего инициализировать).
+ *  
+ *  Конструктор копирования: `RegexpInterface(const RegexpInterface & r)`
+ *  --
+ *  
+ *  Тривиальное копирование (нечего копировать).
+ *  
+ *  Конструктор перемещения: `RegexpInterface(RegexpInterface && r)`
+ *  --
+ *  
+ *  Тривиальное перемещение (нечего перемещать).
+ *  
+ *  Копирующее присваивание: `RegexpInterface & operator =(const RegexpInterface & r)`
+ *  --
+ *  
+ *  Тривиальное присваивание (нечего присваивать).
+ *  
+ *  Перемещающее присваивание: `RegexpInterface & operator =(RegexpInterface && r)`
+ *  --
+ *  
+ *  Тривиальное присваивание (нечего присваивать).
+ */
+
+/*! \fn virtual pm::regexp::RegexpInterface::~RegexpInterface()
+ *  \brief Виртуальный деструктор. Перегружается производным классом при наследовании.
+ */
+
+/*! \fn bool pm::regexp::RegexpInterface::match(stream::Stream & s, const Context & context = default_context) const
+ *  \brief Метод разбора возвратного потока \p s в контексте \p context.
+ */
+
+/*! \fn bool pm::regexp::RegexpInterface::match(std::istream & s, const Context & context = default_context) const
+ *  \brief Метод разбора стадартного потока ввода \p s в контексте \p context.
+ */
+
+/*! \fn bool pm::regexp::RegexpInterface::match(const std::string & s, const Context & context = default_context) const
+ *  \brief Метод разбора строки \p s в контексте \p context.
+ */
+
+/*! \fn virtual bool pm::regexp::RegexpInterface::match_full(stream::Stream & s, const Context & context) const
+ *  \brief Метод полного разбора потока \p s в контексте \p context. Перегружается производным классом при наследовании. Неперегруженный - немедленно возвращает `false` (неуспех).
+ */
