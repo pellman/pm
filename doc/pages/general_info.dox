@@ -1,0 +1,12 @@
+/*! \page GeneralInfo Общая информация
+ *  
+ *  \subpage GIPrerequisites "Требования к окружению сборки"
+ *  
+ *  \subpage GIBuild "Сборка"
+ *  
+ *  \subpage GIContents "Содержимое библиотеки"
+ *  
+ *  \subpage GIFiles "Структура исходных файлов"
+ *  
+ *  \subpage GINamespaces "Соглашения о пространствах имён"
+ */

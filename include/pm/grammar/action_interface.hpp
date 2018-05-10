@@ -33,12 +33,12 @@ class Grammar;
 class ActionInterface {
 public:
   virtual ~ActionInterface() {}
-  inline virtual bool gamatch_full(stream::Stream & s, const Grammar & g, const Context & gcontext) const;
+  inline virtual bool gamatch(stream::Stream & s, const Grammar & g, const Context & gcontext) const;
 };
 
 
 // implementation
-bool ActionInterface::gamatch_full(stream::Stream &, const Grammar &, const Context &) const {return false;}
+bool ActionInterface::gamatch(stream::Stream &, const Grammar &, const Context &) const {return false;}
 
 
 } // namespace grammar

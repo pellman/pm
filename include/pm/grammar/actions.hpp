@@ -29,11 +29,12 @@
 namespace pm {
 namespace grammar {
 
-// functions
-Action ac(const dataset::Function & f);
-Action ac(dataset::Function && f);
-Action ac(size_t index, const dataset::Function & f_fail);
-Action ac(size_t index, dataset::Function && f_fail);
+// constants
+Action ac_false();
+Action ac_true();
+
+// redirect
+Action ac(size_t index);
 
 // regexp
 Action ac(const regexp::Regexp & r);
@@ -41,38 +42,31 @@ Action ac(regexp::Regexp && r);
 Action ac(const regexp::Regexp & r, size_t data_index);
 Action ac(regexp::Regexp && r, size_t data_index);
 
-// redirect
-Action ac(size_t index);
+// function
+Action ac(const dataset::Function & f);
+Action ac(dataset::Function && f);
 
-// constants
-Action ac_false();
-Action ac_true();
+// fail function
+Action ac(size_t index, const dataset::Function & f);
+Action ac(size_t index, dataset::Function && f);
 
 // alternative
 Action alt(const std::list<size_t> & indexes);
 Action alt(std::list<size_t> && indexes);
 template<typename ... Indexes>
-Action alt(Indexes ... indexes);
-
-// opt
-Action opt(size_t index);
+Action alt(Indexes ... indexes) {return alt(std::list<size_t>{indexes ...});}
 
 // rule
 Action rule(const std::list<size_t> & indexes);
 Action rule(std::list<size_t> && indexes);
 template<typename ... Indexes>
-Action rule(Indexes ... indexes);
+Action rule(Indexes ... indexes) {return alt(std::list<size_t>{indexes ...});}
+
+// opt
+Action opt(size_t index);
 
 // star
 Action star(size_t index);
-
-
-// implementation
-template<typename ... Indexes>
-Action alt(Indexes ... indexes) {return alt(std::list<size_t>{indexes ...});}
-
-template<typename ... Indexes>
-Action rule(Indexes ... indexes) {return alt(std::list<size_t>{indexes ...});}
 
 } // namespace grammar
 } // namespace pm

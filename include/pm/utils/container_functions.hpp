@@ -26,72 +26,39 @@ namespace pm {
 namespace utils {
 
 template<typename Container>
-void append(Container & to, const Container & from);
-
-template<typename Container>
-bool disjoint(const Container & X, const Container & Y);
-
-template<typename Container>
-void erase_index(Container & container, size_t ind);
-
-template<typename Container>
-bool intersects(const Container & X, const Container & Y);
-
-template<typename Element, typename Container>
-bool is_in(const Element & element, const Container & container);
-
-template<typename Element, typename Container>
-bool isnt_in(const Element & element, const Container & container);
-
-template<typename Container>
-void merge(Container & to, const Container & from);
-
-
-// implementation
-template<typename Container>
-void append(Container & to, const Container & from) {
-  to.insert(to.end(), from.begin(), from.end());
-}
+void append(Container & to, const Container & from) {to.insert(to.end(), from.begin(), from.end());}
 
 template<typename Container>
 bool disjoint(const Container & X, const Container & Y) {
   for(const auto & elX : X) {
     if(is_in(elX, Y)) {
-      return false; // TODO effectiveness
+      return false; // TODO efficiency
     }
   }
   return true;
 }
 
 template<typename Container>
-void erase_index(Container & container, size_t ind) {
-  container.erase(container.begin() + ind);
-}
+void erase_index(Container & container, size_t ind) {container.erase(container.begin() + ind);}
 
 template<typename Container>
 bool intersects(const Container & X, const Container & Y) {
   for(const auto & elX : X) {
     if(is_in(elX, Y)) {
-      return true; // TODO effectiveness
+      return true; // TODO efficiency
     }
   }
   return false;
 }
 
 template<typename Element, typename Container>
-bool is_in(const Element & element, const Container & container) {
-  return container.find(element) != container.end();
-}
+bool is_in(const Element & element, const Container & container) {return container.find(element) != container.end();}
 
 template<typename Element, typename Container>
-bool isnt_in(const Element & element, const Container & container) {
-  return container.find(element) == container.end();
-}
+bool isnt_in(const Element & element, const Container & container) {return container.find(element) == container.end();}
 
 template<typename Container>
-void merge(Container & to, const Container & from) {
-  to.insert(from.begin(), from.end());
-}
+void merge(Container & to, const Container & from) {to.insert(from.begin(), from.end());}
 
 } // namespace utils
 } // namespace pm

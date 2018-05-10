@@ -41,13 +41,15 @@ grammar::Grammar Grammar::interpret(InterpretInfo & ii) const {
     g.set_main(ii.actions.at(main_.val()));
   }
   if(main_data_.nonempty()) {
-    g.set_main_data(ii.data.add(main_data_.val()));
+    g.set_main_data(ii.data.insert(main_data_.val()));
   }
   if(skip_.nonempty()) {
     g.set_skip(skip_.val());
   }
   return g;
 }
+
+regexp::Regexp Grammar::interpret_as_regexp() const {return regexp::Regexp(new grammar::Grammar(interpret()));}
 
 } // namespace syntax
 } // namespace grammar

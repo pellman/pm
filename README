@@ -1,0 +1,134 @@
+You are reading README for the library pm, version 2.1.ru.0.
+
+Deabbreviation of the library name: puzzling modules.
+
+"ru" in the version means that the documentation (except this README) is in Russian. (!!!)
+
+Pm is a C++ library (standard 11).
+
+The library is distributed under GNU GPLv3 license.
+The license text is placed in the file LICENSE in this folder.
+
+
+= Prerequisites =
+
+Library itself, obligatory:
+- C++ compiler compliant with C++11 standard (or greater).
+ - Not necesarrily fully compliant.
+ - E.g., gcc 4.8.5 is okay, though it is not fully compliant with C++11.
+ - Earlier gcc versions are not really tested: if it compiles, it works.
+
+Library itself, optional:
+- "cmake" tool, version: at least 3.1.
+ - The library build is much easier with cmake.
+
+Documentation:
+- "doxygen" utility.
+- "dot" utility (for graph generation in doxygen).
+ - Those who are familiar with doxygen may eliminate "dot": disable graph generation in the configuration files "Doxyfile" and "doxygen_layout.xml" located in this folder.
+
+
+= Build instructions =
+
+== Library, with cmake ==
+
+The instruction was tested for
+- cmake 3.5.1,
+- cmake 3.5.2,
+- gcc/g++ 4.5.8,
+- gcc/g++ 5.4.0.
+
+According to "cmake" documentation, the earliest acceptable version of "cmake" utility is 3.1.
+
+=== For those familiar with cmake ===
+
+The build in a usual way without any complications and tricks.
+The main cmake-file is located in this folder.
+The targets are:
+- "pm"
+ - The whole library.
+- "grammar": module for grammars, and all dependencies:
+ - Currently this module plus all dependencies equals the whole library.
+- "regexp": module for regular expressions, and all dependencies:
+ - Module for ungettable streams.
+ - Module for arbitrary data.
+- "dataset": module for arbitrary data sets, and all dependencies:
+ - Module for arbirary data.
+- "stream": module for ungettable streams.
+- "type_abuse": module for arbitrary data.
+
+One more module not mentioned in the list is the utility module.
+This module is header-only, no build is needed.
+
+=== For those not familiar with cmake ===
+
+Step-by-step instruction for Linux terminal (<root> is this folder):
+- change to this folder
+    cd <root>
+- create "build" subfolder, if not created
+    mkdir build
+- change to the created subfolder
+    cd build
+- generate cmake-files
+    cmake ..
+- build the library (target "pm")
+    make
+- if absolutely necessary, build a certain target (see previous subsection for target details)
+    make pm
+    make grammar
+    make regexp
+    make dataset
+    make stream
+    make type_abuse
+- hopefully, no errors are generated - in this case use the static library file <root>/build/lib<имя_собранной_цели>.a
+
+== Library, without cmake (compiler-only) ==
+
+To build the library, follow any instructions on how to create a library in your operating system with your compiler (<root> is this folder):
+- Do not forget an option to enable C++11 standard.
+ - (gcc) "-std=c++11".
+- Do not forget to tell the compiler that a library (or an object file) is to be built.
+ - (gcc+Linux) "-c" to build object files, and another command - "ar" - to archive object files into a library.
+- Do not forget to tell the compiler where the library headers are located.
+ - They are located in "<root>/include".
+ - (gcc) "-I<root>/include" .
+- Feed all ".cpp"-files located in the subfolder "src" to the compiler.
+
+== Documentation ==
+
+<root> is this folder.
+
+=== For those familiar with doxygen ===
+
+Run "docygen" utility from this folder, and feed the configuration file "Doxyfile".
+According to "Doxyfile", files located in "<root>/src" and "<root>/doc" are to be searched recursively.
+
+By default, the documentation is to be built in the subfolder "<root>/build/doc".
+Create the subfolder, or at least "<root>/build", if it does not exist - otherwise "doxygen" may fail, being unable to create the subfolder.
+
+To change predefined "doxygen" build configuration, change the files "Doxyfile" (main configuration) and "doxygen_layout.xml" (page layout configuration) located in this folder.
+
+=== For those not familiar with doxygen ===
+
+Step-by-step instruction for Linux terminal:
+- change to this folder
+    cd <root>
+- create "build" subfolder, if not created
+    mkdir build
+- run doxygen, and feed the "Doxyfile" configuration
+    doxygen Doxyfile
+- hopefully, no errors are generated - in this case open the file "<root>/build/doc/html/index.html" in any standard browser
+
+
+= Source files =
+
+This folder (<root>) contains:
+- "README" file - a brief information about the library (this file).
+- "README_ru" file - the same information in Russian.
+- "LICENSE" file - a GNU GPLv3 full text.
+- "CMakeLists.txt" file - the main cmake-file to build the library with "cmake".
+- "Doxyfile" file - the main build configuration for "doxygen".
+- "doxygen_layout.xml" file - the page layout configuration for "doxygen".
+- "include" subfolder - all library header are located here.
+- "src" subfolder - all compilable library files are located here.
+- "doc" subfolder - all documentation source files are located here.

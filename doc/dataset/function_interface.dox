@@ -1,0 +1,47 @@
+/*! \file include/pm/dataset/function_interface.hpp
+ *  \brief Содержит интерфейс применения \ref pm::dataset::Function "функции над совокупностью данных" к совокупности данных pm::dataset::FunctionInterface.
+ *  \ingroup ModuleDataset
+ */
+
+/*! \class pm::dataset::FunctionInterface
+ *  \brief Класс интерфейса применения \ref pm::dataset::Function "функции над совокупностью данных" к совокупности данных.
+ *  \ingroup ModuleDataset
+ *  
+ *  Содержит *метод применения* функции к совокупности данных, принимающий на вход \ref pm::dataset::Set "совокупность данных" и изменяющий данные совокупности согласно заданному *действию*.
+ *  
+ *  Неявные методы
+ *  ==
+ *  
+ *  Конструктор по умолчанию: `FunctionInterface()`
+ *  --
+ *  
+ *  Тривиальная инициализация (нечего инициализировать).
+ *  
+ *  Конструктор копирования: `FunctionInterface(const FunctionInterface &)`
+ *  --
+ *  
+ *  Тривиальное копирование (нечего копировать).
+ *  
+ *  Конструктор перемещения: `FunctionInterface(FunctionInterface &&)`
+ *  --
+ *  
+ *  Тривиальное перемещение (нечего перемещать).
+ *  
+ *  Копирующее присваивание: `FunctionInterface & operator =(const FunctionInterface &)`
+ *  --
+ *  
+ *  Тривиальное присваивание (нечего присваивать).
+ *  
+ *  Перемещающее присваивание: `FunctionInterface & operator =(FunctionInterface &&)`
+ *  --
+ *  
+ *  Тривиальное присваивание (нечего присваивать).
+ */
+
+/*! \fn virtual pm::dataset::FunctionInterface::~FunctionInterface()
+ *  \brief Виртуальный деструктор. Перегружается производным классом при наследовании.
+ */
+
+/*! \fn virtual void pm::dataset::FunctionInterface::apply(const Set & s) const
+ *  \brief Метод применения к совокупности данных. Пока не перегружен, действие тривиально: совокупность не изменяется.
+ */

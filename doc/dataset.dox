@@ -1,0 +1,4 @@
+/*! \file include/pm/dataset.hpp
+ *  \brief Подключает всё, что относится к \ref GICDataset "модулю совокупностей данных".
+ *  \ingroup ModuleDataset
+ */

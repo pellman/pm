@@ -1,0 +1,26 @@
+/*! \file include/pm/grammar/syntax/actions/function.hpp
+ *  \brief Содержит интерфейс создания определения грамматического действия \ref PGFunction "функции над совокупностью данных".
+ *  \ingroup ModuleGrammar
+ *  \anchor PGDFunction
+ *  
+ *  Определение функции над совокупностью данных - это \ref pm::grammar::syntax::Action "определение грамматического действия", устроенно так:
+ *  - Оно содержит \ref pm::dataset::syntax::Function "определение функции над совокупностью данных" \p f.
+ *  - \ref pm::grammar::syntax::Grammar "Результат интерпретации": действие \ref PGFunction "функции над совокупностью данных", содержащее \ref pm::dataset::Function "функцию над совокупностью данных", являющуюся \ref pm::dataset::syntax::FunctionInterface "результатом интерпретации" определения \p f на \ref pm::dataset::syntax::Set "определении совокупности данных" \f$ \varphi_d \f$, определяемом \ref pm::grammar::syntax::Grammar "способом интерпретации определения грамматики".
+ *  
+ *  Описанное определение возвращается вызовом функции или оператора интерфейса.
+ *  
+ *  \sa \ref PGList "Список готовых грамматических действий и их определений"
+ *  \sa \ref PDatasetFunction "Список готовых функций над совокупностью данных и их определений"
+ */
+
+/*! \fn Action pm::grammar::syntax::ac(const dataset::syntax::Function & f)
+ */
+
+/*! \fn Action pm::grammar::syntax::ac(dataset::syntax::Function && f)
+ */
+
+/*! \fn grammar::syntax::Action pm::dataset::syntax::operator +(const Function & f)
+ */
+
+/*! \fn grammar::syntax::Action pm::dataset::syntax::operator +(Function && f)
+ */

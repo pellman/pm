@@ -37,7 +37,7 @@ public:
   Rule(const std::list<size_t> & indexes);
   Rule(std::list<size_t> && indexes);
   // PRESERVING METHODS
-  bool gamatch_full(stream::Stream & s, const Grammar & g, const Context & gcontext) const override;
+  bool gamatch(stream::Stream & s, const Grammar & g, const Context & gcontext) const override;
   
 private:
   // FIELDS
@@ -51,18 +51,19 @@ Rule::Rule(const std::list<size_t> & indexes)
 Rule::Rule(std::list<size_t> && indexes)
   : indexes_(std::move(indexes)) {}
 
-bool Rule::gamatch_full(stream::Stream & s, const Grammar & g, const Context & gcontext) const {
+bool Rule::gamatch(stream::Stream & s, const Grammar & g, const Context & gcontext) const {
   Context aux_context = gcontext;
-  aux_context.castr.detach_unset(true);
+  aux_context.p_string_flag.detach_set(true);
+  aux_context.p_string.detach_unset();
   bool res = true;
   for(const auto & a : indexes_) {
-    if(!g.action(a).gamatch_full(s, g, aux_context)) {
+    if(!g.action(a).gamatch(s, g, aux_context)) {
       res = false;
       break;
     }
   }
   if(res) {
-    if(gcontext.castr.active()) {
+    if(gcontext.string_flag()) {
       gcontext.str() += std::move(aux_context.str());
     }
   }

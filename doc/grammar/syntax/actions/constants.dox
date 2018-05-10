@@ -1,0 +1,22 @@
+/*! \file include/pm/grammar/syntax/actions/constants.hpp
+ *  \brief Содержит интерфейс создания определений грамматических действий \ref PGFail "неуспеха" и \ref PGSuccess "успеха".
+ *  \ingroup ModuleGrammar
+ *  
+ *  В документации описывается \ref pm::grammar::syntax::Grammar "результат интерпретации" \ref pm::grammar::syntax::Action "определения грамматического действия", возвращаемого в качестве результата вызова функции интерфейса.
+ *  
+ *  \sa \ref PGList "Список готовых грамматических действий и их определений"
+ */
+
+/*! \fn Action pm::grammar::syntax::ac_false()
+ *  \brief Определение неуспеха.
+ *  \anchor PGDFail
+ *  
+ *  Результат интерпретации: \ref PGFail "неуспех".
+ */
+
+/*! \fn Action pm::grammar::syntax::ac_true()
+ *  \brief Определение успеха.
+ *  \anchor PGDSuccess
+ *  
+ *  Результат интерпретации: \ref PGSuccess "успех".
+ */

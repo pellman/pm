@@ -49,7 +49,7 @@ public:
   inline void unget(char c);
   inline void unget(const std::string & s);
   // ACCESS METHODS
-  inline bool finished() const;
+  inline bool empty();
 
 private:
   // FIELDS
@@ -79,7 +79,20 @@ void Stream::unget(char c) {buffer_.push(c);}
 
 void Stream::unget(const std::string & s) {buffer_.push(s);}
 
-bool Stream::finished() const {return buffer_.empty() && !stream_.good();}
+bool Stream::empty() {
+  if(!buffer_.empty()) {
+    return false;
+  }
+  if(!stream_.good()) {
+    return true;
+  }
+  char c;
+  if(!stream_.get(c).good()) {
+    return true;
+  }
+  unget(c);
+  return false;
+}
 
 } // namespace stream
 } // namespace pm

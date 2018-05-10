@@ -36,7 +36,7 @@ public:
   Function(const dataset::Function & f);
   Function(dataset::Function && f);
   // PRESERVING METHODS
-  bool gamatch_full(stream::Stream & s, const Grammar & g, const Context & gcontext) const override;
+  bool gamatch(stream::Stream & s, const Grammar & g, const Context & gcontext) const override;
   
 private:
   // FIELDS
@@ -50,9 +50,9 @@ Function::Function(const dataset::Function & f)
 Function::Function(dataset::Function && f)
   : f_(std::move(f)) {}
 
-bool Function::gamatch_full(stream::Stream &, const Grammar &, const Context & gcontext) const {
-  if(gcontext.cadataset.active()) {
-    f_.apply(gcontext.cadataset.cds);
+bool Function::gamatch(stream::Stream &, const Grammar &, const Context & gcontext) const {
+  if(gcontext.data_flag()) {
+    f_.apply(gcontext.dataset);
   }
   return true;
 }

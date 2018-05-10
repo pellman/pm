@@ -1,0 +1,80 @@
+/*! \file include/pm/grammar/syntax/actions/fail_function.hpp
+ *  \brief Содержит интерфейс создания определения грамматического действия \ref PGFailFunction "перенаправления с откатом".
+ *  \ingroup ModuleGrammar
+ *  \anchor PGDFailFunction
+ *  
+ *  Определение перенаправления с откатом - это \ref pm::grammar::syntax::Action "определение грамматического действия", устроенное так:
+ *  - Оно содержит *подопределение*: определение грамматического действия \f$ D \f$.
+ *  - Оно содержит \ref pm::dataset::syntax::Function "определение функции над совокупностью данных" \p f.
+ *  - \ref pm::grammar::syntax::Grammar "Результат интерпретации": \ref PGFailFunction "перенаправление с откатом", содержащее индекс \f$ \varphi_i(D) \f$ и \ref pm::dataset::Function "функцию над совокупностью данных", являющуюся \ref pm::dataset::syntax::FunctionInterface "результатом интерпретации" определения \p f на \ref pm::dataset::syntax::Set "определении совокупности данных" \f$ \varphi_d \f$.
+ *   - Отображения \f$ \varphi_i \f$ и \f$ \varphi_d \f$ определяются \ref pm::grammar::syntax::Grammar "способом интерпретации определения грамматики".
+ *  
+ *  В документации интерфейса приводится описание подопределения, содержащегося в определении перенаправления с откатом, возвращаемого функцией или оператором интерфейса.
+ *  
+ *  \sa \ref PGList "Список готовых грамматических действий и их определений"
+ *  \sa \ref PDatasetFunction "Список готовых функций над совокупностью данных и их определений"
+ */
+
+/*! \fn Action pm::grammar::syntax::ac(const Action & a, const dataset::syntax::Function & f)
+ *  \brief Подопределение: \p a.
+ */
+
+/*! \fn Action pm::grammar::syntax::ac(const Action & a, dataset::syntax::Function && f)
+ *  \brief Подопределение: \p a.
+ */
+
+/*! \fn Action pm::grammar::syntax::ac(Action && a, const dataset::syntax::Function & f)
+ *  \brief Подопределение: \p a.
+ */
+
+/*! \fn Action pm::grammar::syntax::ac(Action && a, dataset::syntax::Function && f)
+ *  \brief Подопределение: \p a.
+ */
+
+/*! \fn Action pm::grammar::syntax::operator -(const Action & a, const dataset::syntax::Function & f)
+ *  \brief Подопределение: \p a.
+ */
+
+/*! \fn Action pm::grammar::syntax::operator -(const Action & a, dataset::syntax::Function && f)
+ *  \brief Подопределение: \p a.
+ */
+
+/*! \fn Action pm::grammar::syntax::operator -(Action && a, const dataset::syntax::Function & f)
+ *  \brief Подопределение: \p a.
+ */
+
+/*! \fn Action pm::grammar::syntax::operator -(Action && a, dataset::syntax::Function && f)
+ *  \brief Подопределение: \p a.
+ */
+
+/*! \fn grammar::syntax::Action pm::dataset::syntax::operator -(const std::string & a, const dataset::syntax::Function & f)
+ *  \brief Подопределение: \ref PGDRedirect "определение перенаправления" на имя \p a.
+ */
+
+/*! \fn grammar::syntax::Action pm::dataset::syntax::operator -(const std::string & a, dataset::syntax::Function && f)
+ *  \brief Подопределение: \ref PGDRedirect "определение перенаправления" на имя \p a.
+ */
+
+/*! \fn grammar::syntax::Action pm::dataset::syntax::operator -(std::string && a, const dataset::syntax::Function & f)
+ *  \brief Подопределение: \ref PGDRedirect "определение перенаправления" на имя \p a.
+ */
+
+/*! \fn grammar::syntax::Action pm::dataset::syntax::operator -(std::string && a, dataset::syntax::Function && f)
+ *  \brief Подопределение: \ref PGDRedirect "определение перенаправления" на имя \p a.
+ */
+
+/*! \fn grammar::syntax::Action pm::dataset::syntax::operator -(const regexp::Regexp & a, const dataset::syntax::Function & f)
+ *  \brief Подопределение: \ref PGDRe "определение регулярного выражения" \p a без данных.
+ */
+
+/*! \fn grammar::syntax::Action pm::dataset::syntax::operator -(const regexp::Regexp & a, dataset::syntax::Function && f)
+ *  \brief Подопределение: \ref PGDRe "определение регулярного выражения" \p a без данных.
+ */
+
+/*! \fn grammar::syntax::Action pm::dataset::syntax::operator -(regexp::Regexp && a, const dataset::syntax::Function & f)
+ *  \brief Подопределение: \ref PGDRe "определение регулярного выражения" \p a без данных.
+ */
+
+/*! \fn grammar::syntax::Action pm::dataset::syntax::operator -(regexp::Regexp && a, dataset::syntax::Function && f)
+ *  \brief Подопределение: \ref PGDRe "определение регулярного выражения" \p a без данных.
+ */

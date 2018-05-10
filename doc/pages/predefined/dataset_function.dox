@@ -1,0 +1,69 @@
+/*! \page PDatasetFunction Готовые функции над совокупностью данных
+ *  
+ *  \tableofcontents
+ *  
+ *  \ref pm::dataset::Function "Что такое функция над совокупностью данных."
+ *  
+ *  \ref pm::dataset::syntax::Function "Что такое определение функции над совокупностью данных."
+ *  
+ *  Все функции над совокупностью данных, которые можно создать документированным способом (*готовые* функции) явно или через определения, подключаются \ref include/pm/dataset/functions.hpp "этим файлом".
+ *  
+ *  Все определения готовых функций над совокупностью данных подключаются \ref include/pm/dataset/syntax/functions.hpp "этим файлом".
+ *  
+ *  \section PDGeneral Общие функции
+ *  
+ *  Подключаются \ref include/pm/dataset/functions/general.hpp "этим файлом".
+ *  
+ *  Определения подключаются \ref include/pm/dataset/syntax/functions/general.hpp "этим файлом".
+ *  
+ *  Общая функция устроена так:
+ *  - Она содержит:
+ *   - *подфункцию*: \ref GNNDataFunction "функцию над данными";
+ *   - *целевые индексы*: упорядоченный набор \ref GNSTypes "индексов".
+ *  - \ref pm::dataset::FunctionInterface "Действие": подфункция применяется к набору \ref GNNData "данных" \ref pm::dataset::Set "ds[[i1]], ..., ds[[in]]" соответственно, где:
+ *   - `ds` - \ref pm::dataset::Set "совокупность данных", к которой применяется действие;
+ *   - ``i1, ..., in` - целевые индексы.
+ *  
+ *  Общие функции различаются видом содержащейся подфункции.
+ *  
+ *  - \ref PDTrivial "Тривиальная функция"; \ref PDDTrivial "определение"
+ *  - \ref PDPure "Чистая функция"; \ref PDDPure "определение"
+ *  - \ref PDRef "Ссылочная функция"; \ref PDDRef "определение"
+ *  - \ref PDRen "Переустанавливающая функция"; \ref PDDRen "определение"
+ *  - \ref PDRet "Устанавливающая функция"; \ref PDDRet "определение"
+ *  
+ *  \section PDLComposition Композиция функций
+ *  
+ *  Подключается \ref include/pm/dataset/functions/composition.hpp "этим файлом".
+ *  
+ *  Определение подключается \ref include/pm/dataset/syntax/functions/composition.hpp "этим файлом".
+ *  
+ *  Содержит упорядоченный набор подфункций.
+ *  \ref pm::dataset::FunctionInterface "Действие" - это последовательное выполнение действий подфункций.
+ *  
+ *  \section PDSpecific Специальные функции
+ *  
+ *  Подключаются \ref include/pm/dataset/functions/specific.hpp "этим файлом".
+ *  
+ *  Определения подключаются \ref include/pm/dataset/syntax/functions/specific.hpp "этим файлом".
+ *  
+ *  \ref pm::dataset::FunctionInterface "Действие" - это заданное простое для понимания преобразование \ref GNNData "данных" \ref pm::dataset::Set "совокупности" по \ref pm::type_abuse::DPtr "указателям" с заданными \ref GNSTypes "индексами".
+ *  
+ *  - \ref PDClone "Перезапись одних данных другими"; \ref PDDClone "определение"
+ *  - \ref PDSet "Переустановка данных"; \ref PDDSet "определение"
+ *  - \ref PDSwap "Обмен данных"; \ref PDDSwap "определение"
+ *  - \ref PDUnset "Сброс данных"; \ref PDDUnset "определение"
+ *  - \ref PDAdd "Прибавление одних данных к другим"; \ref PDDAdd "определение"
+ *  - \ref PDAddConstant "Прибавление константы к данным"; \ref PDDAddConstant "определение"
+ *  - \ref PDDiv "Деление одних данных на другие"; \ref PDDDiv "определение"
+ *  - \ref PDDivConstant "Деление данных на константу"; \ref PDDDivConstant "определение"
+ *  - \ref PDMod "Взятие остатка от деления одних данных на другие"; \ref PDDMod "определение"
+ *  - \ref PDModConstant "Взятие остатка от деления данных на константу"; \ref PDDModConstant "определение"
+ *  - \ref PDMul "Умножение одних данных на другие"; \ref PDDMul "определение"
+ *  - \ref PDMulConstant "Умножение данных на константу"; \ref PDDMulConstant "определение"
+ *  - \ref PDSub "Вычитание одних данных из других"; \ref PDDSub "определение"
+ *  - \ref PDSubConstant "Вычитание константы из данных"; \ref PDDSubConstant "определение"
+ *  - \ref PDCharToDigit "Преобразование символа цифры в число"; \ref PDDCharToDigit "определение"
+ *  - \ref PDCharToString "Преобразование символа в строку"; \ref PDDCharToString "определение"
+ *  - \ref PDConvert "Прямое преобразование типа данных"; \ref PDDConvert "определение"
+ */

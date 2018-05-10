@@ -20,8 +20,14 @@
 #ifndef __PM_GRAMMAR_SYNTAX_ACTIONS_HPP
 #define __PM_GRAMMAR_SYNTAX_ACTIONS_HPP
 
-#include "pm/grammar/syntax/actions/base.hpp"
-#include "pm/grammar/syntax/actions/lazy.hpp"
-#include "pm/grammar/syntax/actions/operators.hpp"
+#include "pm/grammar/syntax/actions/alternative.hpp"
+#include "pm/grammar/syntax/actions/constants.hpp"
+#include "pm/grammar/syntax/actions/function.hpp"
+#include "pm/grammar/syntax/actions/fail_function.hpp"
+#include "pm/grammar/syntax/actions/optional.hpp"
+#include "pm/grammar/syntax/actions/redirect.hpp"
+#include "pm/grammar/syntax/actions/regexp.hpp"
+#include "pm/grammar/syntax/actions/rule.hpp"
+#include "pm/grammar/syntax/actions/star.hpp"
 
 #endif

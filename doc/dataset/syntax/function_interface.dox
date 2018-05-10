@@ -1,0 +1,54 @@
+/*! \file include/pm/dataset/syntax/function_interface.hpp
+ *  \brief Содержит интерфейс интерпретации \ref pm::dataset::syntax::Function "определения функции над совокупностью данных" pm::dataset::syntax::FunctionInterface.
+ *  \ingroup ModuleDataset
+ */
+
+/*! \class pm::dataset::syntax::FunctionInterface
+ *  \brief Класс интерфейса интерпретации \ref pm::dataset::syntax::Function "определения функции над совокупностью данных".
+ *  \ingroup ModuleDataset
+ *  
+ *  Содержит *метод интерпретации* определения, работающий так:
+ *  - На вход поступает \ref pm::dataset::syntax::Set "определение совокупности данных" ds.
+ *  - В ds добавляются все имена, *содержащиеся* в определении функции.
+ *  - Возвращается \ref pm::dataset::Function "функция над совокупностью данных", являющаяся *результатом интерпретации* определения функции на обработанном определении совокупности ds.
+ *  
+ *  То, какие имена содержатся в определении функции над совокупностью данных, определяется в документации каждого конкретного определения.
+ *  
+ *  \sa \ref PDatasetFunction "Список готовых функций над совокупностью данных и их определений"
+ *  
+ *  Неявные методы
+ *  ==
+ *  
+ *  Конструктор по умолчанию: `FunctionInterface()`
+ *  --
+ *  
+ *  Тривиальная инициализация (нечего инициализировать).
+ *  
+ *  Конструктор копирования: `FunctionInterface(const FunctionInterface &)`
+ *  --
+ *  
+ *  Тривиальное копирование (нечего копировать).
+ *  
+ *  Конструктор перемещения: `FunctionInterface(FunctionInterface &&)`
+ *  --
+ *  
+ *  Тривиальное перемещение (нечего перемещать).
+ *  
+ *  Копирующее присваивание: `FunctionInterface & operator =(const FunctionInterface &)`
+ *  --
+ *  
+ *  Тривиальное присваивание (нечего присваивать).
+ *  
+ *  Перемещающее присваивание: `FunctionInterface & operator =(FunctionInterface &&)`
+ *  --
+ *  
+ *  Тривиальное присваивание (нечего присваивать).
+ */
+
+/*! \fn virtual pm::dataset::syntax::FunctionInterface::~FunctionInterface()
+ *  \brief Виртуальный деструктор. Перегружается производным классом при наследовании.
+ */
+
+/*! \fn virtual Function pm::dataset::syntax::FunctionInterface::interpret(Set &) const
+ *  \brief Метод интерпретации определения. Пока не перегружен, возвращает \ref PDTrivial "тривиальную функцию".
+ */

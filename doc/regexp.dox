@@ -1,0 +1,4 @@
+/*! \file include/pm/regexp.hpp
+ *  \brief Подключает всё, что относится к \ref GICGrammar "модулю регулярных выражений".
+ *  \ingroup ModuleRegexp
+ */

@@ -47,7 +47,7 @@ Set Set::clone() const {
   return res;
 }
 
-const type_abuse::DPtr & Set::data(size_t i) const {
+const type_abuse::DPtr & Set::ptr(size_t i) const {
   if(ptr_.val().size() <= i) resize_(i+1);
   return ptr_.val()[i];
 }

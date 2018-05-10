@@ -1,0 +1,107 @@
+/*! \file include/pm/dataset/syntax/functions/general.hpp
+ *  \brief Содержит интерфейс создания определений \ref PDGeneral "общих функций над совокупностью данных".
+ *  \ingroup ModuleDataset
+ *  
+ *  Вызовом функции интерфейса возвращается \ref pm::dataset::syntax::Function "определение функции над совокупностью данных" следующего вида:
+ *  - Оно содержит:
+ *   - *подфункцию*: \ref GNNDataFunction "функцию над данными";
+ *   - *целевые имена*: упорядоченный набор \ref GNSTypes "строк" (имён данных).
+ *  - \ref pm::dataset::syntax::FunctionInterface "Результат интерпретации": \ref PDGeneral "общая функция над данными", содержащая ту же подфункцию и целевые индексы \f$ \varphi(name_1), \dots, \varphi(name_k) \f$, где:
+ *   - \f$ name_1, \dots, name_k \f$ - целевые имена определения;
+ *   - \f$ \varphi \f$ - \ref pm::dataset::syntax::Set "определение совокупности данных" после добавления всех целевых имён в \ref pm::dataset::syntax::FunctionInterface "методе интерпретации".
+ *  
+ *  \pre Количество целевых имён равно местности подфункции.
+ *  
+ *  \sa \ref PDatasetFunction "Список готовых функций над совокупностью данных и их определений"
+ */
+
+/*! \name Определение тривиальной функции
+ *  \anchor PDDTrivial
+ *  Подфункция: тривиальная 0-местная функция над данными (при применении ничего не происходит).
+ *  
+ *  Целевые имена: отсутствуют.
+ */
+//!\{
+
+/*! \fn Function pm::dataset::syntax::dfun()
+ */
+
+//!\}
+
+/*! \name Определение чистой функции
+ *  \anchor PDDPure
+ *  Подфункция: \ref GNDFPure "чистая" функция над данными, задаваемая функцией \p f.
+ *  
+ *  Целевые имена: \p names.
+ *  
+ *  \pre \p names - последовательность строк, разделённых запятой - столько, какова местность подфункции.
+ */
+//!\{
+
+  /*! \fn Function pm::dataset::syntax::dfun(Fun && f, Names && ... names)
+   */
+
+//!\}
+
+/*! \name Определение ссылочной функции
+ *  \anchor PDDRef
+ *  Подфункция: \ref GNDFRef "ссылочная" функция над данными, задаваемая функцией \p f.
+ *  
+ *  Целевые имена: \p names.
+ *  
+ *  \pre \p names - последовательность строк, разделённых запятой - столько, какова местность подфункции.
+ */
+//!\{
+
+  /*! \fn Function pm::dataset::syntax::dref(const std::function<void(Args ...)> & f, Names && ... names)
+   */
+
+  /*! \fn Function pm::dataset::syntax::dref(std::function<void(Args ...)> && f, Names && ... names)
+   */
+
+  /*! \fn Function pm::dataset::syntax::dgref(Any (*f)(Args ...), Names && ... names)
+   */
+
+//!\}
+
+/*! \name Определение переустанавливающей функции
+ *  \anchor PDDRen
+ *  Подфункция: \ref GNDFRen "переустанавливающая" функция над данными, задаваемая функцией \p f.
+ *  
+ *  Целевые имена: \p names.
+ *  
+ *  \pre \p names - последовательность строк, разделённых запятой - столько, какова местность подфункции.
+ */
+//!\{
+
+  /*! \fn Function pm::dataset::syntax::dren(const std::function<Ret(Args ...)> & f, Names && ... names)
+   */
+
+  /*! \fn Function pm::dataset::syntax::dren(std::function<Ret(Args ...)> && f, Names && ... names)
+   */
+
+  /*! \fn Function pm::dataset::syntax::dgren(Ret (*f)(Args ...), Names && ... names)
+   */
+
+//!\}
+
+/*! \name Определение устанавливающей функции
+ *  \anchor PDDRet
+ *  Подфункция: \ref GNDFRet "устанавливающая" функция над данными, задаваемая функцией \p f.
+ *  
+ *  Целевые имена: \p names.
+ *  
+ *  \pre \p names - последовательность строк, разделённых запятой - столько, какова местность подфункции.
+ */
+//!\{
+
+  /*! \fn Function pm::dataset::syntax::dret(const std::function<Ret(Args ...)> & f, Names && ... names)
+   */
+
+  /*! \fn Function pm::dataset::syntax::dret(std::function<Ret(Args ...)> && f, Names && ... names)
+   */
+
+  /*! \fn Function pm::dataset::syntax::dgret(Ret (*f)(Args ...), Names && ... names)
+   */
+
+//!\}

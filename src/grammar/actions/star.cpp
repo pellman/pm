@@ -35,7 +35,7 @@ public:
   // CONSTRUCTORS
   Star(size_t index);
   // PRESERVING METHODS
-  bool gamatch_full(stream::Stream & s, const Grammar & g, const Context & gcontext) const override;
+  bool gamatch(stream::Stream & s, const Grammar & g, const Context & gcontext) const override;
   
 private:
   // FIELDS
@@ -46,8 +46,8 @@ private:
 Star::Star(size_t index)
   : index_(index) {}
 
-bool Star::gamatch_full(stream::Stream & s, const Grammar & g, const Context & gcontext) const {
-  while(g.action(index_).gamatch_full(s, g, gcontext));
+bool Star::gamatch(stream::Stream & s, const Grammar & g, const Context & gcontext) const {
+  while(g.action(index_).gamatch(s, g, gcontext));
   return true;
 }
 

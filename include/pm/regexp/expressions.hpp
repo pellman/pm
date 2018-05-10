@@ -20,12 +20,8 @@
 #ifndef __PM_REGEXP_EXPRESSIONS_HPP
 #define __PM_REGEXP_EXPRESSIONS_HPP
 
-#include "pm/regexp/expressions/composition.hpp"
-#include "pm/regexp/expressions/functions.hpp"
-#include "pm/regexp/expressions/lazy_composition.hpp"
-#include "pm/regexp/expressions/lazy_functions.hpp"
-#include "pm/regexp/expressions/operators.hpp"
-#include "pm/regexp/expressions/terminals.hpp"
-#include "pm/regexp/expressions/typical.hpp"
+#include "pm/regexp/expressions/flow.hpp"
+#include "pm/regexp/expressions/functional.hpp"
+#include "pm/regexp/expressions/terminal.hpp"
 
 #endif

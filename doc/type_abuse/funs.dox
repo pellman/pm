@@ -1,0 +1,265 @@
+/*! \file include/pm/type_abuse/funs.hpp
+ *  \brief Содержит типы функциональных объектов, задающих одноместные и двуместные \ref GNDFPure "чистые" \ref GNNDataFunction "функции над данными": pm::type_abuse::UnFun, pm::type_abuse::BinFun - и глобальные функции, возвращающие полезные примеры таких объектов.
+ *  \ingroup ModuleTypeAbuse
+ *  
+ *  *Действие*, приводящееся в описании документируемой глобальной функции - это действие, производимое \ref GNDFPure "чистой" \ref GNNDataFunction "функцией над данными", задаваемой возвращаемым функциональным объектом при применении его к
+ *  - \ref pm::type_abuse::DPtr "данным" d для pm::type_abuse::UnFun;
+ *  - \ref pm::type_abuse::DPtr "данным" d1, d2 для pm::type_abuse::BinFun.
+ *  
+ *  В документации используется терминология, введённая для \ref GNNData "данных".
+ */
+
+/*! \typedef std::function<void(const DPtr &, const DPtr &)> pm::type_abuse::BinFun
+ *  \brief Тип функциональных объектов, задающих двуместные чистые функции над данными.
+ *  \ingroup ModuleTypeAbuse
+ */
+
+/*! \typedef std::function<void(const DPtr &)> pm::type_abuse::UnFun
+ *  \brief Тип функциональных объектов, задающих одноместные чистые функции над данными.
+ *  \ingroup ModuleTypeAbuse
+ */
+
+/*! \fn BinFun pm::type_abuse::funs::clone()
+ *  \brief Действие: перезаписать данные d1 данными d2.
+ *  
+ *  \pre Если данные d2 непусты в момент выполнения действия, то тип этих данных \ref GNSLifetime "копируем".
+ */
+
+/*! \fn BinFun pm::type_abuse::funs::swap()
+ *  \brief Действие: обменять данные d1 и d2.
+ */
+
+/*! \fn UnFun pm::type_abuse::funs::unset()
+ *  \brief Действие: сбросить данные d.
+ */
+
+/*! \fn UnFun pm::type_abuse::funs::set(Args && ... args)
+ *  \brief Действие: установить в данные d значение типа \p T от аргументов \p args.
+ *  
+ *  \pre Тип \p T \ref GNSLifetime "инициализируем" от аргументов \p args.
+ */
+
+/*! \fn BinFun pm::type_abuse::funs::add()
+ *  \brief Действие: выполнить присваивание d1 += d2.
+ *  
+ *  \pre Данные d1 в момент выполнения действия непусты и имеют тип \p Left.
+ *  \pre Данные d2 в момент выполнения действия непусты и имеют тип \p Right.
+ *  \pre Выполняемое присваивание корректно для типов \p Left и \p Right.
+ */
+
+/*! \fn UnFun pm::type_abuse::funs::add(Right && i)
+ *  \brief Действие: выполнить присваивание d += i.
+ *  
+ *  \pre Данные d в момент выполнения действия непусты и имеют тип \p Left.
+ *  \pre Выполняемое присваивание корректно для типов \p Left и \p Right.
+ *  \pre Если в качестве аргумента подаётся lvalue-значение, то тип \p Right \ref GNSLifetime "копируем", а если rvalue-значение, то \ref GNSLifetime "перемещаем".
+ */
+
+/*! \fn BinFun pm::type_abuse::funs::div()
+ *  \brief Действие: выполнить присваивание d1 /= d2.
+ *  
+ *  \pre Данные d1 в момент выполнения действия непусты и имеют тип \p Left.
+ *  \pre Данные d2 в момент выполнения действия непусты и имеют тип \p Right.
+ *  \pre Выполняемое присваивание корректно для типов \p Left и \p Right.
+ */
+
+/*! \fn UnFun pm::type_abuse::funs::div(Right && i)
+ *  \brief Действие: выполнить присваивание d /= i.
+ *  
+ *  \pre Данные d в момент выполнения действия непусты и имеют тип \p Left.
+ *  \pre Выполняемое присваивание корректно для типов \p Left и \p Right.
+ *  \pre Если в качестве аргумента подаётся lvalue-значение, то тип \p Right \ref GNSLifetime "копируем", а если rvalue-значение, то \ref GNSLifetime "перемещаем".
+ */
+
+/*! \fn BinFun pm::type_abuse::funs::mod()
+ *  \brief Действие: выполнить присваивание d1 %= d2.
+ *  
+ *  \pre Данные d1 в момент выполнения действия непусты и имеют тип \p Left.
+ *  \pre Данные d2 в момент выполнения действия непусты и имеют тип \p Right.
+ *  \pre Выполняемое присваивание корректно для типов \p Left и \p Right.
+ */
+
+/*! \fn UnFun pm::type_abuse::funs::mod(Right && i)
+ *  \brief Действие: выполнить присваивание d %= i.
+ *  
+ *  \pre Данные d в момент выполнения действия непусты и имеют тип \p Left.
+ *  \pre Выполняемое присваивание корректно для типов \p Left и \p Right.
+ *  \pre Если в качестве аргумента подаётся lvalue-значение, то тип \p Right \ref GNSLifetime "копируем", а если rvalue-значение, то \ref GNSLifetime "перемещаем".
+ */
+
+/*! \fn BinFun pm::type_abuse::funs::mul()
+ *  \brief Действие: выполнить присваивание d1 *= d2.
+ *  
+ *  \pre Данные d1 в момент выполнения действия непусты и имеют тип \p Left.
+ *  \pre Данные d2 в момент выполнения действия непусты и имеют тип \p Right.
+ *  \pre Выполняемое присваивание корректно для типов \p Left и \p Right.
+ */
+
+/*! \fn UnFun pm::type_abuse::funs::mul(Right && i)
+ *  \brief Действие: выполнить присваивание d *= i.
+ *  
+ *  \pre Данные d в момент выполнения действия непусты и имеют тип \p Left.
+ *  \pre Выполняемое присваивание корректно для типов \p Left и \p Right.
+ *  \pre Если в качестве аргумента подаётся lvalue-значение, то тип \p Right \ref GNSLifetime "копируем", а если rvalue-значение, то \ref GNSLifetime "перемещаем".
+ */
+
+/*! \fn BinFun pm::type_abuse::funs::sub()
+ *  \brief Действие: выполнить присваивание d1 /= d2.
+ *  
+ *  \pre Данные d1 в момент выполнения действия непусты и имеют тип \p Left.
+ *  \pre Данные d2 в момент выполнения действия непусты и имеют тип \p Right.
+ *  \pre Выполняемое присваивание корректно для типов \p Left и \p Right.
+ */
+
+/*! \fn UnFun pm::type_abuse::funs::sub(Right && i)
+ *  \brief Действие: выполнить присваивание d -= i.
+ *  
+ *  \pre Данные d в момент выполнения действия непусты и имеют тип \p Left.
+ *  \pre Выполняемое присваивание корректно для типов \p Left и \p Right.
+ *  \pre Если в качестве аргумента подаётся lvalue-значение, то тип \p Right \ref GNSLifetime "копируем", а если rvalue-значение, то \ref GNSLifetime "перемещаем".
+ */
+
+/*! \fn UnFun pm::type_abuse::funs::convert()
+ *  \brief Действие: установить в данные d значение типа \p To от аргумента d (как rvalue).
+ *  
+ *  \pre Данные d в момент выполнения действия непусты и имеют тип \p From.
+ *  \pre Тип \p To \ref GNSLifetime "инициализируем" от значения типа \p From.
+ */
+
+/*! \fn UnFun pm::type_abuse::funs::char_to_digit()
+ *  \brief Действие: установить в данные d значение типа \p Int от аргумента (d - '0').
+ *  
+ *  \pre Данные d в момент выполнения действия непусты и имеют тип char.
+ *  \pre Тип \p Int \ref GNSLifetime "инициализируем" от значения типа char.
+ */
+
+/*! \fn UnFun pm::type_abuse::funs::char_to_string()
+ *  \brief Действие: установить в данные d значение типа std::string от аргументов 1, d.
+ *  
+ *  std::string(1, c) - это строка длины 1, содержащая единственный символ c.
+ *  
+ *  \pre Данные d в момент выполнения действия непусты и имеют тип char.
+ */
+
+/*! \fn BinFun pm::type_abuse::funs::bref(const std::function<void(Arg1, Arg2)> & f)
+ *  \brief Действие: применить к d1, d2 \ref GNDFRef "ссылочную функцию над данными", задаваемую функцией \p f.
+ *  
+ *  \pre Данные d1 в момент выполнения действия непусты и имеют тип, равный \ref GNSQualifiers "основе" типа \p Arg1.
+ *  \pre Данные d2 в момент выполнения действия непусты и имеют тип, равный \ref GNSQualifiers "основе" типа \p Arg2.
+ */
+
+/*! \fn BinFun pm::type_abuse::funs::bref(std::function<void(Arg1, Arg2)> && f)
+ *  \brief Действие: применить к d1, d2 \ref GNDFRef "ссылочную функцию над данными", задаваемую функцией \p f.
+ *  
+ *  \pre Данные d1 в момент выполнения действия непусты и имеют тип, равный \ref GNSQualifiers "основе" типа \p Arg1.
+ *  \pre Данные d2 в момент выполнения действия непусты и имеют тип, равный \ref GNSQualifiers "основе" типа \p Arg2.
+ */
+
+/*! \fn BinFun pm::type_abuse::funs::bren(const std::function<Ret(Arg1, Arg2)> & f)
+ *  \brief Действие: применить к d1, d2 \ref GNDFRen "переустанавливающую функцию над данными", задаваемую функцией \p f.
+ *  
+ *  \pre Данные d1 в момент выполнения действия непусты и имеют тип, равный \ref GNSQualifiers "основе" типа \p Arg1.
+ *  \pre Данные d2 в момент выполнения действия непусты и имеют тип, равный \ref GNSQualifiers "основе" типа \p Arg2.
+ *  \pre \ref GNSQualifiers "Основа" типа \p Ret \ref GNSLifetime "перемещаема" и \ref GNSLifetime "уничтожаема".
+ */
+
+/*! \fn BinFun pm::type_abuse::funs::bren(std::function<Ret(Arg1, Arg2)> && f)
+ *  \brief Действие: применить к d1, d2 \ref GNDFRen "переустанавливающую функцию над данными", задаваемую функцией \p f.
+ *  
+ *  \pre Данные d1 в момент выполнения действия непусты и имеют тип, равный \ref GNSQualifiers "основе" типа \p Arg1.
+ *  \pre Данные d2 в момент выполнения действия непусты и имеют тип, равный \ref GNSQualifiers "основе" типа \p Arg2.
+ *  \pre \ref GNSQualifiers "Основа" типа \p Ret \ref GNSLifetime "перемещаема" и \ref GNSLifetime "уничтожаема".
+ */
+
+/*! \fn BinFun pm::type_abuse::funs::bret(const std::function<Ret(Arg)> & f)
+ *  \brief Действие: применить к d1, d2 \ref GNDFRet "устанавливающую функцию над данными", задаваемую функцией \p f.
+ *  
+ *  \pre Данные d2 в момент выполнения действия непусты и имеют тип, равный \ref GNSQualifiers "основе" типа \p Arg.
+ *  \pre \ref GNSQualifiers "Основа" типа \p Ret \ref GNSLifetime "перемещаема" и \ref GNSLifetime "уничтожаема".
+ */
+
+/*! \fn BinFun pm::type_abuse::funs::bret(std::function<Ret(Arg)> && f)
+ *  \brief Действие: применить к d1, d2 \ref GNDFRet "устанавливающую функцию над данными", задаваемую функцией \p f.
+ *  
+ *  \pre Данные d2 в момент выполнения действия непусты и имеют тип, равный \ref GNSQualifiers "основе" типа \p Arg.
+ *  \pre \ref GNSQualifiers "Основа" типа \p Ret \ref GNSLifetime "перемещаема" и \ref GNSLifetime "уничтожаема".
+ */
+
+/*! \fn UnFun pm::type_abuse::funs::uref(const std::function<void(Arg)> & f)
+ *  \brief Действие: применить к d \ref GNDFRef "ссылочную функцию над данными", задаваемую функцией \p f.
+ *  
+ *  \pre Данные d в момент выполнения действия непусты и имеют тип, равный \ref GNSQualifiers "основе" типа \p Arg.
+ */
+
+/*! \fn UnFun pm::type_abuse::funs::uref(std::function<void(Arg)> && f)
+ *  \brief Действие: применить к d \ref GNDFRef "ссылочную функцию над данными", задаваемую функцией \p f.
+ *  
+ *  \pre Данные d в момент выполнения действия непусты и имеют тип, равный \ref GNSQualifiers "основе" типа \p Arg.
+ */
+
+/*! \fn UnFun pm::type_abuse::funs::uren(const std::function<Ret(Arg)> & f)
+ *  \brief Действие: применить к d \ref GNDFRen "переустанавливающую функцию над данными", задаваемую функцией \p f.
+ *  
+ *  \pre Данные d в момент выполнения действия непусты и имеют тип, равный \ref GNSQualifiers "основе" типа \p Arg.
+ *  \pre \ref GNSQualifiers "Основа" типа \p Ret \ref GNSLifetime "перемещаема" и \ref GNSLifetime "уничтожаема".
+ */
+
+/*! \fn UnFun pm::type_abuse::funs::uren(std::function<Ret(Arg)> && f)
+ *  \brief Действие: применить к d \ref GNDFRen "переустанавливающую функцию над данными", задаваемую функцией \p f.
+ *  
+ *  \pre Данные d в момент выполнения действия непусты и имеют тип, равный \ref GNSQualifiers "основе" типа \p Arg.
+ *  \pre \ref GNSQualifiers "Основа" типа \p Ret \ref GNSLifetime "перемещаема" и \ref GNSLifetime "уничтожаема".
+ */
+
+/*! \fn UnFun pm::type_abuse::funs::uret(const std::function<Ret()> & f)
+ *  \brief Действие: применить к d \ref GNDFRet "устанавливающую функцию над данными", задаваемую функцией \p f.
+ *  
+ *  \pre \ref GNSQualifiers "Основа" типа \p Ret \ref GNSLifetime "перемещаема" и \ref GNSLifetime "уничтожаема".
+ */
+
+/*! \fn UnFun pm::type_abuse::funs::uret(std::function<Ret()> && f)
+ *  \brief Действие: применить к d \ref GNDFRet "устанавливающую функцию над данными", задаваемую функцией \p f.
+ *  
+ *  \pre \ref GNSQualifiers "Основа" типа \p Ret \ref GNSLifetime "перемещаема" и \ref GNSLifetime "уничтожаема".
+ */
+
+/*! \fn BinFun pm::type_abuse::funs::ref(AnyRet (*f)(Arg1, Arg2))
+ *  \brief Действие: применить к d1, d2 \ref GNDFRef "ссылочную функцию над данными", задаваемую функцией \p f.
+ *  
+ *  \pre Данные d1 в момент выполнения действия непусты и имеют тип, равный \ref GNSQualifiers "основе" типа \p Arg1.
+ *  \pre Данные d2 в момент выполнения действия непусты и имеют тип, равный \ref GNSQualifiers "основе" типа \p Arg2.
+ */
+
+/*! \fn UnFun pm::type_abuse::funs::ref(AnyRet (*f)(Arg))
+ *  \brief Действие: применить к d \ref GNDFRef "ссылочную функцию над данными", задаваемую функцией \p f.
+ *  
+ *  \pre Данные d в момент выполнения действия непусты и имеют тип, равный \ref GNSQualifiers "основе" типа \p Arg.
+ */
+
+/*! \fn BinFun pm::type_abuse::funs::ren(Ret (*f)(Arg1, Arg2))
+ *  \brief Действие: применить к d1, d2 \ref GNDFRen "переустанавливающую функцию над данными", задаваемую функцией \p f.
+ *  
+ *  \pre Данные d1 в момент выполнения действия непусты и имеют тип, равный \ref GNSQualifiers "основе" типа \p Arg1.
+ *  \pre Данные d2 в момент выполнения действия непусты и имеют тип, равный \ref GNSQualifiers "основе" типа \p Arg2.
+ *  \pre \ref GNSQualifiers "Основа" типа \p Ret \ref GNSLifetime "перемещаема" и \ref GNSLifetime "уничтожаема".
+ */
+
+/*! \fn UnFun pm::type_abuse::funs::ren(Ret (*f)(Arg))
+ *  \brief Действие: применить к d \ref GNDFRen "переустанавливающую функцию над данными", задаваемую функцией \p f.
+ *  
+ *  \pre Данные d в момент выполнения действия непусты и имеют тип, равный \ref GNSQualifiers "основе" типа \p Arg.
+ *  \pre \ref GNSQualifiers "Основа" типа \p Ret \ref GNSLifetime "перемещаема" и \ref GNSLifetime "уничтожаема".
+ */
+
+/*! \fn BinFun pm::type_abuse::funs::ret(Ret (*f)(Arg))
+ *  \brief Действие: применить к d1, d2 \ref GNDFRet "устанавливающую функцию над данными", задаваемую функцией \p f.
+ *  
+ *  \pre Данные d2 в момент выполнения действия непусты и имеют тип, равный \ref GNSQualifiers "основе" типа \p Arg.
+ *  \pre \ref GNSQualifiers "Основа" типа \p Ret \ref GNSLifetime "перемещаема" и \ref GNSLifetime "уничтожаема".
+ */
+
+/*! \fn UnFun pm::type_abuse::funs::ret(Ret (*f)())
+ *  \brief Действие: применить к d \ref GNDFRet "устанавливающую функцию над данными", задаваемую функцией \p f.
+ *  
+ *  \pre \ref GNSQualifiers "Основа" типа \p Ret \ref GNSLifetime "перемещаема" и \ref GNSLifetime "уничтожаема".
+ */

@@ -37,7 +37,7 @@ public:
   Alternative(const std::list<size_t> & indexes);
   Alternative(std::list<size_t> && indexes);
   // PRESERVING METHODS
-  bool gamatch_full(stream::Stream & s, const Grammar & g, const Context & gcontext) const override;
+  bool gamatch(stream::Stream & s, const Grammar & g, const Context & gcontext) const override;
   
 private:
   // FIELDS
@@ -51,9 +51,9 @@ Alternative::Alternative(const std::list<size_t> & indexes)
 Alternative::Alternative(std::list<size_t> && indexes)
   : indexes_(std::move(indexes)) {}
 
-bool Alternative::gamatch_full(stream::Stream & s, const Grammar & g, const Context & gcontext) const {
+bool Alternative::gamatch(stream::Stream & s, const Grammar & g, const Context & gcontext) const {
   for(const auto & a : indexes_) {
-    if(g.action(a).gamatch_full(s, g, gcontext)) {
+    if(g.action(a).gamatch(s, g, gcontext)) {
       return true;
     }
   }

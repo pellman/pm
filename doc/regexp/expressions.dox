@@ -1,0 +1,4 @@
+/*! \file include/pm/regexp/expressions.hpp
+ *  \brief Подключает весь интерфейс создания \ref PRList "готовых регулярных выражений".
+ *  \ingroup ModuleRegexp
+ */

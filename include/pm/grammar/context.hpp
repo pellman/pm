@@ -21,8 +21,11 @@
 #define __PM_GRAMMAR_CONTEXT_HPP
 
 #include <cstddef>
-#include "pm/regexp/subcontext/astring.hpp"
-#include "pm/grammar/subcontext/adataset.hpp"
+#include <string>
+#include "pm/dataset/set.hpp"
+#include "pm/regexp/subcontext/activator.hpp"
+#include "pm/type_abuse/dptr.hpp"
+#include "pm/type_abuse/sptr.hpp"
 
 namespace pm {
 namespace grammar {
@@ -30,80 +33,51 @@ namespace grammar {
 class Context {
 public:
   // ALTERING METHODS
-  inline void detach();
-  inline void detach_receive(const Context & gcontext);
+  void detach();
+  void detach_receive(const Context & gcontext);
+  void detach_unset();
   // PRESERVING METHODS
   // = alter subcontexts =
-  inline void activate() const;
-  inline void deactivate() const;
-  inline void receive(const Context & gcontext) const;
-  inline void swap(const Context & gcontext) const;
+  void receive(const Context & gcontext) const;
+  void swap(const Context & gcontext) const;
+  void unset() const;
   // = preserve subcontexts =
   inline Context clone() const;
-  inline void send(const Context & gcontext) const;
+  void send(const Context & gcontext) const;
   // ACCESS METHODS
-  inline bool active() const;
-  inline const type_abuse::DPtr & data(size_t i) const;
-  inline bool inactive() const;
+  // = flags =
+  inline bool & data_flag() const;
+  inline bool & string_flag() const;
+  // = data =
+  template<typename T>
+  T & data(size_t i) const;
+  inline const type_abuse::DPtr & ptr(size_t i) const;
   inline std::string & str() const;
-  template<typename StoredType>
-  StoredType & val(size_t i) const;
   // FIELDS
-  regexp::subcontext::AString castr;
-  subcontext::ADataSet cadataset;
+  // = flags =
+  regexp::subcontext::Activator p_data_flag;
+  regexp::subcontext::Activator p_string_flag;
+  // = data =
+  dataset::Set dataset;
+  type_abuse::SPtr<std::string> p_string;
 };
 
-extern Context default_context;
+extern Context default_context; // TODO: should be "const", but cannot be due to defects of earlier C++ standard versions; defects were fixed, but still persists in commonly-used versions of clang
 
 
 // implementation
-void Context::detach() {
-  castr.detach();
-  cadataset.detach();
-}
+Context Context::clone() const {return {p_data_flag.clone(), p_string_flag.clone(), dataset.clone(), p_string.clone()};}
 
-void Context::detach_receive(const Context & gcontext) {
-  castr.detach_receive(gcontext.castr);
-  cadataset.detach_receive(gcontext.cadataset);
-}
+bool & Context::data_flag() const {return p_data_flag.val();}
 
-void Context::activate() const {
-  castr.activate();
-  cadataset.activate();
-}
+bool & Context::string_flag() const {return p_string_flag.val();}
 
-void Context::deactivate() const {
-  castr.deactivate();
-  cadataset.deactivate();
-}
+template<typename T>
+T & Context::data(size_t i) const {return dataset.data<T>(i);}
 
-void Context::receive(const Context & gcontext) const {
-  castr.receive(gcontext.castr);
-  cadataset.receive(gcontext.cadataset);
-}
+const type_abuse::DPtr & Context::ptr(size_t i) const {return dataset.ptr(i);}
 
-void Context::swap(const Context & gcontext) const {
-  castr.swap(gcontext.castr);
-  cadataset.swap(gcontext.cadataset);
-}
-
-Context Context::clone() const {return {castr.clone(), cadataset.clone()};}
-
-void Context::send(const Context & gcontext) const {
-  castr.send(gcontext.castr);
-  cadataset.send(gcontext.cadataset);
-}
-
-bool Context::active() const {return castr.active() || cadataset.active();}
-
-const type_abuse::DPtr & Context::data(size_t i) const {return cadataset.data(i);}
-
-bool Context::inactive() const {return castr.inactive() && cadataset.inactive();}
-
-std::string & Context::str() const {return castr.str();}
-
-template<typename StoredType>
-StoredType & Context::val(size_t i) const {return cadataset.val<StoredType>(i);}
+std::string & Context::str() const {return p_string.val();}
 
 } // namespace grammar
 } // namespace pm

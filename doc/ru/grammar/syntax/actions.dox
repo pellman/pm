@@ -1,5 +1,0 @@
-/*! \file include/pm/grammar/syntax/actions.hpp
- *  \brief Подключает целиком интерфейс создания \ref ConGrammar "готовых определений грамматических действий".
- *  
- *  \ingroup ModuleGrammar
- */

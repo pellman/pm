@@ -1,0 +1,66 @@
+/*! \file include/pm/grammar/syntax/actions/regexp.hpp
+ *  \brief Содержит интерфейс создания определений грамматических действий \ref PGRe "регулярного выражения без данных" и \ref PGReData "регулярного выражения с данными".
+ *  \ingroup ModuleGrammar
+ *  
+ *  \sa \ref PRList "Список готовых регулярных выражений"
+ *  \sa \ref PGList "Список готовых грамматических действий и их определений"
+ */
+
+/*! \name Определение регулярного выражения без данных
+ *  \anchor PGDRe
+ *  Определение регулярного выражения без данных - это \ref pm::grammar::syntax::Action "определение грамматического действия", устроенное так:
+ *  - Оно содержит \ref pm::regexp::Regexp "регулярное выражение" \p r.
+ *  - \ref pm::grammar::syntax::Grammar "Результат интерпретации": \ref PGRe "регулярное выражение" \p r без данных.
+ *  
+ *  Описанное определение возвращается вызовом функции интерфейса.
+ *  
+ *  \pre \p r - \ref PRSafety "безопасное" регулярное выражение.
+ */
+//!\{
+
+/*! \fn Action pm::grammar::syntax::ac(const regexp::Regexp & r)
+ */
+
+/*! \fn Action pm::grammar::syntax::ac(regexp::Regexp && r)
+ */
+
+//!\}
+
+/*! \name Определение регулярного выражения с данными
+ *  \anchor PGDReData
+ *  Определение регулярного выражения с данными - это \ref pm::grammar::syntax::Action "определение грамматического действия", устроенное так:
+ *  - Оно содержит \ref pm::regexp::Regexp "регулярное выражение" \p r.
+ *  - Оно содержит имя данных \p data_name: \ref GNSTypes "строку".
+ *  - \ref pm::grammar::syntax::Grammar "Результат интерпретации": \ref PGReData "регулярное выражение" \p r с данными по индексу \f$ \varphi_d(data\_name) \f$, где \f$ \varphi_d \f$ - отображение имён данных в индексы, определяемое \ref pm::grammar::syntax::Grammar "способом интерпретации определения грамматики".
+ *  
+ *  Описанное определение возвращается вызовом функции или оператора интерфейса.
+ *  
+ *  \pre \p r - \ref PRSafety "безопасное" регулярное выражение.
+ */
+//!\{
+
+/*! \fn Action pm::grammar::syntax::ac(const regexp::Regexp & r, const std::string & data_name)
+ */
+
+/*! \fn Action pm::grammar::syntax::ac(const regexp::Regexp & r, std::string && data_name)
+ */
+
+/*! \fn Action pm::grammar::syntax::ac(regexp::Regexp && r, const std::string & data_name)
+ */
+
+/*! \fn Action pm::grammar::syntax::ac(regexp::Regexp && r, std::string && data_name)
+ */
+
+/*! \fn grammar::syntax::Action pm::regexp::operator >>(const Regexp & r, const std::string & data_name)
+ */
+
+/*! \fn grammar::syntax::Action pm::regexp::operator >>(const Regexp & r, std::string && data_name)
+ */
+
+/*! \fn grammar::syntax::Action pm::regexp::operator >>(Regexp && r, const std::string & data_name)
+ */
+
+/*! \fn grammar::syntax::Action pm::regexp::operator >>(Regexp && r, std::string && data_name)
+ */
+
+//!\}

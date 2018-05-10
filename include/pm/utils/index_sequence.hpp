@@ -26,7 +26,7 @@ namespace pm {
 namespace utils {
 
 // USAGE
-//   SeqGen<N> equals to the type IndSeq<0, 1, 2, ..., N-1> - use default object of this type as a template function parameter to deduce index sequence "0, 1, 2, ..., N-1" for sequential unpacking
+//   SeqGen<N> equals to the type IndSeq<0, 1, 2, ..., N-1> - use a default object of this type as a template function parameter to deduce index sequence "0, 1, 2, ..., N-1" in a parameter pack expansion
 
 template<size_t ... indexes>
 struct IndSeq {};

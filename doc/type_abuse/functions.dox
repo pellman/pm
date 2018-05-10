@@ -1,0 +1,84 @@
+/*! \file include/pm/type_abuse/functions.hpp
+ *  \brief Содержит несколько полезных одноместных и двуместных глобальных функций, делающих работу с \ref pm::type_abuse::DPtr "указателями на данные" более наглядной.
+ *  \ingroup ModuleTypeAbuse
+ *  
+ *  В документации функций
+ *  - описывается результат выполнения вызова этих функций;
+ *  - используется терминология, введённая для \ref GNNData "данных", \ref GNNTrickyPointer "хитрых указателей" в целом и \ref pm::type_abuse::DPtr "указателей на данные" в частности.
+ */
+
+/*! \fn void pm::type_abuse::clone(const DPtr & ptr1, const DPtr & ptr2)
+ *  \brief Перезаписать данные \<\p ptr1\> данными \<\p ptr2\>.
+ *  
+ *  \pre Если данные \<\p ptr2\> в момент вызова непусты, то тип этих данных \ref GNSLifetime "копируем".
+ */
+
+/*! \fn void pm::type_abuse::swap(const DPtr & ptr1, const DPtr & ptr2)
+ *  \brief Обменять данные \<\p ptr1\> и \<\p ptr2\>.
+ */
+
+/*! \fn void pm::type_abuse::unset(const DPtr & ptr)
+ *  \brief Сбросить данные \<\p ptr\>.
+ */
+
+/*! \fn void pm::type_abuse::add(const DPtr & ptr1, const DPtr & ptr2)
+ *  \brief Выполнить присваивание \<ptr1\> += \<ptr2\>.
+ *  
+ *  \pre Данные \<\p ptr1\> в момент вызова непусты и имеют тип \p Left.
+ *  \pre Данные \<\p ptr2\> в момент вызова непусты и имеют тип \p Right.
+ *  \pre Выполняемое присваивание корректно для типов \p Left, \p Right.
+ */
+
+/*! \fn void pm::type_abuse::div(const DPtr & ptr1, const DPtr & ptr2)
+ *  \brief Выполнить присваивание \<ptr1\> /= \<ptr2\>.
+ *  
+ *  \pre Данные \<\p ptr1\> в момент вызова непусты и имеют тип \p Left.
+ *  \pre Данные \<\p ptr2\> в момент вызова непусты и имеют тип \p Right.
+ *  \pre Выполняемое присваивание корректно для типов \p Left, \p Right.
+ */
+
+/*! \fn void pm::type_abuse::mod(const DPtr & ptr1, const DPtr & ptr2)
+ *  \brief Выполнить присваивание \<ptr1\> %= \<ptr2\>.
+ *  
+ *  \pre Данные \<\p ptr1\> в момент вызова непусты и имеют тип \p Left.
+ *  \pre Данные \<\p ptr2\> в момент вызова непусты и имеют тип \p Right.
+ *  \pre Выполняемое присваивание корректно для типов \p Left, \p Right.
+ */
+
+/*! \fn void pm::type_abuse::mul(const DPtr & ptr1, const DPtr & ptr2)
+ *  \brief Выполнить присваивание \<ptr1\> *= \<ptr2\>.
+ *  
+ *  \pre Данные \<\p ptr1\> в момент вызова непусты и имеют тип \p Left.
+ *  \pre Данные \<\p ptr2\> в момент вызова непусты и имеют тип \p Right.
+ *  \pre Выполняемое присваивание корректно для типов \p Left, \p Right.
+ */
+
+/*! \fn void pm::type_abuse::sub(const DPtr & ptr1, const DPtr & ptr2)
+ *  \brief Выполнить присваивание \<ptr1\> -= \<ptr2\>.
+ *  
+ *  \pre Данные \<\p ptr1\> в момент вызова непусты и имеют тип \p Left.
+ *  \pre Данные \<\p ptr2\> в момент вызова непусты и имеют тип \p Right.
+ *  \pre Выполняемое присваивание корректно для типов \p Left, \p Right.
+ */
+
+/*! \fn void pm::type_abuse::convert(const DPtr & ptr)
+ *  \brief Установить в \<ptr\> значение типа \p To от аргумента \<ptr\> (как rvalue).
+ *  
+ *  \pre Данные \<\p ptr\> в момент вызова непусты и имеют тип \p From.
+ *  \pre Тип \p To \ref GNSLifetime "инициализируем" от значения типа \p From.
+ */
+
+/*! \fn void pm::type_abuse::char_to_digit(const DPtr & ptr)
+ *  \brief Установить в \<\p ptr\> значение типа \p Int от аргумента (*ptr - '0').
+ *  
+ *  \pre Данные \<\p ptr\> в момент вызова непусты и имеют тип char.
+ *  \pre Тип \p Int \ref GNSLifetime "инициализируем" от значения типа char.
+ */
+
+/*! \fn void pm::type_abuse::char_to_string(const DPtr & ptr)
+ *  \brief Установить в \<\p ptr\> значение типа std::string от аргументов 1, \<ptr\>.
+ *  
+ *  std::string(1, c) - это строка длины 1, содержащая единственный символ c.
+ *  
+ *  \pre Данные \<\p ptr\> в момент вызова непусты и имеют тип char.
+ */

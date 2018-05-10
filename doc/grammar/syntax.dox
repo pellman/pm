@@ -1,0 +1,4 @@
+/*! \file include/pm/grammar/syntax.hpp
+ *  \brief Подключает класс определения грамматики pm::grammar::syntax::Grammar, класс определения грамматического действия pm::grammar::syntax::Action, интерфейс создания \ref PGList "определений готовых грамматических действий" и другие вспомогательные классы.
+ *  \ingroup ModuleGrammar
+ */

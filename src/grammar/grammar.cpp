@@ -47,13 +47,13 @@ bool Grammar::gmatch(const std::string & s, const Context & gcontext) const {
 }
 
 bool Grammar::match_full(stream::Stream & s, const regexp::Context & context) const {
-  Context gcontext{context.castr, {context.cadata.cact}};
-  if(context.cadata.active()) {
-    gcontext.data(main_data()).receive(context.data());
+  Context gcontext{context.p_data_flag, context.p_string_flag, {}, context.p_string};
+  if(context.data_flag()) {
+    gcontext.ptr(main_data()).receive(context.p_current_data);
   }
   bool res = gmatch_full(s, gcontext);
-  if(res && context.cadata.active()) {
-    context.data().swap(gcontext.data(main_data()));
+  if(res && context.data_flag()) {
+    context.p_current_data.swap(gcontext.ptr(main_data()));
   }
   return res;
 }

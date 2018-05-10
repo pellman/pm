@@ -1,5 +1,0 @@
-/*! \file include/pm/dataset/syntax.hpp
- *  \brief Подключает класс \ref ConDataset "определения совокупности" pm::dataset::syntax::Set и весь интерфейс создания \ref ConDataset "опеределений функций над совокупностью".
- *  
- *  \ingroup ModuleDataset
- */

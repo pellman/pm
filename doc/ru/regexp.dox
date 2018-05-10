@@ -1,4 +1,0 @@
-/*! \file include/pm/regexp.hpp
- *  \brief Подключает реализацию \ref ConRegexp "регулярного контекста, регулярного выражения и готовых регулярных выражений".
- *  \ingroup ModuleRegexp
- */

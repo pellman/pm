@@ -1,0 +1,51 @@
+/*! \file include/pm/grammar/action_interface.hpp
+ *  \brief Содержит класс интерфейса грамматического действия pm::grammar::ActionInterface.
+ *  \ingroup ModuleGrammar
+ */
+
+/*! \class pm::grammar::ActionInterface
+ *  \brief Класс интерфейса грамматического действия.
+ *  \ingroup ModuleGrammar
+ *  
+ *  Содержит виртуальный *метод разбора грамматическим действием* - вариацию \ref GNNParsing "процедуры разбора", принимающую на вход \ref pm::stream::Stream "буферизованный поток", \ref pm::grammar::Grammar "грамматику" и \ref pm::grammar::Context "грамматический контекст разбора" и возвращающую итог разбора.
+ *  
+ *  Метод разбора перегружается производными классами.
+ *  
+ *  Пока не перегружен, метод разбора немедленно завершает работу и возвращает неуспех.
+ *  
+ *  Неявные методы
+ *  ==
+ *  
+ *  Конструктор по умолчанию: `ActionInterface()`
+ *  --
+ *  
+ *  Тривиальная инициализация (нечего инициализировать).
+ *  
+ *  Конструктор копирования: `ActionInterface(const ActionInterface & r)`
+ *  --
+ *  
+ *  Тривиальное копирование (нечего копировать).
+ *  
+ *  Конструктор перемещения: `ActionInterface(ActionInterface && r)`
+ *  --
+ *  
+ *  Тривиальное перемещение (нечего перемещать).
+ *  
+ *  Копирующее присваивание: `ActionInterface & operator =(const ActionInterface & r)`
+ *  --
+ *  
+ *  Тривиальное присваивание (нечего присваивать).
+ *  
+ *  Перемещающее присваивание: `ActionInterface & operator =(ActionInterface && r)`
+ *  --
+ *  
+ *  Тривиальное присваивание (нечего присваивать).
+ */
+
+/*! \fn virtual pm::grammar::ActionInterface::~ActionInterface()
+ *  \brief Виртуальный деструктор. Перегружается производным классом при наследовании.
+ */
+
+/*! \fn virtual bool pm::grammar::ActionInterface::gamatch(stream::Stream & s, const Grammar & g, const Context & gcontext) const
+ *  \brief Метод разбора грамматическим действием. Перегружается производным классом при наследовании. Неперегруженный - немедленно возвращает `false` (неуспех).
+ */

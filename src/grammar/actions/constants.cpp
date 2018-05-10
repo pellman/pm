@@ -29,11 +29,11 @@ class ATrue
   : public ActionInterface {
 public:
   // PRESERVING METHODS
-  bool gamatch_full(stream::Stream & s, const Grammar & g, const Context & gcontext) const override;
+  bool gamatch(stream::Stream & s, const Grammar & g, const Context & gcontext) const override;
 };
 
 // core implementation
-bool ATrue::gamatch_full(stream::Stream &, const Grammar &, const Context &) const {return true;}
+bool ATrue::gamatch(stream::Stream &, const Grammar &, const Context &) const {return true;}
 
 } // namespace
 

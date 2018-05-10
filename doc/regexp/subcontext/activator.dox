@@ -1,0 +1,13 @@
+/*! \file include/pm/regexp/subcontext/activator.hpp
+ *  \brief Содержит класс стабильного указателя на \ref GNSTypes "флаг" активности pm::regexp::subcontext::Activator.
+ *  \ingroup ModuleRegexp
+ */
+
+/*! \class pm::regexp::subcontext::Activator
+ *  \brief Класс стабильного указателя на \ref GNSTypes "флаг" активности.
+ *  \ingroup ModuleRegexp
+ *  
+ *  Отличия от базового класса pm::type_abuse::SPtr<bool>:
+ *  - Конструкторы, инициализирующие копией и перемещением объекта, заменены конструктором, инициализирующим от значения типа bool.
+ *  - Значение данных по умолчанию: false (опущенный флаг).
+ */

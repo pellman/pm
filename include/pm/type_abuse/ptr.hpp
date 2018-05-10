@@ -41,14 +41,14 @@ public:
   void detach();
   void detach_own(Base * ptr);
   void detach_receive(const Ptr<Base> & ptr);
-  template<typename NewStoredType = Base, typename ... Args>
+  template<typename T = Base, typename ... Args>
   void detach_set(Args && ... args);
   void detach_unset();
   // PRESERVING METHODS
   // = alter pointed object =
   void own(Base * ptr) const;
   void receive(const Ptr<Base> & ptr) const;
-  template<typename NewStoredType = Base, typename ... Args>
+  template<typename T = Base, typename ... Args>
   void set(Args && ... args) const;
   void swap(const Ptr<Base> & ptr) const;
   void swap(std::unique_ptr<Base> & ptr) const;
@@ -61,8 +61,8 @@ public:
   Base * get() const;
   Base * get_copy() const;
   bool nonempty() const;
-  template<typename StoredType = Base>
-  StoredType & val() const;
+  template<typename T = Base>
+  T & val() const;
 
 private:
   // METHODS
@@ -71,8 +71,8 @@ private:
   std::shared_ptr<std::unique_ptr<Base>> ptr_;
 };
 
-template<typename Base, typename StoredType = Base, typename ... Args>
-Ptr<Base> make_ptr(Args && ... args) {return new StoredType(std::forward<Args>(args) ...);}
+template<typename Base, typename T = Base, typename ... Args>
+Ptr<Base> make_ptr(Args && ... args) {return new T(std::forward<Args>(args) ...);}
 
 
 // implementation
@@ -110,8 +110,8 @@ template<typename Base>
 Ptr<Base>::operator bool() const {return nonempty();}
 
 template<typename Base>
-template<typename NewStoredType, typename ... Args>
-void Ptr<Base>::detach_set(Args && ... args) {detach_own(new NewStoredType(std::forward<Args>(args) ...));}
+template<typename T, typename ... Args>
+void Ptr<Base>::detach_set(Args && ... args) {detach_own(new T(std::forward<Args>(args) ...));}
 
 template<typename Base>
 void Ptr<Base>::detach_unset() {ptr_.reset(new std::unique_ptr<Base>());}
@@ -130,8 +130,8 @@ void Ptr<Base>::receive(const Ptr<Base> & ptr) const {
 }
 
 template<typename Base>
-template<typename NewStoredType, typename ... Args>
-void Ptr<Base>::set(Args && ... args) const {own(new NewStoredType(std::forward<Args>(args) ...));}
+template<typename T, typename ... Args>
+void Ptr<Base>::set(Args && ... args) const {own(new T(std::forward<Args>(args) ...));}
 
 template<typename Base>
 void Ptr<Base>::swap(std::unique_ptr<Base> & ptr) const {uptr_().swap(ptr);}
@@ -161,8 +161,8 @@ template<typename Base>
 bool Ptr<Base>::nonempty() const {return static_cast<bool>(uptr_());}
 
 template<typename Base>
-template<typename StoredType>
-StoredType & Ptr<Base>::val() const {return *static_cast<StoredType *>(uptr_().get());}
+template<typename T>
+T & Ptr<Base>::val() const {return *static_cast<T *>(uptr_().get());}
 
 template<typename Base>
 std::unique_ptr<Base> & Ptr<Base>::uptr_() const {return *ptr_;}

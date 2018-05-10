@@ -20,9 +20,11 @@
 #ifndef __PM_REGEXP_CONTEXT_HPP
 #define __PM_REGEXP_CONTEXT_HPP
 
-#include <utility>
-#include "pm/regexp/subcontext/adata.hpp"
-#include "pm/regexp/subcontext/astring.hpp"
+#include <string>
+//#include <utility>
+#include "pm/regexp/subcontext/activator.hpp"
+#include "pm/type_abuse/sptr.hpp"
+#include "pm/type_abuse/dptr.hpp"
 
 namespace pm {
 namespace regexp {
@@ -30,83 +32,54 @@ namespace regexp {
 class Context {
 public:
   // ALTERING METHODS
-  inline void detach();
-  inline void detach_receive(const Context & context);
+  void detach();
+  void detach_receive(const Context & context);
+  void detach_unset();
   // PRESERVING METHODS
-  // = alter subcontexts =
-  inline void activate() const;
-  inline void deactivate() const;
-  inline void receive(const Context & context) const;
-  inline void swap(const Context & context) const;
-  // = preserve subcontexts =
+  // = alter data =
+  void receive(const Context & context) const;
+  void swap(const Context & context) const;
+  void unset() const;
+  // = preserve data =
   inline Context clone() const;
-  inline void send(const Context & context) const;
+  void send(const Context & context) const;
   // ACCESS METHODS
-  inline bool active() const;
-  inline type_abuse::DPtr & data();
-  inline const type_abuse::DPtr & data() const;
-  inline bool inactive() const;
+  // = flags =
+  inline bool & data_flag() const;
+  inline bool & string_flag() const;
+  // = generated data =
+  template<typename T>
+  T & current_data() const;
+  template<typename T>
+  T & saved_data() const;
   inline std::string & str() const;
-  template<typename StoredType>
-  StoredType & val() const;
   // FIELDS
-  subcontext::AString castr;
-  subcontext::AData cadata;
+  // = flags =
+  subcontext::Activator p_data_flag;
+  subcontext::Activator p_string_flag;
+  // = generated data =
+  type_abuse::DPtr p_current_data;
+  type_abuse::DPtr p_saved_data;
+  type_abuse::SPtr<std::string> p_string;
 };
 
-extern Context default_context;
+extern Context default_context; // TODO: should be "const", but cannot be due to defects of earlier C++ standard versions; defects were fixed, but still persist in commonly-used versions of clang
 
 
 // implementation
-void Context::detach() {
-  castr.detach();
-  cadata.detach();
-}
+Context Context::clone() const {return {p_data_flag.clone(), p_string_flag.clone(), p_current_data.clone(), p_saved_data.clone(), p_string.clone()};}
 
-void Context::detach_receive(const Context & context) {
-  castr.detach_receive(context.castr);
-  cadata.detach_receive(context.cadata);
-}
+bool & Context::data_flag() const {return p_data_flag.val();}
 
-void Context::activate() const {
-  castr.activate();
-  cadata.activate();
-}
+bool & Context::string_flag() const {return p_string_flag.val();}
 
-void Context::deactivate() const {
-  castr.deactivate();
-  cadata.deactivate();
-}
+template<typename T>
+T & Context::current_data() const {return p_current_data.val<T>();}
 
-void Context::receive(const Context & context) const {
-  castr.receive(context.castr);
-  cadata.receive(context.cadata);
-}
+template<typename T>
+T & Context::saved_data() const {return p_saved_data.val<T>();}
 
-void Context::swap(const Context & context) const {
-  castr.swap(context.castr);
-  cadata.swap(context.cadata);
-}
-
-Context Context::clone() const {return {castr.clone(), cadata.clone()};}
-
-void Context::send(const Context & context) const {
-  castr.send(context.castr);
-  cadata.send(context.cadata);
-}
-
-bool Context::active() const {return castr.active() || cadata.active();}
-
-type_abuse::DPtr & Context::data() {return cadata.data();}
-
-const type_abuse::DPtr & Context::data() const {return cadata.data();}
-
-bool Context::inactive() const {return castr.inactive() && cadata.inactive();}
-
-std::string & Context::str() const {return castr.str();}
-
-template<typename StoredType>
-StoredType & Context::val() const {return cadata.val<StoredType>();}
+std::string & Context::str() const {return p_string.val();}
 
 } // namespace regexp
 } // namespace pm

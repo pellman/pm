@@ -1,0 +1,324 @@
+/*! \file include/pm/dataset/syntax/functions/specific.hpp
+ *  \brief Содержит интерфейс создания определений \ref PDSpecific "специальных функций над совокупностью данных".
+ *  \ingroup ModuleDataset
+ *  
+ *  Вызовом функции интерфейса возвращается \ref pm::dataset::syntax::Function "определение функции над совокупностью данных" с документируемым набором содержащихся *целевых имён* (\ref GNSTypes "строк") и документируемым \ref pm::dataset::syntax::FunctionInterface "результатом интерпретации".
+ *  
+ *  В описании результата интерпретации \f$ \varphi \f$ обозначает \ref pm::dataset::syntax::Set "определение совокупности данных", получаемое после добавления всех целевых имён в \ref pm::dataset::syntax::FunctionInterface "методе интерпретации".
+ *  
+ *  \sa \ref PDatasetFunction "Список готовых функций над совокупностью данных и их определений"
+ */
+
+/*! \name Определение перезаписи одних данных другими
+ *  \anchor PDDClone
+ *  Целевые имена: \p target, \p source.
+ *  
+ *  Результат интерпретации: \ref PDClone "функция перезаписи одних данных другими" с целевыми индексами \f$ \varphi(target) \f$, \f$ \varphi(source) \f$.
+ */
+//!\{
+
+  /*! \fn Function pm::dataset::syntax::clone(const std::string & target, const std::string & source)
+   */
+
+  /*! \fn Function pm::dataset::syntax::clone(const std::string & target, std::string && source)
+   */
+
+  /*! \fn Function pm::dataset::syntax::clone(std::string && target, const std::string & source)
+   */
+
+  /*! \fn Function pm::dataset::syntax::clone(std::string && target, std::string && source)
+   */
+
+//!\}
+
+/*! \name Определение переустановки данных
+ *  \anchor PDDSet
+ *  Целевые имена: \p target.
+ *  
+ *  Результат интерпретации: \ref PDSet "функция переустановки данных", содержащая объект типа \p T, инициализированный от \p args, и целевой индекс \f$ \varphi(target) \f$.
+ */
+//!\{
+
+  /*! \fn Function pm::dataset::syntax::set(const std::string & target, Args && ... args)
+   */
+
+  /*! \fn Function pm::dataset::syntax::set(std::string && target, Args && ... args)
+   */
+
+//!\}
+
+/*! \name Определение обмена данных
+ *  \anchor PDDSwap
+ *  Целевые имена: \p target1, \p target2.
+ *  
+ *  Результат интерпретации: \ref PDSwap "функция обмена данных" с целевыми индексами \f$ \varphi(target1) \f$, \f$ \varphi(target2) \f$.
+ */
+//!\{
+
+  /*! \fn Function pm::dataset::syntax::swap(const std::string & target1, const std::string & target2)
+   */
+
+  /*! \fn Function pm::dataset::syntax::swap(const std::string & target1, std::string && target2)
+   */
+
+  /*! \fn Function pm::dataset::syntax::swap(std::string && target1, const std::string & target2)
+   */
+
+  /*! \fn Function pm::dataset::syntax::swap(std::string && target1, std::string && target2)
+   */
+
+//!\}
+
+/*! \name Определение сброса данных
+ *  \anchor PDDUnset
+ *  Целевые имена: \p target.
+ *  
+ *  Результат интерпретации: \ref PDUnset "функция сброса данных" с целевым индексом \f$ \varphi(target) \f$.
+ */
+//!\{
+
+  /*! \fn Function pm::dataset::syntax::unset(const std::string & target)
+   */
+
+  /*! \fn Function pm::dataset::syntax::unset(std::string && target)
+   */
+
+//!\}
+
+/*! \name Определение прибавления одних данных к другим
+ *  \anchor PDDAdd
+ *  Целевые имена: \p target_left, \p target_right.
+ *  
+ *  Результат интерпретации: \ref PDAdd "функция прибавления одних данных к другим" с параметрами \p Left, \p Right и целевыми индексами \f$ \varphi(target\_left) \f$, \f$ \varphi(target\_right) \f$.
+ */
+//!\{
+
+  /*! \fn Function pm::dataset::syntax::add(const std::string & target_left, const std::string & target_right)
+   */
+
+  /*! \fn Function pm::dataset::syntax::add(const std::string & target_left, std::string && target_right)
+   */
+
+  /*! \fn Function pm::dataset::syntax::add(std::string && target_left, const std::string & target_right)
+   */
+
+  /*! \fn Function pm::dataset::syntax::add(std::string && target_left, std::string && target_right)
+   */
+
+//!\}
+
+/*! \name Определение прибавления константы к данным
+ *  \anchor PDDAddConstant
+ *  Целевые имена: \p target.
+ *  
+ *  Результат интерпретации: \ref PDAddConstant "функция прибавления константы к данным" с параметрами \p Left, \p Right и целевым индексом \f$ \varphi(target) \f$.
+ */
+//!\{
+
+  /*! \fn Function pm::dataset::syntax::add(const std::string & target, Right && i)
+   */
+
+  /*! \fn Function pm::dataset::syntax::add(std::string && target, Right && i)
+   */
+
+//!\}
+
+/*! \name Определение деления одних данных на другие
+ *  \anchor PDDDiv
+ *  Целевые имена: \p target_left, \p target_right.
+ *  
+ *  Результат интерпретации: \ref PDDiv "функция деления одних данных на другие" с параметрами \p Left, \p Right и целевыми индексами \f$ \varphi(target\_left) \f$, \f$ \varphi(target\_right) \f$.
+ */
+//!\{
+
+  /*! \fn Function pm::dataset::syntax::div(const std::string & target_left, const std::string & target_right)
+   */
+
+  /*! \fn Function pm::dataset::syntax::div(const std::string & target_left, std::string && target_right)
+   */
+
+  /*! \fn Function pm::dataset::syntax::div(std::string && target_left, const std::string & target_right)
+   */
+
+  /*! \fn Function pm::dataset::syntax::div(std::string && target_left, std::string && target_right)
+   */
+
+//!\}
+
+/*! \name Определение деления данных на константу
+ *  \anchor PDDDivConstant
+ *  Целевые имена: \p target.
+ *  
+ *  Результат интерпретации: \ref PDDivConstant "функция деления данных на константу" с параметрами \p Left, \p Right и целевым индексом \f$ \varphi(target) \f$.
+ */
+//!\{
+
+  /*! \fn Function pm::dataset::syntax::div(const std::string & target, Right && i)
+   */
+
+  /*! \fn Function pm::dataset::syntax::div(std::string && target, Right && i)
+   */
+
+//!\}
+
+/*! \name Определение взятия остатка от деления одних данных на другие
+ *  \anchor PDDMod
+ *  Целевые имена: \p target_left, \p target_right.
+ *  
+ *  Результат интерпретации: \ref PDMod "функция взятия остатка от деления одних данных на другие" с параметрами \p Left, \p Right и целевыми индексами \f$ \varphi(target\_left) \f$, \f$ \varphi(target\_right) \f$.
+ */
+//!\{
+
+  /*! \fn Function pm::dataset::syntax::mod(const std::string & target_left, const std::string & target_right)
+   */
+
+  /*! \fn Function pm::dataset::syntax::mod(const std::string & target_left, std::string && target_right)
+   */
+
+  /*! \fn Function pm::dataset::syntax::mod(std::string && target_left, const std::string & target_right)
+   */
+
+  /*! \fn Function pm::dataset::syntax::mod(std::string && target_left, std::string && target_right)
+   */
+
+//!\}
+
+/*! \name Определение взятие остатка от деления данных на константу
+ *  \anchor PDDModConstant
+ *  Целевые имена: \p target.
+ *  
+ *  Результат интерпретации: \ref PDModConstant "функция взятия остатка от деления данных на константу" с параметрами \p Left, \p Right и целевым индексом \f$ \varphi(target) \f$.
+ */
+//!\{
+
+  /*! \fn Function pm::dataset::syntax::mod(const std::string & target, Right && i)
+   */
+
+  /*! \fn Function pm::dataset::syntax::mod(std::string && target, Right && i)
+   */
+
+//!\}
+
+/*! \name Определение умножения одних данных на другие
+ *  \anchor PDDMul
+ *  Целевые имена: \p target_left, \p target_right.
+ *  
+ *  Результат интерпретации: \ref PDMul "функция умножения одних данных на другие" с параметрами \p Left, \p Right и целевыми индексами \f$ \varphi(target\_left) \f$, \f$ \varphi(target\_right) \f$.
+ */
+//!\{
+
+  /*! \fn Function pm::dataset::syntax::mul(const std::string & target_left, const std::string & target_right)
+   */
+
+  /*! \fn Function pm::dataset::syntax::mul(const std::string & target_left, std::string && target_right)
+   */
+
+  /*! \fn Function pm::dataset::syntax::mul(std::string && target_left, const std::string & target_right)
+   */
+
+  /*! \fn Function pm::dataset::syntax::mul(std::string && target_left, std::string && target_right)
+   */
+
+//!\}
+
+/*! \name Определение умножения данных на константу
+ *  \anchor PDDMulConstant
+ *  Целевые имена: \p target.
+ *  
+ *  Результат интерпретации: \ref PDMulConstant "функция умножения данных на константу" с параметрами \p Left, \p Right и целевым индексом \f$ \varphi(target) \f$.
+ */
+//!\{
+
+  /*! \fn Function pm::dataset::syntax::mul(const std::string & target, Right && i)
+   */
+
+  /*! \fn Function pm::dataset::syntax::mul(std::string && target, Right && i)
+   */
+
+//!\}
+
+/*! \name Определение вычитания одних данных из других
+ *  \anchor PDDSub
+ *  Целевые имена: \p target_left, \p target_right.
+ *  
+ *  Результат интерпретации: \ref PDSub "функция вычитания одних данных из других" с параметрами \p Left, \p Right и целевыми индексами \f$ \varphi(target\_left) \f$, \f$ \varphi(target\_right) \f$.
+ */
+//!\{
+
+  /*! \fn Function pm::dataset::syntax::sub(const std::string & target_left, const std::string & target_right)
+   */
+
+  /*! \fn Function pm::dataset::syntax::sub(const std::string & target_left, std::string && target_right)
+   */
+
+  /*! \fn Function pm::dataset::syntax::sub(std::string && target_left, const std::string & target_right)
+   */
+
+  /*! \fn Function pm::dataset::syntax::sub(std::string && target_left, std::string && target_right)
+   */
+
+//!\}
+
+/*! \name Определение вычитания константы из данных
+ *  \anchor PDDSubConstant
+ *  Целевые имена: \p target.
+ *  
+ *  Результат интерпретации: \ref PDSubConstant "функция прибавления константы к данным" с параметрами \p Left, \p Right и целевым индексом \f$ \varphi(target) \f$.
+ */
+//!\{
+
+  /*! \fn Function pm::dataset::syntax::sub(const std::string & target, Right && i)
+   */
+
+  /*! \fn Function pm::dataset::syntax::sub(std::string && target, Right && i)
+   */
+
+//!\}
+
+/*! \name Определение преобразования символа цифры в число
+ *  \anchor PDDCharToDigit
+ *  Целевые имена: \p target.
+ *  
+ *  Результат интерпретации: \ref PDCharToDigit "функция преобразования символа цифры в число" с параметром \p Int и целевым индексом \f$ \varphi(target) \f$.
+ */
+//!\{
+
+  /*! \fn Function pm::dataset::syntax::char_to_digit(const std::string & target)
+   */
+
+  /*! \fn Function pm::dataset::syntax::char_to_digit(std::string && target)
+   */
+
+//!\}
+
+/*! \name Определение преобразования символа в строку
+ *  \anchor PDDCharToString
+ *  Целевые имена: \p target.
+ *  
+ *  Результат интерпретации: \ref PDCharToString "функция преобразования символа в строку" с целевым индексом \f$ \varphi(target) \f$.
+ */
+//!\{
+
+  /*! \fn Function pm::dataset::syntax::char_to_string(const std::string & target)
+   */
+
+  /*! \fn Function pm::dataset::syntax::char_to_string(std::string && target)
+   */
+
+//!\}
+
+/*! \name Определение прямого преобразования типа данных
+ *  \anchor PDDConvert
+ *  Целевые имена: \p target.
+ *  
+ *  Результат интерпретации: \ref PDConvert "функция прямого преобразования типа данных" с параметрами \p To, \p From и целевым индексом \f$ \varphi(target) \f$.
+ */
+//!\{
+
+  /*! \fn Function pm::dataset::syntax::convert(const std::string & target)
+   */
+
+  /*! \fn Function pm::dataset::syntax::convert(std::string && target)
+   */
+
+//!\}

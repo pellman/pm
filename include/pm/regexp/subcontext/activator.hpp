@@ -36,20 +36,11 @@ public:
   inline Activator(bool act);
   inline Activator(const SPtr<bool> & ptr);
   inline Activator(SPtr<bool> && ptr);
-  // ALTERING METHODS
-  inline void detach_activate();
-  inline void detach_deactivate();
+  inline Activator(bool * ptr);
+  // REDEFINED METHODS
   inline void detach_unset();
-  // PRESERVING METHODS
-  // = alter subcontexts =
-  inline void activate() const;
-  inline void deactivate() const;
   inline void unset() const;
-  // = preserve subcontexts =
   inline Activator clone() const;
-  // ACCESS METHODS
-  inline bool active() const;
-  inline bool inactive() const;
 };
 
 
@@ -66,23 +57,14 @@ Activator::Activator(const SPtr<bool> & ptr)
 Activator::Activator(SPtr<bool> && ptr)
   : type_abuse::SPtr<bool>(std::move(ptr)) {}
 
-void Activator::detach_activate() {detach_set(true);}
-
-void Activator::detach_deactivate() {detach_set(false);}
+Activator::Activator(bool * ptr)
+  : type_abuse::SPtr<bool>(ptr) {}
 
 void Activator::detach_unset() {detach_set(false);}
-
-void Activator::activate() const {val() = true;}
-
-void Activator::deactivate() const {val() = false;}
 
 void Activator::unset() const {val() = false;}
 
 Activator Activator::clone() const {return type_abuse::SPtr<bool>::clone();}
-
-bool Activator::active() const {return val();}
-
-bool Activator::inactive() const {return !val();}
 
 } // namespace subcontext
 } // namespace regexp

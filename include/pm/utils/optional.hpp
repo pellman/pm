@@ -25,22 +25,22 @@
 namespace pm {
 namespace utils {
 
-template<typename StoredType>
+template<typename T>
 class Optional {
 public:
   // DEFAULTS
   Optional();
-  Optional(const Optional<StoredType> & opt);
-  Optional(Optional<StoredType> && opt);
-  Optional<StoredType> & operator =(const Optional<StoredType> & opt);
-  Optional<StoredType> & operator =(Optional<StoredType> && opt);
+  Optional(const Optional<T> & opt);
+  Optional(Optional<T> && opt);
+  Optional<T> & operator =(const Optional<T> & opt);
+  Optional<T> & operator =(Optional<T> && opt);
   ~Optional();
   // CONSTRUCTORS
-  Optional(const StoredType & value);
-  Optional(StoredType && value);
+  Optional(const T & value);
+  Optional(T && value);
   // ASSIGNMENTS
-  Optional<StoredType> & operator =(const StoredType & value);
-  Optional<StoredType> & operator =(StoredType && value);
+  Optional<T> & operator =(const T & value);
+  Optional<T> & operator =(T && value);
   // ALTERING METHODS
   template<typename ... Args>
   void set(Args && ... args);
@@ -48,8 +48,8 @@ public:
   // ACCESS METHODS
   bool empty() const;
   bool nonempty() const;
-  StoredType & val();
-  const StoredType & val() const;
+  T & val();
+  const T & val() const;
 
 private:
   // METHODS
@@ -60,34 +60,34 @@ private:
   // FIELDS
   bool has_value_;
   union {
-    StoredType value_;
+    T value_;
   };
 };
 
 
 // implementation
-template<typename StoredType>
-Optional<StoredType>::Optional()
+template<typename T>
+Optional<T>::Optional()
   : has_value_(false) {}
 
-template<typename StoredType>
-Optional<StoredType>::Optional(const Optional<StoredType> & opt)
+template<typename T>
+Optional<T>::Optional(const Optional<T> & opt)
   : has_value_(opt.has_value_) {
   if(opt.has_value_) {
     set_(opt.value_);
   }
 }
 
-template<typename StoredType>
-Optional<StoredType>::Optional(Optional<StoredType> && opt)
+template<typename T>
+Optional<T>::Optional(Optional<T> && opt)
   : has_value_(opt.has_value_) {
   if(opt.has_value_) {
     set_(std::move(opt.value_));
   }
 }
 
-template<typename StoredType>
-Optional<StoredType> & Optional<StoredType>::operator =(const Optional<StoredType> & opt) {
+template<typename T>
+Optional<T> & Optional<T>::operator =(const Optional<T> & opt) {
   if(has_value_) {
     unset_();
   }
@@ -98,8 +98,8 @@ Optional<StoredType> & Optional<StoredType>::operator =(const Optional<StoredTyp
   return *this;
 }
 
-template<typename StoredType>
-Optional<StoredType> & Optional<StoredType>::operator =(Optional<StoredType> && opt) {
+template<typename T>
+Optional<T> & Optional<T>::operator =(Optional<T> && opt) {
   if(has_value_) {
     unset_();
   }
@@ -110,25 +110,25 @@ Optional<StoredType> & Optional<StoredType>::operator =(Optional<StoredType> && 
   return *this;
 }
 
-template<typename StoredType>
-Optional<StoredType>::~Optional() {
+template<typename T>
+Optional<T>::~Optional() {
   if(has_value_) {
     unset_();
   }
 }
 
-template<typename StoredType>
-Optional<StoredType>::Optional(const StoredType & value)
+template<typename T>
+Optional<T>::Optional(const T & value)
   : has_value_(true),
     value_(value) {}
 
-template<typename StoredType>
-Optional<StoredType>::Optional(StoredType && value)
+template<typename T>
+Optional<T>::Optional(T && value)
   : has_value_(true),
     value_(std::move(value)) {}
 
-template<typename StoredType>
-Optional<StoredType> & Optional<StoredType>::operator =(const StoredType & value) {
+template<typename T>
+Optional<T> & Optional<T>::operator =(const T & value) {
   if(has_value_) {
     unset_();
   }
@@ -139,8 +139,8 @@ Optional<StoredType> & Optional<StoredType>::operator =(const StoredType & value
   return *this;
 }
 
-template<typename StoredType>
-Optional<StoredType> & Optional<StoredType>::operator =(StoredType && value) {
+template<typename T>
+Optional<T> & Optional<T>::operator =(T && value) {
   if(has_value_) {
     unset_();
   }
@@ -151,9 +151,9 @@ Optional<StoredType> & Optional<StoredType>::operator =(StoredType && value) {
   return *this;
 }
 
-template<typename StoredType>
+template<typename T>
 template<typename ... Args>
-void Optional<StoredType>::set(Args && ... args) {
+void Optional<T>::set(Args && ... args) {
   if(has_value_) {
     unset_();
   }
@@ -163,32 +163,32 @@ void Optional<StoredType>::set(Args && ... args) {
   set_(std::forward<Args>(args) ...);
 }
 
-template<typename StoredType>
-void Optional<StoredType>::unset() {
+template<typename T>
+void Optional<T>::unset() {
   if(has_value_) {
     unset_();
   }
   has_value_ = false;
 }
 
-template<typename StoredType>
-bool Optional<StoredType>::empty() const {return !has_value_;}
+template<typename T>
+bool Optional<T>::empty() const {return !has_value_;}
 
-template<typename StoredType>
-bool Optional<StoredType>::nonempty() const {return has_value_;}
+template<typename T>
+bool Optional<T>::nonempty() const {return has_value_;}
 
-template<typename StoredType>
-StoredType & Optional<StoredType>::val() {return value_;}
+template<typename T>
+T & Optional<T>::val() {return value_;}
 
-template<typename StoredType>
-const StoredType & Optional<StoredType>::val() const {return value_;}
+template<typename T>
+const T & Optional<T>::val() const {return value_;}
 
-template<typename StoredType>
+template<typename T>
 template<typename ... Args>
-void Optional<StoredType>::set_(Args && ... args) {new (&value_) StoredType(std::forward<Args>(args) ...);}
+void Optional<T>::set_(Args && ... args) {new (&value_) T(std::forward<Args>(args) ...);}
 
-template<typename StoredType>
-void Optional<StoredType>::unset_() {value_.~StoredType();}
+template<typename T>
+void Optional<T>::unset_() {value_.~T();}
 
 } // namespace utils
 } // namespace pm

@@ -1,0 +1,28 @@
+/*! \page PGList Список готовых грамматических действий
+ *  
+ *  \tableofcontents
+ *  
+ *  \ref pm::grammar::Action "Что такое грамматическое действие."
+ *  
+ *  \ref pm::grammar::Action "Что такое определение грамматического действия."
+ *  
+ *  \ref PGrammar "Что такое готовое грамматическое действие."
+ *  
+ *  Готовые грамматические действия подключаются \ref include/pm/grammar/actions.hpp "этим файлом".
+ *  
+ *  Определения готовых грамматических действий подключаются \ref include/pm/grammar/syntax/actions.hpp "этим файлом".
+ *  
+ *  Все действия, создаваемые документированным способом явно или через определения, \ref PGSafety "слабо-безопасны".
+ *  
+ *  - \ref PGFail "Неуспех"; \ref PGDFail "определение"
+ *  - \ref PGSuccess "Успех"; \ref PGDSuccess "определение"
+ *  - \ref PGRedirect "Перенаправление"; \ref PGDRedirect "определение"
+ *  - \ref PGRe "Регулярное выражение без данных"; \ref PGDRe "определение"
+ *  - \ref PGReData "Регулярное выражение с данными"; \ref PGDReData "определение"
+ *  - \ref PGFunction "Функция над совокупностью данных"; \ref PGDFunction "определение"
+ *  - \ref PGFailFunction "Перенаправление с откатом"; \ref PGDFailFunction "определение"
+ *  - \ref PGAlternative "Альтернатива"; \ref PGDAlternative "определение"
+ *  - \ref PGRule "Правило"; \ref PGDRule "определение"
+ *  - \ref PGOptional "Опционал"; \ref PGDOptional "определение"
+ *  - \ref PGStar "Звезда Клини"; \ref PGDStar "определение"
+ */

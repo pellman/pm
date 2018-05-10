@@ -37,7 +37,7 @@ public:
   inline Action(const type_abuse::SPtr<ActionInterface> & ptr);
   inline Action(type_abuse::SPtr<ActionInterface> && ptr);
   // PRESERVING METHODS
-  inline bool gamatch_full(stream::Stream & s, const Grammar & g, const Context & gcontext) const override;
+  inline bool gamatch(stream::Stream & s, const Grammar & g, const Context & gcontext) const override;
   // FIELDS
   type_abuse::SPtr<ActionInterface> ptr_;
 };
@@ -53,7 +53,7 @@ Action::Action(const type_abuse::SPtr<ActionInterface> & ptr)
 Action::Action(type_abuse::SPtr<ActionInterface> && ptr)
   :ptr_(std::move(ptr)) {}
 
-bool Action::gamatch_full(stream::Stream & s, const Grammar & g, const Context & gcontext) const {return ptr_->gamatch_full(s, g, gcontext);}
+bool Action::gamatch(stream::Stream & s, const Grammar & g, const Context & gcontext) const {return ptr_->gamatch(s, g, gcontext);}
 
 } // namespace grammar
 } // namespace pm

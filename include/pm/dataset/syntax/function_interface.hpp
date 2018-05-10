@@ -21,7 +21,7 @@
 #define __PM_DATASET_SYNTAX_FUNCTION_INTERFACE_HPP
 
 #include <string>
-#include "pm/dataset/functions/base.hpp"
+#include "pm/dataset/functions/general.hpp"
 #include "pm/dataset/syntax/set.hpp"
 
 namespace pm {

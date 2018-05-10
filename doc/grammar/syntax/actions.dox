@@ -1,0 +1,4 @@
+/*! \file include/pm/grammar/syntax/actions.hpp
+ *  \brief Подключает интерфейс создания определений \ref PGList "готовых грамматических действий".
+ *  \ingroup ModuleGrammar
+ */

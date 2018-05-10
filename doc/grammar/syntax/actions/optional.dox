@@ -1,0 +1,27 @@
+/*! \file include/pm/grammar/syntax/actions/optional.hpp
+ *  \brief Содержит интерфейс создания определения грамматического действия \ref PGOptional "опционала".
+ *  \ingroup ModuleGrammar
+ *  \anchor PGDOptional
+ *  
+ *  Определение опционала - это \ref pm::grammar::syntax::Action "определение грамматического действия", устроенное так:
+ *  - Оно содержит определение грамматического действия \p a.
+ *  - \ref pm::grammar::syntax::Grammar "Результат интерпретации": \ref PGOptional "опционал" над индексом \f$ \varphi_i(a) \f$, где \f$ \varphi_i \f$ - отображение определений грамматических действий в индексы, определяемое \ref pm::grammar::syntax::Grammar "способом интерпретации определения грамматики".
+ *  
+ *  Описанное определение возвращается вызовом функции или оператора интерфейса.
+ *  
+ *  \pre Определение опционала, возвращаемое вызовом функции или оператора интерфейса, не используется (прямо или косвенно) в определении \p a.
+ *  
+ *  \sa \ref PGList "Список готовых грамматических действий и их определений"
+ */
+
+/*! \fn Action pm::grammar::syntax::opt(const Action & a)
+ */
+
+/*! \fn Action pm::grammar::syntax::opt(Action && a)
+ */
+
+/*! \fn Action pm::grammar::syntax::operator !(const Action & a)
+ */
+
+/*! \fn Action pm::grammar::syntax::operator !(Action && a)
+ */

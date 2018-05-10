@@ -29,7 +29,7 @@
 namespace pm {
 namespace utils {
 
-template<typename Element>
+template<typename T>
 class Numeration {
 public:
   // TYPES
@@ -41,19 +41,21 @@ public:
     Iterator operator --(int) {Iterator res; --it; return res;}
     bool operator ==(const Iterator & i) const {return it == i.it;}
     bool operator !=(const Iterator & i) const {return it != i.it;}
-    const Element & operator *() {return (*it)->first;}
-    typename std::vector<typename std::map<Element, size_t>::const_iterator>::const_iterator it;
+    const T & operator *() {return (*it)->first;}
+    typename std::vector<typename std::map<T, size_t>::const_iterator>::const_iterator it;
   };
+  // OPERATORS
+  const T & operator [](size_t i) const;
   // ALTERING METHODS
-  size_t add(const Element & el);
-  size_t add(Element && el);
   void clear();
-  void remove(const Element & el);
+  void erase(const T & el);
+  size_t insert(const T & el);
+  size_t insert(T && el);
   // ACCESS METHODS
   // = direct access =
-  const Element & element_at(size_t i) const;
-  bool has(const Element & el) const;
-  size_t index_of(const Element & el) const;
+  const T & at(size_t i) const;
+  size_t find(const T & el) const;
+  bool has(const T & el) const;
   size_t size() const;
   // = iteration =
   Iterator begin() const;
@@ -61,42 +63,23 @@ public:
 
 private:
   // FIELDS
-  std::map<Element, size_t> forward_;
-  typename std::vector<typename std::map<Element, size_t>::const_iterator> backward_;
+  std::map<T, size_t> forward_;
+  typename std::vector<typename std::map<T, size_t>::const_iterator> backward_;
 };
 
 
 // implementation
-template<typename Element>
-size_t Numeration<Element>::add(const Element & el) {
-  auto it = forward_.find(el);
-  if(it != forward_.end()) {
-    return it->second;
-  }
-  size_t res = backward_.size();
-  backward_.push_back(forward_.insert(it, {el, res}));
-  return res;
-}
+template<typename T>
+const T & Numeration<T>::operator [](size_t i) const {return backward_[i]->first;}
 
-template<typename Element>
-size_t Numeration<Element>::add(Element && el) {
-  auto it = forward_.find(el);
-  if(it != forward_.end()) {
-    return it->second;
-  }
-  size_t res = backward_.size();
-  backward_.push_back(forward_.insert(it, {std::move(el), res}));
-  return res;
-}
-
-template<typename Element>
-void Numeration<Element>::clear() {
+template<typename T>
+void Numeration<T>::clear() {
   forward_.clear();
   backward_.clear();
 }
 
-template<typename Element>
-void Numeration<Element>::remove(const Element & el) {
+template<typename T>
+void Numeration<T>::erase(const T & el) {
   auto it = forward_.find(el);
   if(it == forward_.end()) return;
   for(auto vit = backward_.begin() + it->second + 1; vit != backward_.end(); ++vit) {
@@ -106,23 +89,45 @@ void Numeration<Element>::remove(const Element & el) {
   forward_.erase(it);
 }
 
-template<typename Element>
-const Element & Numeration<Element>::element_at(size_t i) const {return backward_[i]->first;}
+template<typename T>
+size_t Numeration<T>::insert(const T & el) {
+  auto it = forward_.find(el);
+  if(it != forward_.end()) {
+    return it->second;
+  }
+  size_t res = backward_.size();
+  backward_.push_back(forward_.insert(it, {el, res}));
+  return res;
+}
 
-template<typename Element>
-bool Numeration<Element>::has(const Element & el) const {return is_in(el, forward_);}
+template<typename T>
+size_t Numeration<T>::insert(T && el) {
+  auto it = forward_.find(el);
+  if(it != forward_.end()) {
+    return it->second;
+  }
+  size_t res = backward_.size();
+  backward_.push_back(forward_.insert(it, {std::move(el), res}));
+  return res;
+}
 
-template<typename Element>
-size_t Numeration<Element>::index_of(const Element & el) const {return forward_.at(el);}
+template<typename T>
+const T & Numeration<T>::at(size_t i) const {return backward_.at(i)->first;}
 
-template<typename Element>
-size_t Numeration<Element>::size() const {return backward_.size();}
+template<typename T>
+size_t Numeration<T>::find(const T & el) const {return forward_.at(el);}
 
-template<typename Element>
-typename Numeration<Element>::Iterator Numeration<Element>::begin() const {return {backward_.begin()};}
+template<typename T>
+bool Numeration<T>::has(const T & el) const {return is_in(el, forward_);}
 
-template<typename Element>
-typename Numeration<Element>::Iterator Numeration<Element>::end() const {return {backward_.end()};}
+template<typename T>
+size_t Numeration<T>::size() const {return backward_.size();}
+
+template<typename T>
+typename Numeration<T>::Iterator Numeration<T>::begin() const {return {backward_.begin()};}
+
+template<typename T>
+typename Numeration<T>::Iterator Numeration<T>::end() const {return {backward_.end()};}
 
 } // namespace utils
 } // namespace pm

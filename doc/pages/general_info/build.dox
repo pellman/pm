@@ -1,0 +1,8 @@
+/*! \page GIBuild Инструкция по сборке
+ *  
+ *  \subpage GIBCmake "Сборка библиотеки утилитой cmake"
+ *  
+ *  \subpage GIBPure "Сборка библиотеки компилятором"
+ *  
+ *  \subpage GIBDoc "Сборка документации"
+ */

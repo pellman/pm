@@ -92,7 +92,7 @@ void Grammar::unset_skip() {skip_.unset();}
 
 bool Grammar::gmatch(stream::Stream & s, const Context & gcontext) const {return gmatch_full(s, gcontext);}
 
-bool Grammar::gmatch_full(stream::Stream & s, const Context & gcontext) const {return main_action().gamatch_full(s, *this, gcontext);}
+bool Grammar::gmatch_full(stream::Stream & s, const Context & gcontext) const {return main_action().gamatch(s, *this, gcontext);}
 
 Action & Grammar::action(size_t i) {return actions_[i];}
 

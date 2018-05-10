@@ -1,0 +1,158 @@
+/*! \file include/pm/regexp/expressions/terminal/symbol.hpp
+ *  \brief Интерфейс создания \ref PRLTSymbol "готовых символьных регулярных выражений": читающих один символ и записывающих его в текущие данные.
+ *  \ingroup ModuleRegexp
+ *  
+ *  Все выражения, создаваемые при помощи интерфейса, \ref PRSafety "безопасны".
+ *  
+ *  \ref GNNParsing "Принимаемая строка": любая строка длины 1, содержащая символ, удовлетворяющий *ограничениям приёма*.
+ *  
+ *  \ref PRSafety "Способ изменения данных":
+ *  - В текущие данные устанавливается значение типа `char` от аргумента - значения единственного символа принятой строки.
+ *  - Сохранённые данные не изменяются.
+ *  
+ *  В документации интерфейса описывается устройство \ref pm::regexp::RegexpInterface "метода разбора" \ref pm::regexp::Regexp "регулярного выражения", возвращаемого вызовом функции интерфейса.
+ *  
+ *  \sa \ref PRList "Список готовых регулярных выражений"
+ */
+
+/*! \name Любой символ
+ *  \anchor PRAnyCharacter
+ *  Ограничения приёма: отсутствуют (принимается любой символ).
+ */
+//!\{
+
+  /*! \fn Regexp pm::regexp::let()
+   */
+
+//!\}
+
+/*! \name Заданный символ
+ *  \anchor PRGivenCharacter
+ *  Содержит символ \p good_char.
+ *  
+ *  Ограничения приёма: принимаемый символ равен \p good_char.
+ */
+//!\{
+
+  /*! \fn Regexp pm::regexp::let(char good_char)
+   */
+
+//!\}
+
+/*! \name Символ заданного множества
+ *  \anchor PRCharacterOfGivenSet
+ *  Содержит множество символов \p good_chars.
+ *  
+ *  Ограничения приёма: принимаемый символ принадлежит множеству \p good_chars.
+ */
+//!\{
+
+  /*! \fn Regexp pm::regexp::let(const std::set<char> & good_chars)
+   */
+  /*! \fn Regexp pm::regexp::let(std::set<char> && good_chars)
+   */
+  /*! \fn Regexp pm::regexp::let(Args && ... args)
+   *  \brief Эквивалентно вызову `pm::regexp::let(std::set<char>{std::forward<Args>(args) ...})`.
+   *  Позволяет вместо pm::regexp::let({c1, c2, ..., ck}) писать pm::regexp::let(c1, c2, ..., ck): на одну пару фигурных скобок меньше.
+   */
+
+//!\}
+
+/*! \name Символ заданного диапазона
+ *  \anchor PRCharacterOfGivenRange
+ *  Содержит два символа: \p bottom_char, \p top_char.
+ *  
+ *  Ограничения приёма: принимаемый символ c удовлетворяет неравенствам \p bottom_char <= c и c <= \p top_char.
+ */
+//!\{
+
+  /*! \fn Regexp pm::regexp::range(char bottom_char, char top_char)
+   */
+
+//!\}
+
+/*! \name Головной символ идентификатора языка C
+ *  \anchor PRCIdHeadCharacter
+ *  Ограничения приёма: для принимаемого символа c верно
+ *  - либо c == '_',
+ *  - либо 'a' <= c и c <= 'z',
+ *  - либо 'A' <= c и c <= 'Z'.
+ */
+//!\{
+
+  /*! \fn Regexp pm::regexp::c_id_head_letter()
+   */
+
+//!\}
+
+/*! \name Хвостовой символ идентификатора языка C
+ *  \anchor PRCIdTailCharacter
+ *  Ограничения приёма: для принимаемого символа c верно
+ *  - либо c == '_',
+ *  - либо 'a' <= c и c <= 'z',
+ *  - либо 'A' <= c и c <= 'Z',
+ *  - либо '0' <= c и c <= '9'.
+ */
+//!\{
+
+  /*! \fn Regexp pm::regexp::c_id_tail_letter()
+   */
+
+//!\}
+
+/*! \name Символ десятичной цифры
+ *  \anchor PRDecimalDigitCharacter
+ *  Ограничения приёма: принимаемый символ c удовлетворяет неравенствам '0' <= c и c <= '9'.
+ */
+//!\{
+
+  /*! \fn Regexp pm::regexp::digit_letter()
+   */
+
+//!\}
+
+/*! \name Латинская буква
+ *  \anchor PRLatinLetter
+ *  Ограничения приёма: для принимаемого символа c верно
+ *  - либо 'a' <= c и c <= 'z',
+ *  - либо 'A' <= c и c <= 'Z'.
+ */
+//!\{
+
+  /*! \fn Regexp pm::regexp::latin_letter()
+   */
+
+//!\}
+
+/*! \name Маленькая латинская буква
+ *  \anchor PRLatinLetterLowercase
+ *  Ограничения приёма: для принимаемого символа c верно 'a' <= c и c <= 'z'.
+ */
+//!\{
+
+  /*! \fn Regexp pm::regexp::latin_lowercase_letter()
+   */
+
+//!\}
+
+/*! \name Большая латинская буква
+ *  \anchor PRLatinLetterUppercase
+ *  Ограничения приёма: для принимаемого символа c верно 'A' <= c и c <= 'Z'.
+ */
+//!\{
+
+  /*! \fn Regexp pm::regexp::latin_uppercase_letter()
+   */
+
+//!\}
+
+/*! \name Символ нижнего подчёркивания
+ *  \anchor PRUnderscoreCharacter
+ *  Ограничения приёма: для принимаемого символа c верно c == '_',
+ */
+//!\{
+
+  /*! \fn Regexp pm::regexp::underscore_letter()
+   */
+
+//!\}

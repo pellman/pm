@@ -20,9 +20,8 @@
 #ifndef __PM_DATASET_SYNTAX_FUNCTIONS_HPP
 #define __PM_DATASET_SYNTAX_FUNCTIONS_HPP
 
-#include "pm/dataset/syntax/functions/base.hpp"
-#include "pm/dataset/syntax/functions/lazy.hpp"
-#include "pm/dataset/syntax/functions/operators.hpp"
-#include "pm/dataset/syntax/functions/typical.hpp"
+#include "pm/dataset/syntax/functions/composition.hpp"
+#include "pm/dataset/syntax/functions/general.hpp"
+#include "pm/dataset/syntax/functions/specific.hpp"
 
 #endif

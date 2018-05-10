@@ -1,21 +1,10 @@
-add_subdirectory("composition")
-add_subdirectory("functions")
-add_subdirectory("terminals")
+add_subdirectory("flow")
+add_subdirectory("functional")
+add_subdirectory("terminal")
 
-file(GLOB src_regexp_expressions_special
-  "*.cpp"
-)
-add_library(ol_regexp_expressions_special OBJECT EXCLUDE_FROM_ALL
-  ${src_regexp_expressions_special}
-)
-set(part_regexp_expressions_special
-  $<TARGET_OBJECTS:ol_regexp_expressions_special>
-  CACHE INTERNAL "КОСТЫЛЬ, нельзя так просто заалиасить объектную библиотеку"
-)
 set(part_regexp_expressions
-  ${part_regexp_expressions_composition}
-  ${part_regexp_expressions_functions}
-  ${part_regexp_expressions_special}
-  ${part_regexp_expressions_terminals}
+  ${part_regexp_expressions_flow}
+  ${part_regexp_expressions_functional}
+  ${part_regexp_expressions_terminal}
   CACHE INTERNAL "КОСТЫЛЬ, нельзя так просто заалиасить объектную библиотеку"
 )

@@ -1,0 +1,6 @@
+/*! \file include/pm/dataset/syntax.hpp
+ *  \brief Подключает класс определения совокупности pm::dataset::syntax::Set и интерфейс создания \ref PDatasetFunction "определений готовых функций над совокупностью".
+ *  \ingroup ModuleDataset
+ *  
+ *  \sa \ref pm::dataset::syntax::Function "Определение функции над совокупностью"
+ */

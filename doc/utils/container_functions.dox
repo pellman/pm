@@ -1,0 +1,66 @@
+/*! \file include/pm/utils/container_functions.hpp
+ *  \brief Содержит функции, упрощающие работу с stl-контейнерами.
+ *  \ingroup ModuleUtils
+ */
+
+/*! \fn void pm::utils::append(Container & to, const Container & from)
+ *  \brief Добавить элементы контейнера \p from в конец контейнера \p to.
+ *  
+ *  Выполнение функции эквивалентно выполнению выражения `to.insert(to.end(), from.begin(), from.end())`.
+ *  
+ *  \pre Выражение `to.insert(to.end(), from.begin(), from.end())` корректно.
+ */
+
+/*! \fn bool pm::utils::disjoint(const Container & X, const Container & Y)
+ *  \brief Вернуть `true` <=> контейнеры \p X, \p Y не содержат \ref GNSComparability "равных" элементов.
+ *  
+ *  `true` <=> \ref GNSRangeBasedFor "перебором" элементов в контейнерах \p X, \p Y невозможно получить элементы `x`, `y` соответственно, такие что значения этих элементов \ref GNSComparability "равны".
+ *  
+ *  \pre Тип значений элементов, содержащихся в контейнере, \ref GNSComparability "сравним".
+ *  \pre Контейнер \p X \ref GNSRangeBasedFor "совместим с циклом по коллекции".
+ *  \pre Выражение `Y.find(element) != Y.end()`, где `element` получается \ref GNSRangeBasedFor "перебором в цикле по коллекции" \p X, корректно.
+ */
+
+/*! \fn void pm::utils::erase_index(Container & container, size_t ind)
+ *  \brief Удалить \p ind -й элемент из контейнера \p container
+ *  
+ *  Выполнение функции эквивалентно выполнению выражения `container.erase(container.begin() + ind)`.
+ *  
+ *  \pre Выражение `container.erase(container.begin() + ind)` корректно.
+ */
+
+/*! \fn bool pm::utils::intersects(const Container & X, const Container & Y)
+ *  \brief Вернуть `true` <=> контейнеры \p X, \p Y содержат \ref GNSComparability "равные" элементы.
+ *  
+ *  `true` <=> \ref GNSRangeBasedFor "перебором" элементов в контейнерах \p X, \p Y можно получить элементы `x`, `y` соответственно, такие что значения этих элементов \ref GNSComparability "равны".
+ *  
+ *  \pre Тип значений элементов, содержащихся в контейнере, \ref GNSComparability "сравним".
+ *  \pre Контейнер \p X \ref GNSRangeBasedFor "совместим с циклом по коллекции".
+ *  \pre Выражение `Y.find(element) != Y.end()`, где `element` получается \ref GNSRangeBasedFor "перебором в цикле по коллекции" \p X, корректно.
+ */
+
+/*! \fn bool pm::utils::is_in(const Element & element, const Container & container)
+ *  \brief Вернуть `true` <=> в контейнере \p container содержится элемент, \ref GNSComparability "равный" \p element.
+ *  
+ *  Возвращаемое значение равно значению выражения `container.find(element) != container.end()`.
+ *  
+ *  \pre Тип значений элементов, содержащихся в контейнере, \ref GNSComparability "сравним".
+ *  \pre Выражение `container.find(element) != container.end()` корректно.
+ */
+
+/*! \fn bool pm::utils::isnt_in(const Element & element, const Container & container)
+ *  \brief Вернуть `true` <=> контейнер \p container не содержит элементов, \ref GNSComparability "равных" \p element.
+ *  
+ *  Возвращаемое значение равно значению выражения `container.find(element) == container.end()`.
+ *  
+ *  \pre Тип значений элементов, содержащихся в контейнере, \ref GNSComparability "сравним".
+ *  \pre Выражение `container.find(element) == container.end()` корректно.
+ */
+
+/*! \fn void pm::utils::merge(Container & to, const Container & from)
+ *  \brief Добавить элементы упорядоченного контейнера \p from в упорядоченный контейнер \p to.
+ *  
+ *  Выполнение функции эквивалентно выполнению выражения `to.insert(from.begin(), from.end())`.
+ *  
+ *  \pre Выражение `to.insert(from.begin(), from.end())` корректно.
+ */

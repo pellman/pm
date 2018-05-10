@@ -35,7 +35,7 @@ public:
   // CONSTRUCTORS
   Redirect(size_t index);
   // PRESERVING METHODS
-  bool gamatch_full(stream::Stream & s, const Grammar & g, const Context & gcontext) const override;
+  bool gamatch(stream::Stream & s, const Grammar & g, const Context & gcontext) const override;
   
 private:
   // FIELDS
@@ -46,8 +46,8 @@ private:
 Redirect::Redirect(size_t index)
   : index_(index) {}
 
-bool Redirect::gamatch_full(stream::Stream & s, const Grammar & g, const Context & gcontext) const {
-  return g.action(index_).gamatch_full(s, g, gcontext);
+bool Redirect::gamatch(stream::Stream & s, const Grammar & g, const Context & gcontext) const {
+  return g.action(index_).gamatch(s, g, gcontext);
 }
 
 } // namespace

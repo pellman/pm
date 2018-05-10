@@ -1,0 +1,207 @@
+/*! \file include/pm/grammar/syntax/actions/rule.hpp
+ *  \brief Содержит интерфейс создания определений грамматического действия \ref PGRule "правила".
+ *  \ingroup ModuleGrammar
+ *  \anchor PGDRule
+ *  
+ *  Определение правила - это \ref pm::grammar::syntax::Action "определение грамматического действия", устроенное так:
+ *  - Оно содержит упорядоченный набор *подопределений*: определений грамматического действия.
+ *  - \ref pm::grammar::syntax::Grammar "Результат интерпретации": \ref PGRule "правило" над индексами \f$ \varphi_i(D_1), \dots, \varphi_i(D_n) \f$, где:
+ *   - \f$ D_1, \dots, D_n \f$ - подопределения;
+ *   - \f$ \varphi_i \f$ - функция отображения определений грамматических действий в индексы, определяемая \ref pm::grammar::syntax::Grammar "способом интерпретации определения грамматики".
+ *  
+ *  В документации функций и операторов интерфейса описывается набор подопределений в определении правила, возвращаемом вызовом.
+ *  
+ *  \pre Определение правила, возвращаемое вызовом функции или оператора интерфейса, не используется (прямо или косвенно) в аргументах вызова.
+ *  
+ *  \sa \ref PGList "Список готовых грамматических действий и их определений"
+ */
+
+/*! \fn Action pm::grammar::syntax::rule(const std::list<Action> & actions)
+ *  \brief Подопределения: содержащиеся в списке \p actions, в том же порядке.
+ */
+
+/*! \fn Action pm::grammar::syntax::rule(std::list<Action> && actions)
+ *  \brief Подопределения: содержащиеся в списке \p actions, в том же порядке.
+ */
+
+/*! \fn Action pm::grammar::syntax::rule(Actions && ... actions)
+ *  \brief Подопределения: содержащиеся в списке {\p actions ...}, в том же порядке.
+ *  Эквивалентно вызову rule(std::list<Action>{std::forward<Actions>(indexes) ...}).
+ *  Позволяет вместо rule({a1, ..., ak}) писать rule(a1, ..., ak): на одну пару скобок меньше.
+ */
+
+/*! \fn Action pm::grammar::syntax::operator &(const Action & a1, const Action & a2)
+ *  \brief Подопределения: \p a1; \p a2.
+ */
+
+/*! \fn Action pm::grammar::syntax::operator &(const Action & a1, Action && a2)
+ *  \brief Подопределения: \p a1; \p a2.
+ */
+
+/*! \fn Action pm::grammar::syntax::operator &(Action && a1, const Action & a2)
+ *  \brief Подопределения: \p a1; \p a2.
+ */
+
+/*! \fn Action pm::grammar::syntax::operator &(Action && a1, Action && a2)
+ *  \brief Подопределения: \p a1; \p a2.
+ */
+
+/*! \fn Action pm::grammar::syntax::operator &(const std::string & name, const Action & a)
+ *  \brief Подопределения: \ref PGDRedirect "определение перенаправления" на имя \p name; \p a.
+ */
+
+/*! \fn Action pm::grammar::syntax::operator &(const std::string & name, Action && a)
+ *  \brief Подопределения: \ref PGDRedirect "определение перенаправления" на имя \p name; \p a.
+ */
+
+/*! \fn Action pm::grammar::syntax::operator &(std::string && name, const Action & a)
+ *  \brief Подопределения: \ref PGDRedirect "определение перенаправления" на имя \p name; \p a.
+ */
+
+/*! \fn Action pm::grammar::syntax::operator &(std::string && name, Action && a)
+ *  \brief Подопределения: \ref PGDRedirect "определение перенаправления" на имя \p name; \p a.
+ */
+
+/*! \fn Action pm::grammar::syntax::operator &(const Action & a, const std::string & name)
+ *  \brief Подопределения: \p a; \ref PGDRedirect "определение перенаправления" на имя \p name.
+ */
+
+/*! \fn Action pm::grammar::syntax::operator &(const Action & a, std::string && name)
+ *  \brief Подопределения: \p a; \ref PGDRedirect "определение перенаправления" на имя \p name.
+ */
+
+/*! \fn Action pm::grammar::syntax::operator &(Action && a, const std::string & name)
+ *  \brief Подопределения: \p a; \ref PGDRedirect "определение перенаправления" на имя \p name.
+ */
+
+/*! \fn Action pm::grammar::syntax::operator &(Action && a, std::string && name)
+ *  \brief Подопределения: \p a; \ref PGDRedirect "определение перенаправления" на имя \p name.
+ */
+
+/*! \fn Action pm::grammar::syntax::operator &(const regexp::Regexp & r, const Action & a)
+ *  \brief Подопределения: \ref PGDRe "определение регулярного выражения" \p r без данных; \p a.
+ */
+
+/*! \fn Action pm::grammar::syntax::operator &(const regexp::Regexp & r, Action && a)
+ *  \brief Подопределения: \ref PGDRe "определение регулярного выражения" \p r без данных; \p a.
+ */
+
+/*! \fn Action pm::grammar::syntax::operator &(regexp::Regexp && r, const Action & a)
+ *  \brief Подопределения: \ref PGDRe "определение регулярного выражения" \p r без данных; \p a.
+ */
+
+/*! \fn Action pm::grammar::syntax::operator &(regexp::Regexp && r, Action && a)
+ *  \brief Подопределения: \ref PGDRe "определение регулярного выражения" \p r без данных; \p a.
+ */
+
+/*! \fn Action pm::grammar::syntax::operator &(const Action & a, const regexp::Regexp & r)
+ *  \brief Подопределения: \p a; \ref PGDRe "определение регулярного выражения" \p r без данных.
+ */
+
+/*! \fn Action pm::grammar::syntax::operator &(const Action & a, regexp::Regexp && r)
+ *  \brief Подопределения: \p a; \ref PGDRe "определение регулярного выражения" \p r без данных.
+ */
+
+/*! \fn Action pm::grammar::syntax::operator &(Action && a, const regexp::Regexp & r)
+ *  \brief Подопределения: \p a; \ref PGDRe "определение регулярного выражения" \p r без данных.
+ */
+
+/*! \fn Action pm::grammar::syntax::operator &(Action && a, regexp::Regexp && r)
+ *  \brief Подопределения: \p a; \ref PGDRe "определение регулярного выражения" \p r без данных.
+ */
+
+/*! \fn Action pm::grammar::syntax::operator &(const dataset::syntax::Function & f, const Action & a)
+ *  \brief Подопределения: \ref PGDFunction "определение функции над совокупностью данных" \p f; \p a.
+ */
+
+/*! \fn Action pm::grammar::syntax::operator &(const dataset::syntax::Function & f, Action && a)
+ *  \brief Подопределения: \ref PGDFunction "определение функции над совокупностью данных" \p f; \p a.
+ */
+
+/*! \fn Action pm::grammar::syntax::operator &(dataset::syntax::Function && f, const Action & a)
+ *  \brief Подопределения: \ref PGDFunction "определение функции над совокупностью данных" \p f; \p a.
+ */
+
+/*! \fn Action pm::grammar::syntax::operator &(dataset::syntax::Function && f, Action && a)
+ *  \brief Подопределения: \ref PGDFunction "определение функции над совокупностью данных" \p f; \p a.
+ */
+
+/*! \fn Action pm::grammar::syntax::operator &(const Action & a, const dataset::syntax::Function & f)
+ *  \brief Подопределения: \p a; \ref PGDFunction "определение функции над совокупностью данных" \p f.
+ */
+
+/*! \fn Action pm::grammar::syntax::operator &(const Action & a, dataset::syntax::Function && f)
+ *  \brief Подопределения: \p a; \ref PGDFunction "определение функции над совокупностью данных" \p f.
+ */
+
+/*! \fn Action pm::grammar::syntax::operator &(Action && a, const dataset::syntax::Function & f)
+ *  \brief Подопределения: \p a; \ref PGDFunction "определение функции над совокупностью данных" \p f.
+ */
+
+/*! \fn Action pm::grammar::syntax::operator &(Action && a, dataset::syntax::Function && f)
+ *  \brief Подопределения: \p a; \ref PGDFunction "определение функции над совокупностью данных" \p f.
+ */
+
+/*! \fn grammar::syntax::Action pm::dataset::syntax::operator &(const std::string & name, const Function & f)
+ *  \brief Подопределения: \ref PGDRedirect "определение перенаправления" на имя \p name; \ref PGDFunction "определение функции над совокупностью данных" \p f.
+ */
+
+/*! \fn grammar::syntax::Action pm::dataset::syntax::operator &(const std::string & name, Function && f)
+ *  \brief Подопределения: \ref PGDRedirect "определение перенаправления" на имя \p name; \ref PGDFunction "определение функции над совокупностью данных" \p f.
+ */
+
+/*! \fn grammar::syntax::Action pm::dataset::syntax::operator &(std::string && name, const Function & f)
+ *  \brief Подопределения: \ref PGDRedirect "определение перенаправления" на имя \p name; \ref PGDFunction "определение функции над совокупностью данных" \p f.
+ */
+
+/*! \fn grammar::syntax::Action pm::dataset::syntax::operator &(std::string && name, Function && f)
+ *  \brief Подопределения: \ref PGDRedirect "определение перенаправления" на имя \p name; \ref PGDFunction "определение функции над совокупностью данных" \p f.
+ */
+
+/*! \fn grammar::syntax::Action pm::dataset::syntax::operator &(const Function & f, const std::string & name)
+ *  \brief Подопределения: \ref PGDFunction "определение функции над совокупностью данных" \p f; \ref PGDRedirect "определение перенаправления" на имя \p name.
+ */
+
+/*! \fn grammar::syntax::Action pm::dataset::syntax::operator &(const Function & f, std::string && name)
+ *  \brief Подопределения: \ref PGDFunction "определение функции над совокупностью данных" \p f; \ref PGDRedirect "определение перенаправления" на имя \p name.
+ */
+
+/*! \fn grammar::syntax::Action pm::dataset::syntax::operator &(Function && f, const std::string & name)
+ *  \brief Подопределения: \ref PGDFunction "определение функции над совокупностью данных" \p f; \ref PGDRedirect "определение перенаправления" на имя \p name.
+ */
+
+/*! \fn grammar::syntax::Action pm::dataset::syntax::operator &(Function && f, std::string && name)
+ *  \brief Подопределения: \ref PGDFunction "определение функции над совокупностью данных" \p f; \ref PGDRedirect "определение перенаправления" на имя \p name.
+ */
+
+/*! \fn grammar::syntax::Action pm::dataset::syntax::operator &(const regexp::Regexp & re, const Function & f)
+ *  \brief Подопределения: \ref PGDRe "определение регулярного выражения" \p r без данных; \ref PGDFunction "определение функции над совокупностью данных" \p f.
+ */
+
+/*! \fn grammar::syntax::Action pm::dataset::syntax::operator &(const regexp::Regexp & re, Function && f)
+ *  \brief Подопределения: \ref PGDRe "определение регулярного выражения" \p r без данных; \ref PGDFunction "определение функции над совокупностью данных" \p f.
+ */
+
+/*! \fn grammar::syntax::Action pm::dataset::syntax::operator &(regexp::Regexp && re, const Function & f)
+ *  \brief Подопределения: \ref PGDRe "определение регулярного выражения" \p r без данных; \ref PGDFunction "определение функции над совокупностью данных" \p f.
+ */
+
+/*! \fn grammar::syntax::Action pm::dataset::syntax::operator &(regexp::Regexp && re, Function && f)
+ *  \brief Подопределения: \ref PGDRe "определение регулярного выражения" \p r без данных; \ref PGDFunction "определение функции над совокупностью данных" \p f.
+ */
+
+/*! \fn grammar::syntax::Action pm::dataset::syntax::operator &(const Function & f, const regexp::Regexp & re)
+ *  \brief Подопределения: \ref PGDFunction "определение функции над совокупностью данных" \p f; \ref PGDRe "определение регулярного выражения" \p r без данных.
+ */
+
+/*! \fn grammar::syntax::Action pm::dataset::syntax::operator &(const Function & f, regexp::Regexp && re)
+ *  \brief Подопределения: \ref PGDFunction "определение функции над совокупностью данных" \p f; \ref PGDRe "определение регулярного выражения" \p r без данных.
+ */
+
+/*! \fn grammar::syntax::Action pm::dataset::syntax::operator &(Function && f, const regexp::Regexp & re)
+ *  \brief Подопределения: \ref PGDFunction "определение функции над совокупностью данных" \p f; \ref PGDRe "определение регулярного выражения" \p r без данных.
+ */
+
+/*! \fn grammar::syntax::Action pm::dataset::syntax::operator &(Function && f, regexp::Regexp && re)
+ *  \brief Подопределения: \ref PGDFunction "определение функции над совокупностью данных" \p f; \ref PGDRe "определение регулярного выражения" \p r без данных.
+ */

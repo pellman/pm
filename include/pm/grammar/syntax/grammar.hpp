@@ -28,7 +28,7 @@
 #include "pm/utils/optional.hpp"
 #include "pm/grammar/grammar.hpp"
 #include "pm/grammar/syntax/action.hpp"
-#include "pm/grammar/syntax/actions/base.hpp"
+#include "pm/grammar/syntax/actions/function.hpp"
 #include "pm/grammar/syntax/interpret_info.hpp"
 
 namespace pm {
@@ -62,6 +62,7 @@ public:
   // PRESERVING METHODS
   grammar::Grammar interpret() const;
   grammar::Grammar interpret(InterpretInfo & ii) const;
+  regexp::Regexp interpret_as_regexp() const;
   
 private:
   // PRESERVING METHODS

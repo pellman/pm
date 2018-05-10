@@ -46,9 +46,9 @@ public:
   inline void send(const Set & set) const;
   // ACCESS METHODS
   // = access =
-  const type_abuse::DPtr & data(size_t i) const;
-  template<typename StoredType>
-  StoredType & val(size_t i) const;
+  const type_abuse::DPtr & ptr(size_t i) const;
+  template<typename T>
+  T & data(size_t i) const;
 
 private:
   // METHODS
@@ -68,8 +68,8 @@ void Set::unset() const {ptr_.unset();}
 
 void Set::send(const Set & set) const {set.receive(*this);}
 
-template<typename StoredType>
-StoredType & Set::val(size_t i) const {return ptr_.val().at(i).val<StoredType>();}
+template<typename T>
+T & Set::data(size_t i) const {return ptr_.val().at(i).val<T>();}
 
 } // namespace dataset
 } // namespace pm

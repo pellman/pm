@@ -37,8 +37,8 @@ namespace funs {
 BinFun clone();
 BinFun swap();
 UnFun unset();
-template<typename DataType, typename ... Args>
-UnFun set(Args && ... args) {return mutator_part(type_abuse::funs::clone(), make_dptr<DataType>(std::forward<Args>(args) ...));}
+template<typename T, typename ... Args>
+UnFun set(Args && ... args) {return mutator_part(type_abuse::funs::clone(), make_dptr<T>(std::forward<Args>(args) ...));}
 
 // arithmetic
 template<typename Left, typename Right = Left>

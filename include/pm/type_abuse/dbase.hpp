@@ -31,14 +31,14 @@ public:
   virtual DBase * clone() const {return new DBase();}
 };
 
-template<typename StoredType>
+template<typename T>
 class DDeriv
   : public DBase {
 public:
   template<typename ... Args>
   DDeriv(Args && ... args) : value(std::forward<Args>(args) ...) {}
   DDeriv * clone() const override {return new DDeriv(*this);}
-  StoredType value;
+  T value;
 };
 
 } // namespace type_abuse

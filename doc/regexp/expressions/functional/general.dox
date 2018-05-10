@@ -1,0 +1,188 @@
+/*! \file include/pm/regexp/expressions/functional/general.hpp
+ *  \brief Содержит интерфейс создания \ref PRLFnGeneral "готовых общих функциональных регулярных выражений": текущие и сохранённые данные \ref pm::regexp::Context "контекста" изменяются согласно произвольным \ref GNNDataFunction "функциям над данными".
+ *  \ingroup ModuleRegexp
+ *  
+ *  Все выражения, создаваемые при помощи интерфейса, \ref PRSafety "безопасны".
+ *  
+ *  Особенности \ref pm::regexp::RegexpInterface "метода разбора" \ref pm::stream::Stream "буферизованного потока":
+ *  - Символы не читаются из потока и не возвращаются в поток.
+ *  - Разбор всегда успешен, \ref GNNParsing "принимается" пустая строка.
+ *  
+ *  Выражение определяется:
+ *  - *подфункцией*: содержащейся одноместной или двуместной \ref GNNDataFunction "функцией над данными";
+ *  - *целевыми данными*: упорядоченным набором данных \ref pm::regexp::Context "контекста", к которым \ref GNNDataFunction "применяется" подфункция.
+ *  
+ *  \ref PRSafety "Способ изменения данных": подфункция применяется к целевым данным.
+ *  
+ *  В документации интерфейса описываются подфункция и целевые данные выражения, возвращаемого вызовом функции интерфейса
+ *  
+ *  \sa \ref PRList "Список готовых регулярных выражений"
+ */
+
+/*! \name Одноместная функция над текущими данными
+ *  \anchor PRFunctionUnaryCurrent
+ *  Подфункция: одноместная функция над данными `F`.
+ *  
+ *  Целевые данные: текущие данные контекста
+ */
+//!\{
+
+  /*! \fn Regexp pm::regexp::mc(const type_abuse::UnFun & f)
+   *  \brief `F` - \ref GNDFPure "чистая" функция над данными, задаваемая функцией \p f.
+   */
+
+  /*! \fn Regexp pm::regexp::mc(type_abuse::UnFun && f)
+   *  \brief `F` - \ref GNDFPure "чистая" функция над данными, задаваемая функцией \p f.
+   */
+
+  /*! \fn Regexp pm::regexp::mcref(Fun && f)
+   *  \brief `F` - \ref GNDFRef "ссылочная" функция над данными, задаваемая функцией \p f.
+   */
+
+  /*! \fn Regexp pm::regexp::cref(AnyRet (*f)(Arg))
+   *  \brief `F` - \ref GNDFRef "ссылочная" функция над данными, задаваемая функцией \p f.
+   */
+
+  /*! \fn Regexp pm::regexp::mcren(Fun && f)
+   *  \brief `F` - \ref GNDFRen "переустанавливающая" функция над данными, задаваемая функцией \p f.
+   */
+
+  /*! \fn Regexp pm::regexp::cren(Ret (*f)(Arg))
+   *  \brief `F` - \ref GNDFRen "переустанавливающая" функция над данными, задаваемая функцией \p f.
+   */
+
+  /*! \fn Regexp pm::regexp::mcret(Fun && f)
+   *  \brief `F` - \ref GNDFRet "устанавливающая" функция над данными, задаваемая функцией \p f.
+   */
+
+  /*! \fn Regexp pm::regexp::cret(Ret (*f)())
+   *  \brief `F` - \ref GNDFRet "устанавливающая" функция над данными, задаваемая функцией \p f.
+   */
+
+//!\}
+
+/*! \name Одноместная функция над сохранёнными данными
+ *  \anchor PRFunctionUnarySaved
+ *  Подфункция: одноместная функция над данными `F`.
+ *  
+ *  Целевые данные: сохранённые данные контекста.
+ */
+//!\{
+
+  /*! \fn Regexp pm::regexp::ms(const type_abuse::UnFun & f)
+   *  \brief `F` - \ref GNDFPure "чистая" функция над данными, задаваемая функцией \p f.
+   */
+
+  /*! \fn Regexp pm::regexp::ms(type_abuse::UnFun && f)
+   *  \brief `F` - \ref GNDFPure "чистая" функция над данными, задаваемая функцией \p f.
+   */
+
+  /*! \fn Regexp pm::regexp::msref(Fun && f)
+   *  \brief `F` - \ref GNDFRef "ссылочная" функция над данными, задаваемая функцией \p f.
+   */
+
+  /*! \fn Regexp pm::regexp::sref(AnyRet (*f)(Arg))
+   *  \brief `F` - \ref GNDFRef "ссылочная" функция над данными, задаваемая функцией \p f.
+   */
+
+  /*! \fn Regexp pm::regexp::msren(Fun && f)
+   *  \brief `F` - \ref GNDFRen "переустанавливающая" функция над данными, задаваемая функцией \p f.
+   */
+
+  /*! \fn Regexp pm::regexp::sren(Ret (*f)(Arg))
+   *  \brief `F` - \ref GNDFRen "переустанавливающая" функция над данными, задаваемая функцией \p f.
+   */
+
+  /*! \fn Regexp pm::regexp::msret(Fun && f)
+   *  \brief `F` - \ref GNDFRet "устанавливающая" функция над данными, задаваемая функцией \p f.
+   */
+
+  /*! \fn Regexp pm::regexp::sret(Ret (*f)())
+   *  \brief `F` - \ref GNDFRet "устанавливающая" функция над данными, задаваемая функцией \p f.
+   */
+
+//!\}
+
+/*! \name Двуместная функция над текущими данными
+ *  \anchor PRFunctionBinaryCurrent
+ *  Подфункция: двуместная функция над данными `F`.
+ *  
+ *  Целевые данные: текущие данные контекста, сохранённые данные контекста.
+ */
+//!\{
+
+  /*! \fn Regexp pm::regexp::ac(const type_abuse::BinFun & f)
+   *  \brief `F` - \ref GNDFPure "чистая" функция над данными, задаваемая функцией \p f.
+   */
+
+  /*! \fn Regexp pm::regexp::ac(type_abuse::BinFun && f)
+   *  \brief `F` - \ref GNDFPure "чистая" функция над данными, задаваемая функцией \p f.
+   */
+
+  /*! \fn Regexp pm::regexp::acref(Fun && f)
+   *  \brief `F` - \ref GNDFRef "ссылочная" функция над данными, задаваемая функцией \p f.
+   */
+
+  /*! \fn Regexp pm::regexp::cref(AnyRet (*f)(Arg1, Arg2))
+   *  \brief `F` - \ref GNDFRef "ссылочная" функция над данными, задаваемая функцией \p f.
+   */
+
+  /*! \fn Regexp pm::regexp::acren(Fun && f)
+   *  \brief `F` - \ref GNDFRen "переустанавливающая" функция над данными, задаваемая функцией \p f.
+   */
+
+  /*! \fn Regexp pm::regexp::cren(Ret (*f)(Arg1, Arg2))
+   *  \brief `F` - \ref GNDFRen "переустанавливающая" функция над данными, задаваемая функцией \p f.
+   */
+
+  /*! \fn Regexp pm::regexp::acret(Fun && f)
+   *  \brief `F` - \ref GNDFRet "устанавливающая" функция над данными, задаваемая функцией \p f.
+   */
+
+  /*! \fn Regexp pm::regexp::cret(Ret (*f)(Arg))
+   *  \brief `F` - \ref GNDFRet "устанавливающая" функция над данными, задаваемая функцией \p f.
+   */
+
+//!\}
+
+/*! \name Двуместная функция над сохранёнными данными
+ *  \anchor PRFunctionBinarySaved
+ *  Подфункция: двуместная функция над данными `F`.
+ *  
+ *  Целевые данные: сохранённые данные контекста, текущие данные контекста.
+ */
+//!\{
+
+  /*! \fn Regexp pm::regexp::as(const type_abuse::BinFun & f)
+   *  \brief `F` - \ref GNDFPure "чистая" функция над данными, задаваемая функцией \p f.
+   */
+
+  /*! \fn Regexp pm::regexp::as(type_abuse::BinFun && f)
+   *  \brief `F` - \ref GNDFPure "чистая" функция над данными, задаваемая функцией \p f.
+   */
+
+  /*! \fn Regexp pm::regexp::asref(Fun && f)
+   *  \brief `F` - \ref GNDFRef "ссылочная" функция над данными, задаваемая функцией \p f.
+   */
+
+  /*! \fn Regexp pm::regexp::sref(AnyRet (*f)(Arg1, Arg2))
+   *  \brief `F` - \ref GNDFRef "ссылочная" функция над данными, задаваемая функцией \p f.
+   */
+
+  /*! \fn Regexp pm::regexp::asren(Fun && f)
+   *  \brief `F` - \ref GNDFRen "переустанавливающая" функция над данными, задаваемая функцией \p f.
+   */
+
+  /*! \fn Regexp pm::regexp::sren(Ret (*f)(Arg1, Arg2))
+   *  \brief `F` - \ref GNDFRen "переустанавливающая" функция над данными, задаваемая функцией \p f.
+   */
+
+  /*! \fn Regexp pm::regexp::asret(Fun && f)
+   *  \brief `F` - \ref GNDFRet "устанавливающая" функция над данными, задаваемая функцией \p f.
+   */
+
+  /*! \fn Regexp pm::regexp::sret(Ret (*f)(Arg))
+   *  \brief `F` - \ref GNDFRet "устанавливающая" функция над данными, задаваемая функцией \p f.
+   */
+
+//!\}

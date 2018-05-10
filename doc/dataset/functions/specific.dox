@@ -1,0 +1,152 @@
+/*! \file include/pm/dataset/functions/specific.hpp
+ *  \brief Содержит интерфейс создания \ref PDSpecific "специальных функций над совокупностью данных".
+ *  \ingroup ModuleDataset
+ *  
+ *  Вызовом функции интерфейса возвращается \ref pm::dataset::Function "функция над совокупностью данных" с документируемым \ref pm::dataset::FunctionInterface "действием".
+ *  
+ *  В описании действия ds обозначает \ref pm::dataset::Set "совокупность данных", к которой применяется действие.
+ *  
+ *  \sa \ref PDatasetFunction "Список готовых функций над совокупностью данных и их определений"
+ *  \sa \ref pm::dataset::Set "ds[[i]]"
+ *  \sa \ref pm::type_abuse::DPtr "Перезапись, обмен, установка значения и сброс данных"
+ *  \sa \ref GNSLifetime "Инициализация, копирование, перемещение, уничтожение объекта; инициализируемый, копируемый, перемещаемый, уничтожаемый тип"
+ */
+
+/*! \fn Function pm::dataset::clone(size_t target, size_t source)
+ *  \brief Действие: данные ds[[\p target]] перезаписываются данными ds[[\p source]].
+ *  \anchor PDClone
+ *  
+ *  \pre В момент выполнения действия: если данные ds[[\p source]] непусты, то тип этих данных копируем.
+ */
+
+/*! \fn Function pm::dataset::set(size_t target, Args && ... args)
+ *  \brief Содержит объект типа \p T, инициализированный от \p args. Действие: данные ds[[\p target]] перезаписываются от содержащегося объекта.
+ *  \anchor PDSet
+ *  
+ *  \pre Тип \p T инициализируем от аргументов \p args, копируем и уничтожаем.
+ */
+
+/*! \fn Function pm::dataset::swap(size_t target1, size_t target2)
+ *  \brief Действие: данные ds[[\p target1]] и ds[[\p target2]] обмениваются.
+ *  \anchor PDSwap
+ */
+
+/*! \fn Function pm::dataset::unset(size_t target)
+ *  \brief Действие: данные ds[[\p target]] сбрасываются.
+ *  \anchor PDUnset
+ */
+
+/*! \fn Function pm::dataset::add(size_t target_left, size_t target_right)
+ *  \brief Действие: выполняется выражение ds[[\p target_left]] += ds[[\p target_right]].
+ *  \anchor PDAdd
+ *  
+ *  \pre В момент выполнения действия: данные ds[[\p target_left]] непусты и имеют тип \p Left.
+ *  \pre В момент выполнения действия: данные ds[[\p target_right]] непусты и имеют тип \p Right.
+ *  \pre Выражение `l += r` корректно для объекта `l` типа \p Left и объекта `r` типа \p Right.
+ */
+
+/*! \fn Function pm::dataset::add(size_t target, Right && i)
+ *  \brief Содержит объект o типа \p Right, инициализированный от \p i. Действие: выполняется выражение ds[[\p target]] += o.
+ *  \anchor PDAddConstant
+ *  
+ *  \pre В момент выполнения действия: данные ds[[\p target_left]] непусты и имеют тип \p Left.
+ *  \pre Тип \p Right перемещаем и уничтожаем.
+ *  \pre Выражение `l += r` корректно для объекта `l` типа \p Left и объекта `r` типа \p Right.
+ */
+
+/*! \fn Function pm::dataset::div(size_t target_left, size_t target_right)
+ *  \brief Действие: выполняется выражение ds[[\p target_left]] /= ds[[\p target_right]].
+ *  \anchor PDDiv
+ *  
+ *  \pre В момент выполнения действия: данные ds[[\p target_left]] непусты и имеют тип \p Left.
+ *  \pre В момент выполнения действия: данные ds[[\p target_right]] непусты и имеют тип \p Right.
+ *  \pre Выражение `l /= r` корректно для объекта `l` типа \p Left и объекта `r` типа \p Right.
+ */
+
+/*! \fn Function pm::dataset::div(size_t target, Right && i)
+ *  \brief Содержит объект o типа \p Right, инициализированный от \p i. Действие: выполняется выражение ds[[\p target]] /= o.
+ *  \anchor PDDivConstant
+ *  
+ *  \pre В момент выполнения действия: данные ds[[\p target_left]] непусты и имеют тип \p Left.
+ *  \pre Тип \p Right перемещаем и уничтожаем.
+ *  \pre Выражение `l /= r` корректно для объекта `l` типа \p Left и объекта `r` типа \p Right.
+ */
+
+/*! \fn Function pm::dataset::mod(size_t target_left, size_t target_right)
+ *  \brief Действие: выполняется выражение ds[[\p target_left]] %= ds[[\p target_right]].
+ *  \anchor PDMod
+ *  
+ *  \pre В момент выполнения действия: данные ds[[\p target_left]] непусты и имеют тип \p Left.
+ *  \pre В момент выполнения действия: данные ds[[\p target_right]] непусты и имеют тип \p Right.
+ *  \pre Выражение `l %= r` корректно для объекта `l` типа \p Left и объекта `r` типа \p Right.
+ */
+
+/*! \fn Function pm::dataset::mod(size_t target, Right && i)
+ *  \brief Содержит объект o типа \p Right, инициализированный от \p i. Действие: выполняется выражение ds[[\p target]] %= o.
+ *  \anchor PDModConstant
+ *  
+ *  \pre В момент выполнения действия: данные ds[[\p target_left]] непусты и имеют тип \p Left.
+ *  \pre Тип \p Right перемещаем и уничтожаем.
+ *  \pre Выражение `l %= r` корректно для объекта `l` типа \p Left и объекта `r` типа \p Right.
+ */
+
+/*! \fn Function pm::dataset::mul(size_t target_left, size_t target_right)
+ *  \brief Действие: выполняется выражение ds[[\p target_left]] *= ds[[\p target_right]].
+ *  \anchor PDMul
+ *  
+ *  \pre В момент выполнения действия: данные ds[[\p target_left]] непусты и имеют тип \p Left.
+ *  \pre В момент выполнения действия: данные ds[[\p target_right]] непусты и имеют тип \p Right.
+ *  \pre Выражение `l *= r` корректно для объекта `l` типа \p Left и объекта `r` типа \p Right.
+ */
+
+/*! \fn Function pm::dataset::mul(size_t target, Right && i)
+ *  \brief Содержит объект o типа \p Right, инициализированный от \p i. Действие: выполняется выражение ds[[\p target]] *= o.
+ *  \anchor PDMulConstant
+ *  
+ *  \pre В момент выполнения действия: данные ds[[\p target_left]] непусты и имеют тип \p Left.
+ *  \pre Тип \p Right перемещаем и уничтожаем.
+ *  \pre Выражение `l *= r` корректно для объекта `l` типа \p Left и объекта `r` типа \p Right.
+ */
+
+/*! \fn Function pm::dataset::sub(size_t target_left, size_t target_right)
+ *  \brief Действие: выполняется выражение ds[[\p target_left]] -= ds[[\p target_right]].
+ *  \anchor PDSub
+ *  
+ *  \pre В момент выполнения действия: данные ds[[\p target_left]] непусты и имеют тип \p Left.
+ *  \pre В момент выполнения действия: данные ds[[\p target_right]] непусты и имеют тип \p Right.
+ *  \pre Выражение `l -= r` корректно для объекта `l` типа \p Left и объекта `r` типа \p Right.
+ */
+
+/*! \fn Function pm::dataset::sub(size_t target, Right && i)
+ *  \brief Содержит объект o типа \p Right, инициализированный от \p i. Действие: выполняется выражение ds[[\p target]] -= o.
+ *  \anchor PDSubConstant
+ *  
+ *  \pre В момент выполнения действия: данные ds[[\p target_left]] непусты и имеют тип \p Left.
+ *  \pre Тип \p Right перемещаем и уничтожаем.
+ *  \pre Выражение `l -= r` корректно для объекта `l` типа \p Left и объекта `r` типа \p Right.
+ */
+
+/*! \fn Function pm::dataset::char_to_digit(size_t target)
+ *  \brief Действие: в данные ds[[\p target]] устанавливается значение типа \p Int от аргумента (ds[[\p target]] - '0').
+ *  \anchor PDCharToDigit
+ *  
+ *  \pre В момент выполнения действия: данные ds[[\p target]] непусты и имеют тип char.
+ *  \pre Тип \p Int инициализируем от значения типа char и уничтожаем.
+ */
+
+/*! \fn Function pm::dataset::char_to_string(size_t target)
+ *  \brief Действие: в данные ds[[\p target]] устанавливается значение типа std::string от аргументов 1, ds[[\p target]].
+ *  \anchor PDCharToString
+ *  
+ *  std::string(1, c) - это строка длины 1, содержащая символ c.
+ *  
+ *  \pre В момент выполнения действия: данные ds[[\p target]] непусты и имеют тип char.
+ */
+
+/*! \fn Function pm::dataset::convert(size_t target)
+ *  \brief Действие: в данные ds[[\p target]] устанавливается значение типа \p To от аргумента ds[[\p target]].
+ *  \anchor PDConvert
+ *  
+ *  \pre В момент выполнения действия: данные по указателю непусты и имеют тип \p From.
+ *  \pre Тип \p To инициализируем от значения типа \p From и уничтожаем.
+ */

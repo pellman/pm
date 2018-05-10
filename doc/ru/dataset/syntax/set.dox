@@ -1,9 +1,0 @@
-/*! \file include/pm/dataset/syntax/set.hpp
- *  \brief Содержит класс \ref ConDataset "определения совокупности данных" pm::dataset::syntax::Set - синоним класса utils::Numeration<std::string>.
- *  
- *  \ingroup ModuleDataset
- */
-
-/*! \typedef utils::Numeration<std::string> pm::dataset::syntax::Set
- *  \brief Класс \ref ConDataset "определения совокупности данных".
- */
