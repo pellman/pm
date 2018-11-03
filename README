@@ -1,5 +1,7 @@
 You are reading README for the library pm, version 2.1.ru.0.
 
+The library contains regular expressions, grammars, "tricky" pointers and other puzzling stuff.
+
 Deabbreviation of the library name: puzzling modules.
 
 "ru" in the version means that the documentation (except this README) is in Russian. (!!!)
