@@ -1,6 +1,0 @@
-/*! \file include/pm/dataset/syntax/functions.hpp
- *  \brief Подключает интерфейс создания \ref PDatasetFunction "определений готовых функций над совокупностью данных".
- *  \ingroup ModuleDataset
- *  
- *  \sa \ref pm::dataset::syntax::Function "Определение функции над совокупностью данных"
- */

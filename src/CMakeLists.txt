@@ -1,5 +1,5 @@
-add_subdirectory("dataset")
+add_subdirectory("data")
 add_subdirectory("grammar")
-add_subdirectory("regexp")
+add_subdirectory("regex")
+add_subdirectory("set")
 add_subdirectory("stream")
-add_subdirectory("type_abuse")

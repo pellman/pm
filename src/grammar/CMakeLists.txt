@@ -1,5 +1,5 @@
-add_subdirectory("actions")
-add_subdirectory("syntax")
+add_subdirectory("definitions")
+add_subdirectory("utils")
 
 file(GLOB src_grammar_base
   "*.cpp"
@@ -11,9 +11,10 @@ set(part_grammar_base
   $<TARGET_OBJECTS:ol_grammar_base>
   CACHE INTERNAL "КОСТЫЛЬ, нельзя так просто заалиасить объектную библиотеку"
 )
+
 set(part_grammar
-  ${part_grammar_actions}
   ${part_grammar_base}
-  ${part_grammar_syntax}
+  ${part_grammar_definitions}
+  ${part_grammar_utils}
   CACHE INTERNAL "КОСТЫЛЬ, нельзя так просто заалиасить объектную библиотеку"
 )

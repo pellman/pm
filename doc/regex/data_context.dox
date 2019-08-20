@@ -1,0 +1,98 @@
+/*! \file include/pm/regex/data_context.hpp
+ *  \brief Содержит структуру регулярных контекстов данных pm::regex::DataContext и перечисление целей этих контекстов pm::regex::Target.
+ *  \ingroup ModuleRegex
+ */
+
+/*! \struct pm::regex::DataContext
+ *  \brief Структура регулярных контекстов данных.
+ *  \ingroup ModuleRegex
+ *  
+ *  
+ *  Составная часть \ref pm::regex::Context "регулярного контекста разбора".
+ *  
+ *  Содержит \ref DTypes "флаг", текущие \ref pm::data::Data "данные" и аккумулированные данные.
+ *  
+ *  Особые свойства класса
+ *  ==
+ *  
+ *  \ref DValidState "Стандартно-корректен".
+ *  
+ *  Неявные методы
+ *  ==
+ *  
+ *      DataContext()
+ *  
+ *  Инициализировать контекст с опущенным флагом, пустыми текущими данными и пустыми аккумулированными данными.
+ *  
+ *  
+ *      DataContext(const DataContext & context)
+ *  
+ *  Инициализировать контекст, содержащий копию содержимого контекста \p context.
+ *  
+ *  \pre Типы объектов, хранящихся в непустых данных контекста \p context, \ref DObjectModification "копируемы".
+ *  
+ *  
+ *      DataContext(DataContext && context)
+ *  
+ *  Инициализировать контекст, переместив в него содержимое контекста \p context.
+ *  
+ *  
+ *      DataContext & operator =(const DataContext & context)
+ *  
+ *  Перезаписать содержимое контекста \ref DSelf "self" копией содержимого контекста \p context.
+ *  
+ *  \pre Типы объектов, хранящихся в непустых данных контекста \p context, \ref DObjectModification "копируемы через присваивание".
+ *  \return Self.
+ *  
+ *      DataContext & operator =(DataContext && context)
+ *  
+ *  Перезаписать содержимое контекста \ref DSelf "self" перемещением содержимого контекста \p context.
+ *  
+ *  \return Self.
+ *  
+ *      ~DataContext()
+ *  
+ *  Уничтожить контекст.
+ */
+
+/*! \var data::Data & pm::regex::DataContext::data(Target t)
+ *  \brief Вернуть ссылку на данные контекста \ref pm::regex::Target "по цели" \p t.
+ */
+
+/*! \var const data::Data & pm::regex::DataContext::data(Target t) const
+ *  \brief Вернуть ссылку на данные контекста \ref pm::regex::Target "по цели" \p t.
+ */
+
+/*! \var bool pm::regex::DataContext::flag
+ *  \brief Флаг контекста.
+ */
+
+/*! \var data::Data pm::regex::DataContext::dcur
+ *  \brief Текущие данные контекста.
+ */
+
+/*! \var data::Data pm::regex::DataContext::dacc
+ *  \brief Аккумулированные данные контекста.
+ */
+
+/*! \enum pm::regex::Target
+ *  \brief Перечисление целей \ref pm::regex::DataContext "регулярного контекста данных".
+ *  \ingroup ModuleRegex
+ *  
+ *  
+ *  Используется в методах регулярного контекста данных и в интерфейсе создания \ref MRSpec "реализованных регулярных выражений".
+ *  
+ *  Для цели t записью !t обозначается цель, противоположная t.
+ */
+
+/*! \var pm::regex::Target pm::regex::Target::cur
+ *  \brief Цель: текущие данные. *Противоположность* цели pm::regex::Target::acc.
+ */
+
+/*! \var pm::regex::Target pm::regex::Target::acc
+ *  \brief Цель: аккумулированные данные. *Противоположность* цели pm::regex::Target::cur.
+ */
+
+/*! \fn pm::regex::Target & pm::regex::complement(Target t)
+ *  \brief Вернуть цель, противоположную t.
+ */

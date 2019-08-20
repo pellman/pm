@@ -1,0 +1,2028 @@
+/*! \page MRegex Регулярные выражения
+ *  
+ *  
+ *  \tableofcontents
+ *  
+ *  Перед изучением этой страницы полезно прочитать \ref PIRegex "общие слова о регулярных выражениях".
+ *  
+ *  В методах \ref pm::regex::Regex "регулярных выражений" реализованы процедуры, позволяющие, прочитывая \ref DTypes "символы" из \ref DTypes "стандартных потоков ввода" и \ref pm::stream::Stream "потоков разбора",
+ *  - проверять, начинается ли поток с последовательности символов, подходящей под общий вид, задаваемый регулярным выражением, и
+ *  - извлекать "полезную информацию", определяемую этой последовательностью, записывая её в \ref pm::regex::Context "регулярный контекст разбора" или \ref pm::regex::DataContext "регулярный контекст данных".
+ *  
+ *  Регулярное выражение полностью определяется его \ref pm::regex::Regex "процедурой регулярного разбора" потока разбора в регулярном контексте данных.
+ *  
+ *  \anchor SafeRParse
+ *  Процедура разбора регулярного выражения *безопасна* если она обладает следующими свойствами:
+ *  - Процедура \ref ParseProcedure "корректна".
+ *  - Успешность разбора и принимаемая строка не зависят от содержимого контекста в начале разбора.
+ *  - Флаг контекста не изменяется разбором.
+ *  - Если флаг контекста опущен, то данные контекста не изменяются разбором.
+ *  
+ *  Далее документируются все регулярные выражения, которые можно получить средствами библиотеки (кроме регулярных выражений, которые можно получить, используя \ref MGrammar "грамматики").
+ *  
+ *  \section MRSpec Особенности документации
+ *  
+ *  \anchor MRSpecInterface Документируемые \ref pm::regex::Regex "регулярные выражения" возвращаются вызовами функций и операторов *интерфейса создания*.
+ *  Все эти функции находятся в пространстве имён pm::regex .
+ *  
+ *  Для возвращаемых регулярных выражений документируется устройство \ref pm::regex::Regex "процедуры регулярного разбора".
+ *  Все эти процедуры \ref SafeRParse "безопасны" при создании выражений согласно документации.
+ *  
+ *  Используемые обозначения:
+ *  - \anchor MRSpecS S: \ref pm::stream::Stream "поток разбора", посылаемый на вход процедуре разбора.
+ *  - \anchor MRSpecC C: \ref pm::regex::DataContext "регулярный контекст данных", посылаемый на вход процедуре разбора.
+ *  
+ *  Пункты документации выражения:
+ *  - \anchor MRSpecParameters *Параметры*: составные части выражения, значения которых фиксируются при создании и влияют на процедуру разбора.
+ *  - \anchor MRSpecConditions *Условия разбора*: ограничения на момент начала разбора, при которых разбор корректен.
+ *  - \anchor MRSpecFlag *Критерий успешности*: необходимые и достаточные условия успешности разбора.
+ *  - \anchor MRSpecStr *Принимаемая строка*: зависимость вида принятой строки от символов, содержащихся в S.
+ *  - \anchor MRSpecData *Изменение данных*: описание изменения текущих и аккумулированных данных контекста C в тех случаях, когда разбор успешен и флаг контекста поднят.
+ *  
+ *  \section MRTerminal Терминальные выражения
+ *  
+ *  Процедура разбора терминального выражения \ref SafeRParse "безопасна".
+ *  
+ *  \ref MRSpecData "Изменение данных":
+ *  - Аккумулированные данные не изменяются.
+ *  - \anchor MRSpecCurrentData Текущие данные изменяются согласно *изменению текущих данных*.
+ *  
+ *  \subsection MRTrivial Тривиальные выражения
+ *  
+ *  Являются \ref MRTerminal "терминальными выражениями".
+ *  
+ *  \ref MRSpecStr "Принимаемая строка" всегда пуста.
+ *  
+ *  \ref MRSpecCurrentData "Изменение текущих данных": данные не изменяются.
+ *  
+ *  \subsubsection MRTrue Успех
+ *  
+ *  \ref MRTrivial "Тривиальное выражение".
+ *  
+ *  \ref MRSpecFlag "Критерий успешности": разбор всегда успешен.
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>re_true()
+ *    <td>
+ *      include/pm/regex/expressions/terminal/trivial.hpp
+ *      
+ *      include/pm/regex/expressions/terminal.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  </table>
+ *  
+ *  \subsubsection MRFalse Неуспех
+ *  
+ *  \ref MRTrivial "Тривиальное выражение".
+ *  
+ *  \ref MRSpecFlag "Критерий успешности": разбор всегда неуспешен.
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>re_false()
+ *    <td>
+ *      include/pm/regex/expressions/terminal/trivial.hpp
+ *      
+ *      include/pm/regex/expressions/terminal.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  </table>
+ *  
+ *  \subsubsection MREnd Конец потока
+ *  
+ *  \ref MRTrivial "Тривиальное выражение".
+ *  
+ *  \ref MRSpecFlag "Критерий успешности": разбор успешен \<=\> поток \ref MRSpecS "S" пуст.
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>end()
+ *    <td>
+ *      include/pm/regex/expressions/terminal/trivial.hpp
+ *      
+ *      include/pm/regex/expressions/terminal.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  </table>
+ *  
+ *  \subsubsection MRUnTrivial Универсальное тривиальное выражение
+ *  
+ *  \ref MRTrivial "Тривиальное выражение".
+ *  
+ *  \ref MRSpecParameters "Параметр": функция matcher сигнатуры bool (pm::stream::Stream).
+ *  
+ *  При разборе выполняется *сканирование*: вызов matcher(\ref MRSpecS "S").
+ *  
+ *  \ref MRSpecFlag "Критерий успешности": разбор успешен \<=\> сканирование вернуло true.
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Типы аргументов
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>trivial(matcher)
+ *    <td>std::function\<bool (pm::stream::Stream)\> matcher
+ *    <td>
+ *      include/pm/regex/expressions/terminal/universal.hpp
+ *      
+ *      include/pm/regex/expressions/terminal.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  </table>
+ *  
+ *  \subsection MRSymbol Символьные выражения
+ *  
+ *  Являются \ref MRTerminal "Терминальными выражениями".
+ *  
+ *  \ref MRSpecFlag "Критерий успешности": разбор успешен \<=\> поток \ref MRSpecS "S" непуст, и \ref DTypes "символ" S[0] является \anchor MRSpecGoodLetters *допустимым*.
+ *  
+ *  \ref MRSpecStr "Принимаемая строка" состоит из одного символа S[0].
+ *  
+ *  \ref MRSpecCurrentData "Изменение текущих данных": данные \ref pm::data::Data "перенаполняются" объектом типа char, равным принятому символу.
+ *  
+ *  \anchor MRSpecRange *Диапазоном* символов [l..r] в документации называется \ref DSet "множество" символов c, удовлетворяющих неравенствам l <= c и c <= r.
+ *  
+ *  \subsubsection MRAnyLetter Любой символ
+ *  
+ *  \ref MRSymbol "Символьное выражение".
+ *  
+ *  \ref MRSpecGoodLetters "Допустимые символы": все символы.
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>let()
+ *    <td>
+ *      include/pm/regex/expressions/terminal/symbol.hpp
+ *      
+ *      include/pm/regex/expressions/terminal.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  </table>
+ *  
+ *  \subsubsection MRGivenLetter Заданный символ
+ *  
+ *  \ref MRSymbol "Символьное выражение".
+ *  
+ *  \ref MRSpecParameters "Параметр": символ good_letter.
+ *  
+ *  \ref MRSpecGoodLetters "Допустимые символы": символ, равный good_letter.
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Типы аргументов
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>let(good_letter)
+ *    <td>char good_letter
+ *    <td>
+ *      include/pm/regex/expressions/terminal/symbol.hpp
+ *      
+ *      include/pm/regex/expressions/terminal.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  </table>
+ *  
+ *  \subsubsection MRGivenLetterSet Символ заданного множества
+ *  
+ *  \ref MRSymbol "Символьное выражение".
+ *  
+ *  \ref MRSpecParameters "Параметр": \ref DSet "множество" символов good_letters.
+ *  
+ *  \ref MRSpecGoodLetters "Допустимые символы": все символы, принадлежащие множеству good_letters.
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Типы аргументов
+ *    <td>Пояснение
+ *    <td colspan="2">Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>let(good_letters)
+ *    <td>std::set\<char\> good_letters
+ *    <td>
+ *    <td>
+ *      include/pm/regex/expressions/terminal/symbol.hpp
+ *      
+ *      include/pm/regex/expressions/terminal.hpp
+ *    <td rowspan="2">
+ *      include/pm/regex/expressions.hpp
+ *  <tr>
+ *    <td>let(args ...)
+ *    <td>template\<typename ... Args\> Args ... args
+ *    <td>Эквивалентно выражению let({args ...}) с \ref DPerfectForwarding "идеальной пересылкой".
+ *    <td>
+ *      include/pm/regex/expressions/derived.hpp
+ *  </table>
+ *  
+ *  \subsubsection MRGivenRange Символ заданного диапазона
+ *  
+ *  \ref MRSymbol "Символьное выражение".
+ *  
+ *  \ref MRSpecParameters "Параметры":
+ *  - символ нижней границы bottom;
+ *  - символ верхней границы top.
+ *  
+ *  \ref MRSpecGoodLetters "Допустимые символы": все символы \ref MRSpecRange "диапазона" [bottom..top].
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Типы аргументов
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>range(bottom, top)
+ *    <td>
+ *      char bottom
+ *      
+ *      char top
+ *    <td>
+ *      include/pm/regex/expressions/terminal/symbol.hpp
+ *      
+ *      include/pm/regex/expressions/terminal.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  </table>
+ *  
+ *  \subsubsection MRCIdHeadLetter Головной символ идентификатора языка C
+ *  
+ *  \ref MRSymbol "Символьное выражение".
+ *  
+ *  \ref MRSpecGoodLetters "Допустимые символы": все символы \ref MRSpecRange "диапазонов" ['a'..'z'] и ['A'..'Z'] и символ '_'.
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>c_id_head_letter()
+ *    <td>
+ *      include/pm/regex/expressions/terminal/symbol.hpp
+ *      
+ *      include/pm/regex/expressions/terminal.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  </table>
+ *  
+ *  \subsubsection MRCIdTailLetter Хвостовой символ идентификатора языка C
+ *  
+ *  \ref MRSymbol "Символьное выражение".
+ *  
+ *  \ref MRSpecGoodLetters "Допустимые символы": все символы \ref MRSpecRange "диапазонов" ['a'..'z'], ['A'..'Z'] и ['0'..'9'] и символ '_'.
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>c_id_tail_letter()
+ *    <td>
+ *      include/pm/regex/expressions/terminal/symbol.hpp
+ *      
+ *      include/pm/regex/expressions/terminal.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  </table>
+ *  
+ *  \subsubsection MRDigitLetter Символ десятичной цифры
+ *  
+ *  \ref MRSymbol "Символьное выражение".
+ *  
+ *  \ref MRSpecGoodLetters "Допустимые символы": все символы \ref MRSpecRange "диапазона" ['0'..'9'].
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>decimal_letter()
+ *    <td>
+ *      include/pm/regex/expressions/terminal/symbol.hpp
+ *      
+ *      include/pm/regex/expressions/terminal.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  </table>
+ *  
+ *  \subsubsection MRLatinLetter Латинская буква
+ *  
+ *  \ref MRSymbol "Символьное выражение".
+ *  
+ *  \ref MRSpecGoodLetters "Допустимые символы": все символы \ref MRSpecRange "диапазонов" ['a'..'z'] и ['A'..'Z'].
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>latin_letter()
+ *    <td>
+ *      include/pm/regex/expressions/terminal/symbol.hpp
+ *      
+ *      include/pm/regex/expressions/terminal.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  </table>
+ *  
+ *  \subsubsection MRLowercaseLatinLetter Маленькая латинская буква
+ *  
+ *  \ref MRSymbol "Символьное выражение".
+ *  
+ *  \ref MRSpecGoodLetters "Допустимые символы": все символы \ref MRSpecRange "диапазона" ['a'..'z'].
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>latin_lowercase_letter()
+ *    <td>
+ *      include/pm/regex/expressions/terminal/symbol.hpp
+ *      
+ *      include/pm/regex/expressions/terminal.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  </table>
+ *  
+ *  \subsubsection MRUppercaseLatinLetter Большая латинская буква
+ *  
+ *  \ref MRSymbol "Символьное выражение".
+ *  
+ *  \ref MRSpecGoodLetters "Допустимые символы": все символы \ref MRSpecRange "диапазона" ['A'..'Z'].
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>latin_uppercase_letter()
+ *    <td>
+ *      include/pm/regex/expressions/terminal/symbol.hpp
+ *      
+ *      include/pm/regex/expressions/terminal.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  </table>
+ *  
+ *  \subsubsection MRUnderscoreLetter Символ нижнего подчёркивания
+ *  
+ *  \ref MRSymbol "Символьное выражение".
+ *  
+ *  \ref MRSpecGoodLetters "Допустимые символы": символ '_'.
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>underscore_letter()
+ *    <td>
+ *      include/pm/regex/expressions/terminal/symbol.hpp
+ *      
+ *      include/pm/regex/expressions/terminal.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  </table>
+ *  
+ *  \subsubsection MRUnSymbol Универсальное символьное выражение
+ *  
+ *  \ref MRSymbol "Символьное выражение".
+ *  
+ *  \ref MRSpecParameters "Параметр": функция checker сигнатуры bool (char).
+ *  
+ *  При разборе непустого потока \ref MRSpecS "S" выполняется *проверка*: вызов checker(S[0]).
+ *  
+ *  \ref MRSpecGoodLetters "Допустимые символы": все символы, для которых проверка возвращает true.
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Типы аргументов
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>symbol(checker)
+ *    <td>std::function\<bool (char)\> checker
+ *    <td>
+ *      include/pm/regex/expressions/terminal/universal.hpp
+ *      
+ *      include/pm/regex/expressions/terminal.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  </table>
+ *  
+ *  \subsection MRString Строковые выражения
+ *  
+ *  Являются \ref MRTerminal "Терминальными выражениями".
+ *  
+ *  \ref MRSpecCurrentData "Изменение текущих данных": данные \ref pm::data::Data "перенаполняются" объектом типа std::string, равным принятой строке.
+ *  
+ *  \subsubsection MRTGivenString Заданная строка
+ *  
+ *  \ref MRString "Строковое выражение".
+ *  
+ *  \ref MRSpecParameters "Параметр": \ref DTypes "строка" s
+ *  
+ *  \ref MRSpecFlag "Критерий успешности": разбор успешен \<=\> поток \ref MRSpecS "S" начинается со строки, равной s.
+ *  
+ *  \ref MRSpecStr "Принимаемая строка": равна s.
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Типы аргументов
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>str(s)
+ *    <td>std::string s
+ *    <td>
+ *      include/pm/regex/expressions/terminal/string.hpp
+ *      
+ *      include/pm/regex/expressions/terminal.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  </table>
+ *  
+ *  \subsubsection MRStringOfGivenLength Строка заданной длины
+ *  
+ *  \ref MRString "Строковое выражение".
+ *  
+ *  \ref MRSpecParameters "Параметр": \ref DTypes "индекс" size
+ *  
+ *  \ref MRSpecFlag "Критерий успешности": разбор успешен \<=\> поток \ref MRSpecS "S" содержит хотя бы size символов.
+ *  
+ *  \ref MRSpecStr "Принимаемая строка": любая строка длины size.
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Типы аргументов
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>str(size)
+ *    <td>size_t size
+ *    <td>
+ *      include/pm/regex/expressions/terminal/string.hpp
+ *      
+ *      include/pm/regex/expressions/terminal.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  </table>
+ *  
+ *  \subsubsection MRFutureString Кратчайшая строка с заданным концом
+ *  
+ *  \ref MRString "Строковое выражение".
+ *  
+ *  \ref MRSpecParameters "Параметр": \ref DTypes "строка" s
+ *  
+ *  \ref MRSpecFlag "Критерий успешности": разбор успешен \<=\> в потоке \ref MRSpecS "S" содержится подстрока S[i:j], равная s.
+ *  
+ *  \ref MRSpecStr "Принимаемая строка": строка наименьшей возможной длины, оканчивающаяся подстрокой, равной s.
+ *  
+ *  Если поток S содержит бесконечную последовательность символов и не содержит подстроки, равной s, то разбор не завершается.
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Типы аргументов
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>future_str(s)
+ *    <td>std::string s
+ *    <td>
+ *      include/pm/regex/expressions/terminal/string.hpp
+ *      
+ *      include/pm/regex/expressions/terminal.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  </table>
+ *  
+ *  \subsubsection MRFutureOptString Кратчайшая строка с заданным концом или до конца потока
+ *  
+ *  \ref MRString "Строковое выражение".
+ *  
+ *  \ref MRSpecParameters "Параметр": \ref DTypes "строка" s
+ *  
+ *  \ref MRSpecFlag "Критерий успешности": разбор всегда успешен.
+ *  
+ *  \ref MRSpecStr "Принимаемая строка": строка наименьшей возможной длины, оканчивающаяся подстрокой, равной s, а если такой строки нет, то строка из всех символов потока \ref MRSpecS "S".
+ *  
+ *  Если поток S содержит бесконечную последовательность символов и не содержит подстроки, равной s, то разбор не завершается.
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Типы аргументов
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>future_opt_str(s)
+ *    <td>std::string s
+ *    <td>
+ *      include/pm/regex/expressions/terminal/string.hpp
+ *      
+ *      include/pm/regex/expressions/terminal.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  </table>
+ *  
+ *  \subsubsection MRUnString Универсальное строковое выражение
+ *  
+ *  \ref MRString "Строковое выражение".
+ *  
+ *  \ref MRSpecParameters "Параметр": функция matcher сигнатуры bool (pm::stream::Stream &).
+ *  
+ *  \ref MRSpecConditions "Условия разбора": процедура сканирования \ref ParseProcedure "корректна".
+ *  
+ *  При разборе выполняется *сканирование*: вызов matcher(\ref MRSpecS "S").
+ *  
+ *  \ref MRSpecFlag "Критерий успешности": разбор успешен \<=\> сканирование вернуло true.
+ *  
+ *  \ref MRSpecStr "Принимаемая строка": \ref MRSpecS "S"[i:j], где i - \ref pm::stream::Position "позиция" потока S до сканирования и j - позиция потока S после сканирования.
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Типы аргументов
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>str(matcher)
+ *    <td>std::function\<bool (pm::stream::Stream &)\> matcher
+ *    <td>
+ *      include/pm/regex/expressions/terminal/universal.hpp
+ *      
+ *      include/pm/regex/expressions/terminal.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  </table>
+ *  
+ *  \subsubsection MREnclosedString Кратчайшая строка, обрамлённая заданными началом и концом
+ *  
+ *  \ref MRString "Строковое выражение".
+ *  
+ *  \ref MRSpecParameters "Параметры":
+ *  - начальная \ref DTypes "строка" s_start;
+ *  - конечная строка s_finish.
+ *  
+ *  \ref MRSpecFlag "Критерий успешности": разбор успешен \<=\> поток начинается со строки, равной s_start, и после этой строки содержит подстроку S[i:j], равную s_finish.
+ *  
+ *  \ref MRSpecStr "Принимаемая строка": строка наименьшей возможной длины, представимая в виде s_start s s_finish, где s - произвольная строка (возможно, пустая).
+ *  
+ *  Если поток S содержит бесконечную последовательность символов, начинается со строки, равной s_start, и после этой строки не содержит подстроки, равной s_finish, то разбор не завершается.
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Типы аргументов
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>enclose(s_start, s_finish)
+ *    <td>
+ *      std::string s_start
+ *      
+ *      std::string s_finish
+ *    <td>
+ *      include/pm/regex/expressions/derived.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  </table>
+ *  
+ *  \subsubsection MREnclosedOptString Кратчайшая строка, обрамлённая заданным началом и либо заданным концом, либо концом потока
+ *  
+ *  \ref MRString "Строковое выражение".
+ *  
+ *  \ref MRSpecParameters "Параметры":
+ *  - начальная \ref DTypes "строка" s_start;
+ *  - конечная строка s_finish.
+ *  
+ *  \ref MRSpecFlag "Критерий успешности": разбор успешен \<=\> поток начинается со строки, равной s_start.
+ *  
+ *  \ref MRSpecStr "Принимаемая строка": строка наименьшей возможной длины, представимая в виде s_start s s_finish, где s - произвольная строка (возможно, пустая), а если такой строки нет, то строка из всех символов потока \ref MRSpecS "S".
+ *  
+ *  Если поток S содержит бесконечную последовательность символов, начинается со строки, равной s_start, и после этой строки не содержит подстроки, равной s_finish, то разбор не завершается.
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Типы аргументов
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>enclose_opt(s_start, s_finish)
+ *    <td>
+ *      std::string s_start
+ *      
+ *      std::string s_finish
+ *    <td>
+ *      include/pm/regex/expressions/derived.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  </table>
+ *  
+ *  \subsubsection MRCId Идентификатор языка C
+ *  
+ *  \ref MRString "Строковое выражение".
+ *  
+ *  \ref MRSpecFlag "Критерий успешности": разбор успешен \<=\> поток \ref MRSpecS "S" непуст, и S[0] - \ref MRCIdHeadLetter "головной символ идентификатора языка C".
+ *  
+ *  \ref MRSpecStr "Принимаемая строка": строка наибольшей возможной длины, являющаяся идентификатором языка C (первый символ - головной символ, остальные символы - \ref MRCIdTailLetter "хвостовые символы идентификатора языка C").
+ *  
+ *  Если поток S содержит бесконечную последовательность символов, начинается с головного символа и после него содержит только хвостовые символы, то разбор не завершается.
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>c_id()
+ *    <td>
+ *      include/pm/regex/expressions/derived.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  </table>
+ *  
+ *  \subsubsection MRDecimalString Строковая десятичная запись числа
+ *  
+ *  \ref MRString "Строковое выражение".
+ *  
+ *  \ref MRSpecFlag "Критерий успешности": разбор успешен \<=\> поток \ref MRSpecS "S" непуст, и S[0] - \ref MRDigitLetter "символ десятичной цифры".
+ *  
+ *  \ref MRSpecStr "Принимаемая строка": строка наибольшей возможной длины, состоящая только из символов десятичных цифр.
+ *  
+ *  Если поток S содержит бесконечную последовательность символов десятичных цифр, то разбор не завершается.
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>decimal_string()
+ *    <td>
+ *      include/pm/regex/expressions/derived.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  </table>
+ *  
+ *  \subsubsection MRIdUnary Идентификатор с заданным видом символов
+ *  
+ *  \ref MRString "Строковое выражение".
+ *  
+ *  \ref MRSpecParameters "Параметр": функция letter сигнатуры bool (char).
+ *  
+ *  При разборе последовательно до первого возврата значения false или до конца потока выполняются *проверки* символов S[0], S[1], ... : вызовы letter(S[0]), letter(S[1]), ... .
+ *  
+ *  \ref MRSpecFlag "Критерий успешности": разбор успешен \<=\> поток \ref MRSpecS "S" непуст, и проверка символа S[0] вернула true.
+ *  
+ *  \ref MRSpecStr "Принимаемая строка": строка, состоящая из всех символов, для которых проверка вернула true.
+ *  
+ *  Если поток S содержит бесконечную последовательность символов и все проверки возвращают true, то разбор не завершается.
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Типы аргументов
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>id(letter)
+ *    <td>std::function\<bool (char)\> letter
+ *    <td>
+ *      include/pm/regex/expressions/derived.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  </table>
+ *  
+ *  \subsubsection MRIdBinary Идентификатор с заданным видом головного и хвостовых символов
+ *  
+ *  \ref MRString "Строковое выражение".
+ *  
+ *  \ref MRSpecParameters "Параметр": функции head_letter и tail_letter сигнатуры bool (char).
+ *  
+ *  При разборе последовательно до первого возврата значения false или до конца потока выполняются *проверки* символов S[0], S[1], S[2], ... : вызовы head_letter(S[0]), tail_letter(S[1]), tail_letter(S[2]), ... .
+ *  
+ *  \ref MRSpecFlag "Критерий успешности": разбор успешен \<=\> поток \ref MRSpecS "S" непуст, и проверка символа S[0] вернула true.
+ *  
+ *  \ref MRSpecStr "Принимаемая строка": строка, состоящая из всех символов, для которых проверка вернула true.
+ *  
+ *  Если поток S содержит бесконечную последовательность символов и все проверки возвращают true, то разбор не завершается.
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Типы аргументов
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>id(head_letter, tail_letter)
+ *    <td>
+ *      std::function\<bool (char)\> head_letter
+ *      
+ *      std::function\<bool (char)\> tail_letter
+ *    <td>
+ *      include/pm/regex/expressions/derived.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  </table>
+ *  
+ *  \subsection MRTOther Другие терминальные выражения
+ *  
+ *  \subsubsection MRDecimalDigit Десятичная цифра
+ *  
+ *  \ref MRTerminal "Терминальное выражение".
+ *  
+ *  \ref MRSpecParameters "Параметр": тип Int.
+ *  
+ *  \ref MRSpecConditions "Условия разбора": тип Int \ref DObjectModification "инициализируем" от значений типа char.
+ *  
+ *  \ref MRSpecFlag "Критерий успешности": разбор успешен \<=\> поток \ref MRSpecS "S" непуст, и S[0] - \ref MRDigitLetter "символ десятичной цифры".
+ *  
+ *  \ref MRSpecStr "Принимаемая строка": строка из одного символа S[0].
+ *  
+ *  \ref MRSpecCurrentData "Изменение текущих данных": данные \ref pm::data::Data "перенаполняются" объектом типа Int, равным цифре, символ которой принят: Int(S[0] - '0').
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>decimal_digit\<Int\>()
+ *    <td>
+ *      include/pm/regex/expressions/derived.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  </table>
+ *  
+ *  \subsubsection MRDecimal Десятичное число
+ *  
+ *  \ref MRTerminal "Терминальное выражение".
+ *  
+ *  \ref MRSpecParameters "Параметр": тип Int.
+ *  
+ *  \ref MRSpecConditions "Условия разбора": тип Int \ref DObjectModification "инициализируем" от значения 0, и выражение x = x * 10 + c корректно для любых объектов x типа Int и c типа char.
+ *  
+ *  \ref MRSpecFlag "Критерий успешности": разбор успешен \<=\> поток \ref MRSpecS "S" непуст, и S[0] - \ref MRDigitLetter "символ десятичной цифры".
+ *  
+ *  \ref MRSpecStr "Принимаемая строка": строка наибольшей возможной длины, состоящая из символов десятичных цифр.
+ *  
+ *  \ref MRSpecCurrentData "Изменение текущих данных": данные \ref pm::data::Data "перенаполняются" объектом типа Int, равным числу x, строковая запись которого разобрана:
+ *    \anchor StringToDecimalConversion начиная с числа x = Int(0), поочерёдно для каждого символа c принятой строки выполняется *преобразование* x = x * 10 + (c - '0'), и данные перенаполняются числом после всех преобразований.
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>decimal\<Int\>()
+ *    <td>
+ *      include/pm/regex/expressions/derived.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  </table>
+ *  
+ *  \section MRFlow Управляющие выражения
+ *  
+ *  \ref MRSpecParameters "Параметры" управляющего выражения - это \anchor MRSpecSubre *подвыражения*: одно или несколько регулярных выражений.
+ *  
+ *  \anchor MRSpecSubparse В процедуре разбора управляющего выражения заданным образом комбинируются *подразборы*: разборы подвыражениями.
+ *  
+ *  \ref MRSpecConditions "Условия разбора", действующие для всех управляющих выражений: процедуры разбора всех подвыражений \ref SafeRParse "безопасны".
+ *  
+ *  \subsection MRAlternative Альтернатива
+ *  
+ *  \ref MRFlow "Управляющее выражение".
+ *  
+ *  \ref MRSpecSubre "Подвыражения": r1, r2, ..., rk для произвольного k.
+ *  
+ *  Последовательно выполняются \ref MRSpecSubparse "подразборы" потока \ref MRSpecS "S" выражениями r1, r2, ..., rk - до первого успеха или до исчерпания подвыражений.
+ *  
+ *  \ref MRSpecFlag "Критерий успешности": разбор успешен \<=\> один из подразборов успешен.
+ *  
+ *  \ref MRSpecStr "Принимаемая строка": равна строке, принятой успешным подразбором.
+ *  
+ *  \ref MRSpecData "Изменение данных": данные изменяются успешным подразбором.
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Типы аргументов
+ *    <td>Пояснения
+ *    <td colspan="2">Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>alt(rseq)
+ *    <td>std::vector\<pm::regex::Regex\> rseq
+ *    <td>Подвыражения - элементы вектора rseq в том же порядке.
+ *    <td>
+ *      include/pm/regex/expressions/flow/alt.hpp
+ *      
+ *      include/pm/regex/expressions/flow.hpp
+ *    <td rowspan="3">
+ *      include/pm/regex/expressions.hpp
+ *  <tr>
+ *    <td>alt(args ...)
+ *    <td>template\<typename ... Args\> Args ... args
+ *    <td>Эквивалентно выражению alt({args ...}) с \ref DPerfectForwarding "идеальной пересылкой".
+ *    <td rowspan="2">
+ *      include/pm/regex/expressions/derived.hpp
+ *  <tr>
+ *    <td>r1 | r2
+ *    <td>
+ *      pm::regex::Regex r1
+ *      
+ *      pm::regex::Regex r2
+ *    <td>Подвыражения - r1, r2.
+ *  </table>
+ *  
+ *  \subsection MRConcatenation Конкатенация
+ *  
+ *  \ref MRFlow "Управляющее выражение".
+ *  
+ *  \ref MRSpecSubre "Подвыражения": r1, r2, ..., rk для произвольного k.
+ *  
+ *  \ref MRSpecConditions "Условия разбора": если флаг контекста \ref MRSpecC "C" поднят, то типы объектов, хранящихся в его непустых данных, \ref DObjectModification "копируемы".
+ *  
+ *  Последовательно выполняются \ref MRSpecSubparse "подразборы" потока \ref MRSpecS "S" выражениями r1, r2, ..., rk - до первого неуспеха или до исчерпания подвыражений.
+ *  
+ *  \ref MRSpecFlag "Критерий успешности": разбор успешен \<=\> все подразборы успешны.
+ *  
+ *  \ref MRSpecStr "Принимаемая строка": равна конкатенации строк, принятых подразборами: s1 s2 ... sk, где si - строка, принятая i-м подразбором.
+ *  
+ *  \ref MRSpecData "Изменение данных":
+ *  - Перед разбором создаётся \ref pm::regex::DataContext "регулярный контекст данных" NC, содержащий копии данных контекста C.
+ *  - Данные контекста NC последовательно изменяются подразборами.
+ *  - После всех подразборов объекты, хранящиеся в данных контекста C, уничтожаются, и на их место \ref pm::data::Data "вставляются" соответствующие данные контекста NC.
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Типы аргументов
+ *    <td>Пояснения
+ *    <td colspan="2">Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>concat(rseq)
+ *    <td>std::vector\<pm::regex::Regex\> rseq
+ *    <td>Подвыражения - элементы вектора rseq в том же порядке.
+ *    <td>
+ *      include/pm/regex/expressions/flow/concat.hpp
+ *      
+ *      include/pm/regex/expressions/flow.hpp
+ *    <td rowspan="3">
+ *      include/pm/regex/expressions.hpp
+ *  <tr>
+ *    <td>concat(args ...)
+ *    <td>template\<typename ... Args\> Args ... args
+ *    <td>Эквивалентно выражению concat({args ...}) с \ref DPerfectForwarding "идеальной пересылкой".
+ *    <td rowspan="2">
+ *      include/pm/regex/expressions/derived.hpp
+ *  <tr>
+ *    <td>r1 & r2
+ *    <td>
+ *      pm::regex::Regex r1
+ *      
+ *      pm::regex::Regex r2
+ *    <td>Подвыражения - r1, r2.
+ *  </table>
+ *  
+ *  \subsection MROptional Опционал
+ *  
+ *  \ref MRFlow "Управляющее выражение".
+ *  
+ *  \ref MRSpecSubre "Подвыражение": r.
+ *  
+ *  При разборе однократно выполняется \ref MRSpecSubparse "подразбор" потока \ref MRSpecS "S".
+ *  
+ *  \ref MRSpecFlag "Критерий успешности": разбор всегда успешен.
+ *  
+ *  \ref MRSpecStr "Принимаемая строка":
+ *  - Если подразбор успешен, то равна строке, принятой подразбором.
+ *  - Иначе пуста.
+ *  
+ *  \ref MRSpecData "Изменение данных":
+ *  - Если подразбор успешен, то данные изменяются подразбором.
+ *  - Иначе данные не изменяются.
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Типы аргументов
+ *    <td colspan="2">Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>opt(r)
+ *    <td rowspan="2">pm::regex::Regex r
+ *    <td>
+ *      include/pm/regex/expressions/flow/opt.hpp
+ *      
+ *      include/pm/regex/expressions/flow.hpp
+ *    <td rowspan="2">
+ *      include/pm/regex/expressions.hpp
+ *  <tr>
+ *    <td>!r
+ *    <td>
+ *      include/pm/regex/expressions/derived.hpp
+ *  </table>
+ *  
+ *  \subsection MRStar Звезда Клини
+ *  
+ *  \ref MRFlow "Управляющее выражение".
+ *  
+ *  \ref MRSpecSubre "Подвыражение": r.
+ *  
+ *  При разборе многократно выполняется \ref MRSpecSubparse "подразбор" потока \ref MRSpecS "S" - до первого неуспеха.
+ *  Если подразборы всегда успешны, то разбор не завершается.
+ *  
+ *  \ref MRSpecFlag "Критерий успешности": разбор всегда успешен.
+ *  
+ *  \ref MRSpecStr "Принимаемая строка" равна конкатенации всех строк, принятых успешными подразборами, в порядке приёма: s1 s2 ... sk, где si - строка, принятая i-м успешным подразбором.
+ *  
+ *  \ref MRSpecData "Изменение данных": данные последовательно изменяются успешными подразборами.
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Типы аргументов
+ *    <td colspan="2">Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>star(r)
+ *    <td rowspan="2">pm::regex::Regex r
+ *    <td>
+ *      include/pm/regex/expressions/flow/star.hpp
+ *      
+ *      include/pm/regex/expressions/flow.hpp
+ *    <td rowspan="2">
+ *      include/pm/regex/expressions.hpp
+ *  <tr>
+ *    <td>*r
+ *    <td>
+ *      include/pm/regex/expressions/derived.hpp
+ *  </table>
+ *  
+ *  \subsection MRBut Разность
+ *  
+ *  \ref MRFlow "Управляющее выражение".
+ *  
+ *  \ref MRSpecSubre "Подвыражения": r, exclude.
+ *  
+ *  При разборе:
+ *  - Выполняется *положительный* подразбор: потока \ref MRSpecS "S" выражением r.
+ *  - Если положительный подразбор успешен, то выполняется *отрицательный* подразбор: \ref pm::stream::Stream "потока разбора", содержащего строку, принятую положительным подразбором.
+ *  
+ *  \ref MRSpecFlag "Критерий успешности": разбор успешен \<=\> положительный подразбор успешен и отрицательный подразбор неуспешен.
+ *  
+ *  \ref MRSpecStr "Принимаемая строка" равна строке, принимаемой положительным подразбором.
+ *  
+ *  \ref MRSpecData "Изменение данных":
+ *  - Перед разбором создаётся \ref pm::regex::DataContext "регулярный контекст данных" NC, содержащий копии текущих и аккумулированных данных контекста C.
+ *  - Данные контекста NC изменяются положительным подразбором.
+ *  - После разбора данные контекста C уничтожаются, и на их место \ref pm::data::Data "вставляются" соответствующие данные контекста NC.
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Типы аргументов
+ *    <td colspan="2">Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>but(r, exclude)
+ *    <td rowspan="2">
+ *      pm::regex::Regex r
+ *      
+ *      pm::regex::Regex exclude
+ *    <td>
+ *      include/pm/regex/expressions/flow/but.hpp
+ *      
+ *      include/pm/regex/expressions/flow.hpp
+ *    <td rowspan="2">
+ *      include/pm/regex/expressions.hpp
+ *  <tr>
+ *    <td>r - exclude
+ *    <td>
+ *      include/pm/regex/expressions/derived.hpp
+ *  </table>
+ *  
+ *  \subsection MRNoData Заглушка данных
+ *  
+ *  \ref MRFlow "Управляющее выражение".
+ *  
+ *  \ref MRSpecSubre "Подвыражение": r.
+ *  
+ *  При разборе однократно выполняется \ref MRSpecSubparse "подразбор" потока \ref MRSpecS "S".
+ *  
+ *  \ref MRSpecFlag "Критерий успешности": разбор успешен \<=\> подразбор успешен.
+ *  
+ *  \ref MRSpecStr "Принимаемая строка": равна строке, принятой подразбором.
+ *  
+ *  \ref MRSpecData "Изменение данных": данные не изменяются.
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Типы аргументов
+ *    <td colspan="2">Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>nodata(r)
+ *    <td rowspan="2">pm::regex::Regex r
+ *    <td>
+ *      include/pm/regex/expressions/flow/nodata.hpp
+ *      
+ *      include/pm/regex/expressions/flow.hpp
+ *    <td rowspan="2">
+ *      include/pm/regex/expressions.hpp
+ *  <tr>
+ *    <td>-r
+ *    <td>
+ *      include/pm/regex/expressions/derived.hpp
+ *  </table>
+ *  
+ *  \subsection MRTerminalize Терминализация
+ *  
+ *  \ref MRFlow "Управляющее выражение".
+ *  
+ *  \ref MRSpecSubre "Подвыражение": r.
+ *  
+ *  При разборе однократно выполняется \ref MRSpecSubparse "подразбор" потока \ref MRSpecS "S".
+ *  
+ *  \ref MRSpecFlag "Критерий успешности": разбор успешен \<=\> подразбор успешен.
+ *  
+ *  \ref MRSpecStr "Принимаемая строка": равна строке, принятой подразбором.
+ *  
+ *  \ref MRSpecData "Изменение данных":
+ *  - Текущие данные \ref pm::data::Data "перенаполняются" объектом типа std::string, равным принятой строке.
+ *  - Аккумулированные данные не изменяются.
+ *  
+ *  Также является \ref MRTerminal "терминальным выражением".
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Типы аргументов
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>str(r)
+ *    <td>pm::regex::Regex r
+ *    <td>
+ *      include/pm/regex/expressions/flow/str.hpp
+ *      
+ *      include/pm/regex/expressions/flow.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  </table>
+ *  
+ *  \subsection MRAccumulate Аккумуляция
+ *  
+ *  \ref MRFlow "Управляющее выражение".
+ *  
+ *  \ref MRSpecSubre "Подвыражение": r.
+ *  
+ *  При разборе однократно выполняется \ref MRSpecSubparse "подразбор" потока \ref MRSpecS "S".
+ *  
+ *  \ref MRSpecFlag "Критерий успешности": разбор успешен \<=\> подразбор успешен.
+ *  
+ *  \ref MRSpecStr "Принимаемая строка": равна строке, принятой подразбором.
+ *  
+ *  \ref MRSpecData "Изменение данных":
+ *  - Подразбор выполняется в \ref pm::regex::DataContext "регулярном контексте данных" NC с пустыми текущими данными и с текущими данными контекста \ref MRSpecC "C" в роли аккумулированных данных.
+ *  - Аккумулированные данные контекста C не изменяются.
+ *  - Текущие данные контекста C изменяются так, как изменяются аккумулированные данные контекста NC.
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Типы аргументов
+ *    <td colspan="2">Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>accumulate(r)
+ *    <td rowspan="2">pm::regex::Regex r
+ *    <td>
+ *      include/pm/regex/expressions/flow/accumulate.hpp
+ *      
+ *      include/pm/regex/expressions/flow.hpp
+ *    <td rowspan="2">
+ *      include/pm/regex/expressions.hpp
+ *  <tr>
+ *    <td>~r
+ *    <td>
+ *      include/pm/regex/expressions/derived.hpp
+ *  </table>
+ *  
+ *  \section MRFunctional Функциональные выражения
+ *  
+ *  Процедура разбора функционального выражения \ref SafeRParse "безопасна".
+ *  
+ *  \ref MRSpecFlag "Критерий успешности": разбор всегда успешен.
+ *  
+ *  \ref MRSpecStr "Принимаемая строка" всегда пуста.
+ *  
+ *  \subsection MRUnFun Универсальная функция
+ *  
+ *  \ref MRFunctional "Функциональное выражение".
+ *  
+ *  \ref MRSpecParameters "Параметры":
+ *  - \ref pm::regex::Target "цели" t1, t2, ..., tk;
+ *  - функция f сигнатуры void (pm::data::Data &, ..., pm::data::Data &) с k аргументами.
+ *  
+ *  \ref MRSpecData "Изменение данных": выполняется вызов f(\ref MRSpecC "C"[t1], C[t2], ..., C[tk]).
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Типы аргументов
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>fun(f, t1, t2, ..., tk)
+ *    <td>
+ *      std::function\<void (pm::data::Data &, ..., pm::data::Data &)\> f
+ *      
+ *      pm::regex::Target t1
+ *      
+ *      pm::regex::Target t2
+ *      
+ *      ...
+ *      
+ *      pm::regex::Target tk
+ *    <td>
+ *      include/pm/regex/expressions/functional/universal.hpp
+ *      
+ *      include/pm/regex/expressions/functional.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  </table>
+ *  
+ *  \subsection MRGenRef Общая ссылочная функция
+ *  
+ *  \ref MRFunctional "Функциональное выражение".
+ *  
+ *  \ref MRSpecParameters "Параметры":
+ *  - \ref pm::regex::Target "цели" t1, t2, ..., tk;
+ *  - типы T1, T2, ..., Tk;
+ *  - функция f сигнатуры void (T1, T2, ..., Tk).
+ *  
+ *  \ref MRSpecConditions "Условия разбора": если флаг контекста \ref MRSpecC "C" поднят, то для всех i \ref pm::data::Data "данные" C[ti] непусты и хранят объект \<C[ti]\> типа Ti.
+ *  
+ *  \ref MRSpecData "Изменение данных": выполняется вызов f(\<C[t1]\>, \<C[t2]\>, ..., \<C[tk]\>).
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td colspan="2">Типы аргументов
+ *    <td>Пояснения
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>uref(f, t1, t2, ..., tk)
+ *    <td>
+ *      std::function\<void (T1, T2, ..., Tk)\> f
+ *    <td rowspan="2">
+ *      pm::regex::Target t1
+ *      
+ *      pm::regex::Target t2
+ *      
+ *      ...
+ *      
+ *      pm::regex::Target tk
+ *    <td>
+ *    <td rowspan="2">
+ *      include/pm/regex/expressions/functional/general.hpp
+ *      
+ *      include/pm/regex/expressions/functional.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  <tr>
+ *    <td>ref(f, t1, t2, ..., tk)
+ *    <td>
+ *      AnyT (*f)(T1, T2, ..., Tk)
+ *    <td>Значение, возвращаемое вызовом функции f, игнорируется.
+ *  </table>
+ *  
+ *  \subsection MRGenRet Общая возвращающая функция
+ *  
+ *  \ref MRFunctional "Функциональное выражение".
+ *  
+ *  \ref MRSpecParameters "Параметры":
+ *  - \ref pm::regex::Target "цели" t, t1, t2, ..., tk;
+ *  - типы RetT, T1, T2, ..., Tk;
+ *  - функция f сигнатуры RetT (T1, T2, ..., Tk).
+ *  
+ *  \ref MRSpecConditions "Условия разбора":
+ *  - Если флаг контекста \ref MRSpecC "C" поднят, то для всех i \ref pm::data::Data "данные" C[ti] непусты и хранят объект \<C[ti]\> типа Ti.
+ *  - Тип RetT \ref DObjectModification "уничтожим".
+ *  
+ *  \ref MRSpecData "Изменение данных":
+ *  - Выполняется вызов f(\<C[t1]\>, \<C[t2]\>, ..., \<C[tk]\>).
+ *  - Данные C[t] \ref pm::data::Data "перенаполняются" возвращаемым объектом.
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td colspan="2">Типы аргументов
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>uret(f, t, t1, t2, ..., tk)
+ *    <td>
+ *      std::function\<RetT (T1, T2, ..., Tk)\> f
+ *    <td rowspan="2">
+ *      pm::regex::Target t
+ *      
+ *      pm::regex::Target t1
+ *      
+ *      pm::regex::Target t2
+ *      
+ *      ...
+ *      
+ *      pm::regex::Target tk
+ *    <td rowspan="2">
+ *      include/pm/regex/expressions/functional/general.hpp
+ *      
+ *      include/pm/regex/expressions/functional.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  <tr>
+ *    <td>ret(f, t, t1, t2, ..., tk)
+ *    <td>
+ *      RetT (*f)(T1, T2, ..., Tk)
+ *  </table>
+ *  
+ *  \subsection MRGenRen Общая перенаполняющая функция
+ *  
+ *  \ref MRFunctional "Функциональное выражение".
+ *  
+ *  \ref MRSpecParameters "Параметры":
+ *  - \ref pm::regex::Target "цель" t;
+ *  - типы RetT, ArgT;
+ *  - функция f сигнатуры RetT (ArgT).
+ *  
+ *  \ref MRSpecConditions "Условия разбора":
+ *  - Если флаг контекста \ref MRSpecC "C" поднят, то \ref pm::data::Data "данные" C[t] непусты и хранят объект \<C[t]\>, тип которого - \ref DQualifiers "основа" типа ArgT.
+ *  - Тип RetT \ref DObjectModification "уничтожим".
+ *  
+ *  \ref MRSpecData "Изменение данных":
+ *  - Выполняется вызов f(\<C[t]\>).
+ *  - Данные C[t] \ref pm::data::Data "перенаполняются" возвращаемым объектом.
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td colspan="2">Типы аргументов
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>uren(f, t)
+ *    <td>
+ *      std::function\<RetT (ArgT)\> f
+ *    <td rowspan="2">
+ *      pm::regex::Target t
+ *    <td rowspan="2">
+ *      include/pm/regex/expressions/functional/general.hpp
+ *      
+ *      include/pm/regex/expressions/functional.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  <tr>
+ *    <td>ren(f, t)
+ *    <td>
+ *      RetT (*f)(ArgT)
+ *  </table>
+ *  
+ *  \subsection MREqualize Приравнять данные
+ *  
+ *  \ref MRFunctional "Функциональное выражение".
+ *  
+ *  \ref MRSpecParameters "Параметр": \ref pm::regex::Target "цель" t.
+ *  
+ *  \ref MRSpecConditions "Условия разбора": если флаг контекста \ref MRSpecC "C" поднят и \ref pm::data::Data "данные" \ref MRSpecC "C"[!t] непусты, то тип хранящегося в них объекта \<C[!t]\> копируем.
+ *  
+ *  \ref MRSpecData "Изменение данных": данные C[t] \ref pm::data::Data "перенаполняются" новой копией объекта \<C[!t]\>.
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Типы аргументов
+ *    <td>Пояснения
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>equalize(t)
+ *    <td>
+ *      pm::regex::Target t
+ *    <td>
+ *    <td rowspan="2">
+ *      include/pm/regex/expressions/functional/specific.hpp
+ *      
+ *      include/pm/regex/expressions/functional.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  <tr>
+ *    <td>equalize()
+ *    <td>
+ *    <td>Цель - \ref pm::regex::Target "текущие данные".
+ *  </table>
+ *  
+ *  \subsection MRSwap Поменять местами данные
+ *  
+ *  \ref MRFunctional "Функциональное выражение".
+ *  
+ *  \ref MRSpecData "Изменение данных": текущие данные \ref pm::data::Data "обмениваются" с аккумулированными.
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>swap()
+ *    <td>
+ *      include/pm/regex/expressions/functional/specific.hpp
+ *      
+ *      include/pm/regex/expressions/functional.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  </table>
+ *  
+ *  \subsection MRUnset Опустошить данные
+ *  
+ *  \ref MRFunctional "Функциональное выражение".
+ *  
+ *  \ref MRSpecParameters "Параметр": \ref pm::regex::Target "цель" t.
+ *  
+ *  \ref MRSpecData "Изменение данных": данные \ref MRSpecC "C"[t] \ref pm::data::Data "опустошаются".
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Типы аргументов
+ *    <td>Пояснения
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>unset(t)
+ *    <td>
+ *      pm::regex::Target t
+ *    <td>
+ *    <td rowspan="2">
+ *      include/pm/regex/expressions/functional/specific.hpp
+ *      
+ *      include/pm/regex/expressions/functional.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  <tr>
+ *    <td>unset()
+ *    <td>
+ *    <td>Цель - \ref pm::regex::Target "текущие данные".
+ *  </table>
+ *  
+ *  \subsection MRAdd Прибавить одни данные к другим
+ *  
+ *  \ref MRFunctional "Функциональное выражение".
+ *  
+ *  \ref MRSpecParameters "Параметры":
+ *  - типы Left, Right;
+ *  - \ref pm::regex::Target "цель" t.
+ *  
+ *  \ref MRSpecConditions "Условия разбора":
+ *  - Если флаг контекста \ref MRSpecC "C" поднят, то:
+ *   - \ref pm::data::Data "данные" C[t] непусты и хранят объект \<C[t]\> типа Left;
+ *   - данные C[!t] непусты и хранят объект \<C[!t]\> типа Right.
+ *  - Присваивание C[t] += val корректно.
+ *  
+ *  \ref MRSpecData "Изменение данных": выполняется присваивание \<C[t]\> += \<C[!t]\>.
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Типы аргументов
+ *    <td>Пояснения
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>add\<Left, Right\>(t)
+ *    <td rowspan="2">
+ *      pm::regex::Target t
+ *    <td>
+ *    <td rowspan="4">
+ *      include/pm/regex/expressions/functional/specific.hpp
+ *      
+ *      include/pm/regex/expressions/functional.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  <tr>
+ *    <td>add\<T\>(t)
+ *    <td>Left = Right = T
+ *  <tr>
+ *    <td>add\<Left, Right\>()
+ *    <td>
+ *    <td>Цель - \ref pm::regex::Target "текущие данные".
+ *  <tr>
+ *    <td>add\<T\>()
+ *    <td>
+ *    <td>Left = Right = T, цель - \ref pm::regex::Target "текущие данные".
+ *  </table>
+ *  
+ *  \subsection MRDiv Поделить одни данные на другие
+ *  
+ *  \ref MRFunctional "Функциональное выражение".
+ *  
+ *  \ref MRSpecParameters "Параметры":
+ *  - типы Left, Right;
+ *  - \ref pm::regex::Target "цель" t.
+ *  
+ *  \ref MRSpecConditions "Условия разбора":
+ *  - Если флаг контекста \ref MRSpecC "C" поднят, то:
+ *   - \ref pm::data::Data "данные" C[t] непусты и хранят объект \<C[t]\> типа Left;
+ *   - данные C[!t] непусты и хранят объект \<C[!t]\> типа Right.
+ *  - Присваивание C[t] /= val корректно.
+ *  
+ *  \ref MRSpecData "Изменение данных": выполняется присваивание \<C[t]\> /= \<C[!t]\>.
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Типы аргументов
+ *    <td>Пояснения
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>div\<Left, Right\>(t)
+ *    <td rowspan="2">
+ *      pm::regex::Target t
+ *    <td>
+ *    <td rowspan="4">
+ *      include/pm/regex/expressions/functional/specific.hpp
+ *      
+ *      include/pm/regex/expressions/functional.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  <tr>
+ *    <td>div\<T\>(t)
+ *    <td>Left = Right = T
+ *  <tr>
+ *    <td>div\<Left, Right\>()
+ *    <td>
+ *    <td>Цель - \ref pm::regex::Target "текущие данные".
+ *  <tr>
+ *    <td>div\<T\>()
+ *    <td>
+ *    <td>Left = Right = T, цель - \ref pm::regex::Target "текущие данные".
+ *  </table>
+ *  
+ *  \subsection MRMod Взять остаток от деления одних данных на другие
+ *  
+ *  \ref MRFunctional "Функциональное выражение".
+ *  
+ *  \ref MRSpecParameters "Параметры":
+ *  - типы Left, Right;
+ *  - \ref pm::regex::Target "цель" t.
+ *  
+ *  \ref MRSpecConditions "Условия разбора":
+ *  - Если флаг контекста \ref MRSpecC "C" поднят, то:
+ *   - \ref pm::data::Data "данные" C[t] непусты и хранят объект \<C[t]\> типа Left;
+ *   - данные C[!t] непусты и хранят объект \<C[!t]\> типа Right.
+ *  - Присваивание C[t] %= val корректно.
+ *  
+ *  \ref MRSpecData "Изменение данных": выполняется присваивание \<C[t]\> %= \<C[!t]\>.
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Типы аргументов
+ *    <td>Пояснения
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>mod\<Left, Right\>(t)
+ *    <td rowspan="2">
+ *      pm::regex::Target t
+ *    <td>
+ *    <td rowspan="4">
+ *      include/pm/regex/expressions/functional/specific.hpp
+ *      
+ *      include/pm/regex/expressions/functional.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  <tr>
+ *    <td>mod\<T\>(t)
+ *    <td>Left = Right = T
+ *  <tr>
+ *    <td>mod\<Left, Right\>()
+ *    <td>
+ *    <td>Цель - \ref pm::regex::Target "текущие данные".
+ *  <tr>
+ *    <td>mod\<T\>()
+ *    <td>
+ *    <td>Left = Right = T, цель - \ref pm::regex::Target "текущие данные".
+ *  </table>
+ *  
+ *  \subsection MRMul Умножить одни данные на другие
+ *  
+ *  \ref MRFunctional "Функциональное выражение".
+ *  
+ *  \ref MRSpecParameters "Параметры":
+ *  - типы Left, Right;
+ *  - \ref pm::regex::Target "цель" t.
+ *  
+ *  \ref MRSpecConditions "Условия разбора":
+ *  - Если флаг контекста \ref MRSpecC "C" поднят, то:
+ *   - \ref pm::data::Data "данные" C[t] непусты и хранят объект \<C[t]\> типа Left;
+ *   - данные C[!t] непусты и хранят объект \<C[!t]\> типа Right.
+ *  - Присваивание C[t] *= val корректно.
+ *  
+ *  \ref MRSpecData "Изменение данных": выполняется присваивание \<C[t]\> *= \<C[!t]\>.
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Типы аргументов
+ *    <td>Пояснения
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>mul\<Left, Right\>(t)
+ *    <td rowspan="2">
+ *      pm::regex::Target t
+ *    <td>
+ *    <td rowspan="4">
+ *      include/pm/regex/expressions/functional/specific.hpp
+ *      
+ *      include/pm/regex/expressions/functional.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  <tr>
+ *    <td>mul\<T\>(t)
+ *    <td>Left = Right = T
+ *  <tr>
+ *    <td>mul\<Left, Right\>()
+ *    <td>
+ *    <td>Цель - \ref pm::regex::Target "текущие данные".
+ *  <tr>
+ *    <td>mul\<T\>()
+ *    <td>
+ *    <td>Left = Right = T, цель - \ref pm::regex::Target "текущие данные".
+ *  </table>
+ *  
+ *  \subsection MRSub Вычесть одни данные из других
+ *  
+ *  \ref MRFunctional "Функциональное выражение".
+ *  
+ *  \ref MRSpecParameters "Параметры":
+ *  - типы Left, Right;
+ *  - \ref pm::regex::Target "цель" t.
+ *  
+ *  \ref MRSpecConditions "Условия разбора":
+ *  - Если флаг контекста \ref MRSpecC "C" поднят, то:
+ *   - \ref pm::data::Data "данные" C[t] непусты и хранят объект \<C[t]\> типа Left;
+ *   - данные C[!t] непусты и хранят объект \<C[!t]\> типа Right.
+ *  - Присваивание C[t] -= val корректно.
+ *  
+ *  \ref MRSpecData "Изменение данных": выполняется присваивание \<C[t]\> -= \<C[!t]\>.
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Типы аргументов
+ *    <td>Пояснения
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>sub\<Left, Right\>(t)
+ *    <td rowspan="2">
+ *      pm::regex::Target t
+ *    <td>
+ *    <td rowspan="4">
+ *      include/pm/regex/expressions/functional/specific.hpp
+ *      
+ *      include/pm/regex/expressions/functional.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  <tr>
+ *    <td>sub\<T\>(t)
+ *    <td>Left = Right = T
+ *  <tr>
+ *    <td>sub\<Left, Right\>()
+ *    <td>
+ *    <td>Цель - \ref pm::regex::Target "текущие данные".
+ *  <tr>
+ *    <td>sub\<T\>()
+ *    <td>
+ *    <td>Left = Right = T, цель - \ref pm::regex::Target "текущие данные".
+ *  </table>
+ *  
+ *  \subsection MRAddC Прибавить константу к данным
+ *  
+ *  \ref MRFunctional "Функциональное выражение".
+ *  
+ *  \ref MRSpecParameters "Параметры":
+ *  - типы Left, Right;
+ *  - значение val типа Right;
+ *  - \ref pm::regex::Target "цель" t.
+ *  
+ *  \ref MRSpecConditions "Условия разбора":
+ *  - Если флаг контекста \ref MRSpecC "C" поднят, то \ref pm::data::Data "данные" C[t] непусты и хранят объект \<C[t]\> типа Left.
+ *  - Присваивание C[t] += val корректно.
+ *  
+ *  \ref MRSpecData "Изменение данных": выполняется присваивание \<C[t]\> += val.
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td colspan="2">Типы аргументов
+ *    <td>Пояснения
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>addc\<Left, Right\>(val, t)
+ *    <td rowspan="4">
+ *      Right val
+ *    <td rowspan="2">
+ *      pm::regex::Target t
+ *    <td>
+ *    <td rowspan="4">
+ *      include/pm/regex/expressions/functional/specific.hpp
+ *      
+ *      include/pm/regex/expressions/functional.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  <tr>
+ *    <td>addc\<Left\>(val, t)
+ *    <td>Right - \ref DQualifiers "основа" типа значения val.
+ *  <tr>
+ *    <td>addc\<Left, Right\>(val)
+ *    <td>
+ *    <td>Цель - \ref pm::regex::Target "текущие данные".
+ *  <tr>
+ *    <td>addc\<Left\>(val)
+ *    <td>
+ *    <td>Right - \ref DQualifiers "основа" типа значения val. Цель - \ref pm::regex::Target "текущие данные".
+ *  </table>
+ *  
+ *  \subsection MRDivC Поделить данные на константу
+ *  
+ *  \ref MRFunctional "Функциональное выражение".
+ *  
+ *  \ref MRSpecParameters "Параметры":
+ *  - типы Left, Right;
+ *  - значение val типа Right;
+ *  - \ref pm::regex::Target "цель" t.
+ *  
+ *  \ref MRSpecConditions "Условия разбора":
+ *  - Если флаг контекста \ref MRSpecC "C" поднят, то \ref pm::data::Data "данные" C[t] непусты и хранят объект \<C[t]\> типа Left.
+ *  - Присваивание C[t] /= val корректно.
+ *  
+ *  \ref MRSpecData "Изменение данных": выполняется присваивание \<C[t]\> /= val.
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td colspan="2">Типы аргументов
+ *    <td>Пояснения
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>divc\<Left, Right\>(val, t)
+ *    <td rowspan="4">
+ *      Right val
+ *    <td rowspan="2">
+ *      pm::regex::Target t
+ *    <td>
+ *    <td rowspan="4">
+ *      include/pm/regex/expressions/functional/specific.hpp
+ *      
+ *      include/pm/regex/expressions/functional.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  <tr>
+ *    <td>divc\<Left\>(val, t)
+ *    <td>Right - \ref DQualifiers "основа" типа значения val.
+ *  <tr>
+ *    <td>divc\<Left, Right\>(val)
+ *    <td>
+ *    <td>Цель - \ref pm::regex::Target "текущие данные".
+ *  <tr>
+ *    <td>divc\<Left\>(val)
+ *    <td>
+ *    <td>Right - \ref DQualifiers "основа" типа значения val. Цель - \ref pm::regex::Target "текущие данные".
+ *  </table>
+ *  
+ *  \subsection MRModC Взять остаток от деления данных на константу
+ *  
+ *  \ref MRFunctional "Функциональное выражение".
+ *  
+ *  \ref MRSpecParameters "Параметры":
+ *  - типы Left, Right;
+ *  - значение val типа Right;
+ *  - \ref pm::regex::Target "цель" t.
+ *  
+ *  \ref MRSpecConditions "Условия разбора":
+ *  - Если флаг контекста \ref MRSpecC "C" поднят, то \ref pm::data::Data "данные" C[t] непусты и хранят объект \<C[t]\> типа Left.
+ *  - Присваивание C[t] %= val корректно.
+ *  
+ *  \ref MRSpecData "Изменение данных": выполняется присваивание \<C[t]\> %= val.
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td colspan="2">Типы аргументов
+ *    <td>Пояснения
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>modc\<Left, Right\>(val, t)
+ *    <td rowspan="4">
+ *      Right val
+ *    <td rowspan="2">
+ *      pm::regex::Target t
+ *    <td>
+ *    <td rowspan="4">
+ *      include/pm/regex/expressions/functional/specific.hpp
+ *      
+ *      include/pm/regex/expressions/functional.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  <tr>
+ *    <td>modc\<Left\>(val, t)
+ *    <td>Right - \ref DQualifiers "основа" типа значения val.
+ *  <tr>
+ *    <td>modc\<Left, Right\>(val)
+ *    <td>
+ *    <td>Цель - \ref pm::regex::Target "текущие данные".
+ *  <tr>
+ *    <td>modc\<Left\>(val)
+ *    <td>
+ *    <td>Right - \ref DQualifiers "основа" типа значения val. Цель - \ref pm::regex::Target "текущие данные".
+ *  </table>
+ *  
+ *  \subsection MRMulC Умножить данные на константу
+ *  
+ *  \ref MRFunctional "Функциональное выражение".
+ *  
+ *  \ref MRSpecParameters "Параметры":
+ *  - типы Left, Right;
+ *  - значение val типа Right;
+ *  - \ref pm::regex::Target "цель" t.
+ *  
+ *  \ref MRSpecConditions "Условия разбора":
+ *  - Если флаг контекста \ref MRSpecC "C" поднят, то \ref pm::data::Data "данные" C[t] непусты и хранят объект \<C[t]\> типа Left.
+ *  - Присваивание C[t] *= val корректно.
+ *  
+ *  \ref MRSpecData "Изменение данных": выполняется присваивание \<C[t]\> *= val.
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td colspan="2">Типы аргументов
+ *    <td>Пояснения
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>mulc\<Left, Right\>(val, t)
+ *    <td rowspan="4">
+ *      Right val
+ *    <td rowspan="2">
+ *      pm::regex::Target t
+ *    <td>
+ *    <td rowspan="4">
+ *      include/pm/regex/expressions/functional/specific.hpp
+ *      
+ *      include/pm/regex/expressions/functional.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  <tr>
+ *    <td>mulc\<Left\>(val, t)
+ *    <td>Right - \ref DQualifiers "основа" типа значения val.
+ *  <tr>
+ *    <td>mulc\<Left, Right\>(val)
+ *    <td>
+ *    <td>Цель - \ref pm::regex::Target "текущие данные".
+ *  <tr>
+ *    <td>mulc\<Left\>(val)
+ *    <td>
+ *    <td>Right - \ref DQualifiers "основа" типа значения val. Цель - \ref pm::regex::Target "текущие данные".
+ *  </table>
+ *  
+ *  \subsection MRSubC Вычесть константу из данных
+ *  
+ *  \ref MRFunctional "Функциональное выражение".
+ *  
+ *  \ref MRSpecParameters "Параметры":
+ *  - типы Left, Right;
+ *  - значение val типа Right;
+ *  - \ref pm::regex::Target "цель" t.
+ *  
+ *  \ref MRSpecConditions "Условия разбора":
+ *  - Если флаг контекста \ref MRSpecC "C" поднят, то \ref pm::data::Data "данные" C[t] непусты и хранят объект \<C[t]\> типа Left.
+ *  - Присваивание C[t] -= val корректно.
+ *  
+ *  \ref MRSpecData "Изменение данных": выполняется присваивание \<C[t]\> -= val.
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td colspan="2">Типы аргументов
+ *    <td>Пояснения
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>subc\<Left, Right\>(val, t)
+ *    <td rowspan="4">
+ *      Right val
+ *    <td rowspan="2">
+ *      pm::regex::Target t
+ *    <td>
+ *    <td rowspan="4">
+ *      include/pm/regex/expressions/functional/specific.hpp
+ *      
+ *      include/pm/regex/expressions/functional.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  <tr>
+ *    <td>subc\<Left\>(val, t)
+ *    <td>Right - \ref DQualifiers "основа" типа значения val.
+ *  <tr>
+ *    <td>subc\<Left, Right\>(val)
+ *    <td>
+ *    <td>Цель - \ref pm::regex::Target "текущие данные".
+ *  <tr>
+ *    <td>subc\<Left\>(val)
+ *    <td>
+ *    <td>Right - \ref DQualifiers "основа" типа значения val. Цель - \ref pm::regex::Target "текущие данные".
+ *  </table>
+ *  
+ *  \subsection MRCharToDecimal Преобразовать символ цифры в цифру
+ *  
+ *  \ref MRFunctional "Функциональное выражение".
+ *  
+ *  \ref MRSpecParameters "Параметры":
+ *  - тип Int;
+ *  - \ref pm::regex::Target "цель" t.
+ *  
+ *  \ref MRSpecConditions "Условия разбора":
+ *  - Если флаг контекста \ref MRSpecC "C" поднят, то \ref pm::data::Data "данные" C[t] непусты и хранят объект \<C[t]\> типа char.
+ *  - Тип Int \ref DObjectModification "инициализируем" от значений типа char и \ref DObjectModification "уничтожим".
+ *  
+ *  \ref MRSpecData "Изменение данных": данные C[t] \ref pm::data::Data "перенаполняются" объектом Int(\<C[t]\> - '0').
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Типы аргументов
+ *    <td>Пояснения
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>char_to_decimal\<Int\>(t)
+ *    <td>
+ *      pm::regex::Target t
+ *    <td>
+ *    <td rowspan="2">
+ *      include/pm/regex/expressions/functional/specific.hpp
+ *      
+ *      include/pm/regex/expressions/functional.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  <tr>
+ *    <td>char_to_decimal\<Int\>()
+ *    <td>
+ *    <td>Цель - \ref pm::regex::Target "текущие данные".
+ *  </table>
+ *  
+ *  \subsection MRStringToDecimal Преобразовать строку в число
+ *  
+ *  \ref MRFunctional "Функциональное выражение".
+ *  
+ *  \ref MRSpecParameters "Параметры":
+ *  - тип Int;
+ *  - \ref pm::regex::Target "цель" t.
+ *  
+ *  \ref MRSpecConditions "Условия разбора":
+ *  - Если флаг контекста \ref MRSpecC "C" поднят, то \ref pm::data::Data "данные" C[t] непусты и хранят объект \<C[t]\> типа std::string, значение которого - непустая строка, содержащая только \ref MRDigitLetter "символы десятичных цифр".
+ *  - Для типа Int корректна \ref StringToDecimalConversion "обычная схема итеративного преобразования строки в число".
+ *  - Тип Int \ref DObjectModification "уничтожим".
+ *  
+ *  \ref MRSpecData "Изменение данных": данные C[t] \ref pm::data::Data "перенаполняются" объектом типа Int со значением, десятичная запись которого хранится в \ref DTypes "строке" \<C[t]\>.
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Типы аргументов
+ *    <td>Пояснения
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>string_to_decimal\<Int\>(t)
+ *    <td>
+ *      pm::regex::Target t
+ *    <td>
+ *    <td rowspan="2">
+ *      include/pm/regex/expressions/functional/specific.hpp
+ *      
+ *      include/pm/regex/expressions/functional.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  <tr>
+ *    <td>string_to_decimal\<Int\>()
+ *    <td>
+ *    <td>Цель - \ref pm::regex::Target "текущие данные".
+ *  </table>
+ *  
+ *  \subsection MRCharToString Преобразовать символ в строку
+ *  
+ *  \ref MRFunctional "Функциональное выражение".
+ *  
+ *  \ref MRSpecParameters "Параметр": \ref pm::regex::Target "цель" t.
+ *  
+ *  \ref MRSpecConditions "Условия разбора": если флаг контекста \ref MRSpecC "C" поднят, то \ref pm::data::Data "данные" C[t] непусты и хранят объект \<C[t]\> типа char.
+ *  
+ *  \ref MRSpecData "Изменение данных": данные C[t] \ref pm::data::Data "перенаполняются" объектом типа std::string, равным строке из одного \ref DTypes "символа" \<C[t]\>.
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Типы аргументов
+ *    <td>Пояснения
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>char_to_string(t)
+ *    <td>
+ *      pm::regex::Target t
+ *    <td>
+ *    <td rowspan="2">
+ *      include/pm/regex/expressions/functional/specific.hpp
+ *      
+ *      include/pm/regex/expressions/functional.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  <tr>
+ *    <td>char_to_string()
+ *    <td>
+ *    <td>Цель - \ref pm::regex::Target "текущие данные".
+ *  </table>
+ *  
+ *  \subsection MRCreate Записать константу в данные
+ *  
+ *  \ref MRFunctional "Функциональное выражение".
+ *  
+ *  \ref MRSpecParameters "Параметры":
+ *  - тип T;
+ *  - значение val типа T;
+ *  - \ref pm::regex::Target "цель" t.
+ *  
+ *  \ref MRSpecConditions "Условия разбора": тип T \ref DObjectModification "уничтожим" и \ref DObjectModification "копируем".
+ *  
+ *  \ref MRSpecData "Изменение данных": данные C[t] \ref pm::data::Data "перенаполняются" новой копией объекта val.
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td colspan="2">Типы аргументов
+ *    <td>Пояснения
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>create\<T\>(val, t)
+ *    <td rowspan="4">
+ *      T val
+ *    <td rowspan="2">
+ *      pm::regex::Target t
+ *    <td>
+ *    <td rowspan="4">
+ *      include/pm/regex/expressions/functional/specific.hpp
+ *      
+ *      include/pm/regex/expressions/functional.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  <tr>
+ *    <td>create(val, t)
+ *    <td>T - \ref DQualifiers "основа" типа значения val.
+ *  <tr>
+ *    <td>create\<T\>(val)
+ *    <td>
+ *    <td>Цель - \ref pm::regex::Target "текущие данные".
+ *  <tr>
+ *    <td>create(val)
+ *    <td>
+ *    <td>T - \ref DQualifiers "основа" типа значения val. Цель - \ref pm::regex::Target "текущие данные".
+ *  </table>
+ *  
+ *  \subsection MRConvert Преобразовать тип данных
+ *  
+ *  \ref MRFunctional "Функциональное выражение".
+ *  
+ *  \ref MRSpecParameters "Параметры":
+ *  - типы To, From;
+ *  - \ref pm::regex::Target "цель" t.
+ *  
+ *  \ref MRSpecConditions "Условия разбора":
+ *  - Если флаг контекста \ref MRSpecC "C" поднят, то \ref pm::data::Data "данные" C[t] непусты и хранят объект \<C[t]\> типа From.
+ *  - Тип To \ref DObjectModification "инициализируем" от значений типа From и \ref DObjectModification "уничтожим".
+ *  
+ *  \ref MRSpecData "Изменение данных": данные C[t] \ref pm::data::Data "перенаполняются" объектом To(\<C[t]\>).
+ *  
+ *  <table>
+ *  <tr>
+ *    <td>\ref MRSpecInterface "Интерфейс создания"
+ *    <td>Типы аргументов
+ *    <td>Пояснения
+ *    <td>Подключающие заголовочные файлы
+ *  <tr>
+ *    <td>convert\<To, From\>(t)
+ *    <td>
+ *      pm::regex::Target t
+ *    <td>
+ *    <td rowspan="2">
+ *      include/pm/regex/expressions/functional/specific.hpp
+ *      
+ *      include/pm/regex/expressions/functional.hpp
+ *      
+ *      include/pm/regex/expressions.hpp
+ *  <tr>
+ *    <td>convert\<To, From\>()
+ *    <td>
+ *    <td>Цель - \ref pm::regex::Target "текущие данные".
+ *  </table>
+ */

@@ -1,0 +1,46 @@
+/*! \file include/pm/grammar/definition.hpp
+ *  \brief Содержит класс нетерминальных описаний pm::grammar::Definition.
+ *  \ingroup ModuleGrammar
+ */
+
+/*! \class pm::grammar::Definition
+ *  \brief Класс нетерминальных описаний.
+ *  \ingroup ModuleGrammar
+ *  
+ *  
+ *  Нетерминальные описания используются при работе с \ref pm::grammar::Grammar "грамматиками" для получения \ref pm::grammar::Nonterminal "нетерминалов", особым образом \ref MGSpec "соответствующих" этим описаниям.
+ *  
+ *  Для каждого нетерминального описания определно \ref DSet "множество" *содержащихся* в нём *имён данных*: \ref DTypes "строк", обозначающих имена \ref pm::set::Domain "домена данных", общего для всей грамматики и используемого для определения номеров данных по заданному имени в \ref pm::set::Set "совокупности данных", посылаемой на вход \ref pm::grammar::Nonterminal "процедуре разбора" соответствующего нетерминала.
+ *  
+ *  Остальные детали устройства класса, кроме упомянутых на этой странице, в целом неважны для работы с функциональными описаниями в рамках грамматик.
+ *  
+ *  Особые свойства класса
+ *  ==
+ *  
+ *  \ref DValidState "Нестандартно-корректен".
+ *  
+ *  Неявные методы
+ *  ==
+ *  
+ *      Definition(const Definition & d)
+ *      Definition(Definition && d)
+ *  
+ *  Инициализировать копию/перемещение текущего значения описания \p d.
+ *  
+ *  
+ *      Definition & operator =(const Definition & d)
+ *      Definition & operator =(Definition && d)
+ *  
+ *  Присвоить описанию \ref DSelf "self" текущее значение описания \p d.
+ *  
+ *  \return Self.
+ *  
+ *  
+ *      ~Definition()
+ *  
+ *  Уничтожить описание.
+ */
+
+/*! \fn pm::grammar::Definition::Definition()
+ *  \brief Инициализировать описание \ref MGFalse "неуспеха".
+ */

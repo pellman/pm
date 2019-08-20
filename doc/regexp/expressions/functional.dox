@@ -1,6 +1,0 @@
-/*! \file include/pm/regexp/expressions/functional.hpp
- *  \brief Подключает интерфейс создания \ref PRLFunctional "готовых функциональных регулярных выражений": заданным образом изменяющих текущие и сохранённые данные контекста.
- *  \ingroup ModuleRegexp
- *  
- *  \sa \ref PRList "Список готовых регулярных выражений"
- */
