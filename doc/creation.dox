@@ -1,0 +1,3 @@
+/*! \file include/pm/creation.hpp
+ *  \brief Подключает \ref CParser "интерфейс создания" \ref pm::Parser "парсеров" и \ref CCharSet "интерфейс создания" \ref pm::CharSet "буквенных множеств".
+ */

@@ -1,22 +1,19 @@
-You are reading README for the library pm, version 3.0.ru.0.
+You are reading README for the library pm, version 4.0.0.
 
-The library contains regular expressions, grammars, and other stuff for text parsing.
+The library contains means for handy text parsing.
+Deabbreviation of the library name: parse module.
 
-Deabbreviation of the library name: parse modules.
+Currently all the documentaion (except this file) is Russian-only, sorry.
 
-"ru" in the version means that the documentation (except this README) is in Russian. (!!!)
-
-Pm is a C++ library (standard 14).
-
+Pm is a C++ library written in the standard 17.
 The library is distributed under GNU GPLv3 license.
 The license text is placed in the file LICENSE in this folder.
-
 
 = Prerequisites =
 
 Library itself, obligatory:
-- C++ compiler compliant with C++14 standard (or greater).
-- "cmake" tool, version: at least 3.1.
+- C++ compiler compliant with a standard >= C++17.
+- "cmake" tool, version >= 3.8.
  - Cmake is optional, though it is much easier to build the library with it.
 
 Documentation:
@@ -27,20 +24,20 @@ Documentation:
 
 = Getting started =
 
-Build the documentation with "doxygen" utility using "Doxyfile" in <root> (the folder of README), and open the main web-page of the documentation. All details and instructions are there.
+Build the documentation with "doxygen" utility using "Doxyfile" in this folder, and open the main web-page of the documentation. All detailed instructions are there.
 
 How to build the documentation in Linux:
-  cd <root>
+  cd <this_folder>
   mkdir build
   doxygen Doxyfile
 
 The main documentation page (at least in Linux) is:
-  <root>/build/doc/index.html
+  <this_folder>/build/doc/html/index.html
 
 
 = Source files =
 
-This folder (<root>) contains:
+This folder contains:
 - "README" file - a brief information about the library (this file).
 - "README_ru" file - the same information in Russian.
 - "LICENSE" file - a GNU GPLv3 full text.

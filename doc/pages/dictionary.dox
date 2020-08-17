@@ -1,4 +1,4 @@
-/*! \page Dictionary Общие понятия
+/*! \page Dictionary Терминология
  *  
  *  
  *  \subpage DTypes "Стандартные типы"
@@ -9,13 +9,11 @@
  *  
  *  \subpage DSet "Множество"
  *  
- *  \subpage DMap "Отображение"
- *  
- *  \subpage DRangeBasedFor "Цикл по коллекции"
- *  
  *  \subpage DObjectModification "Основные действия над объектами"
  *  
  *  \subpage DQualifiers "Квалификаторы типов"
  *  
  *  \subpage DPerfectForwarding "Идеальная пересылка"
+ *  
+ *  \subpage DStream "Потоки ввода"
  */

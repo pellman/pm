@@ -1,0 +1,9 @@
+/*! \page Technicals Техническая информация
+ *  
+ *  
+ *  \subpage TPrerequisites "Требования к окружению сборки"
+ *  
+ *  \subpage TBuild "Сборка"
+ *  
+ *  \subpage TFiles "Структура исходных файлов"
+ */

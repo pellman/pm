@@ -1,0 +1,3 @@
+/*! \file include/pm/creation/parser/generator/arithmetic.hpp
+ *  \brief Подключает часть \ref CParser "интерфейса создания парсеров".
+ */

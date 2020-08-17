@@ -1,0 +1,131 @@
+/*! \page CCharSet Интерфейс создания буквенных множеств
+ *  
+ *  
+ *  Все функции, документированные в этом разделе, находятся в пространстве имён pm::char_set, а все операторы - в пространстве имён ::pm.
+ *  Эти функции представлены в таблице со следующими столбцами:
+ *  - *Выражение*, которым возвращается \ref pm::CharSet "буквенное множество".
+ *  - *Типы аргументов*, используемых в выражении.
+ *  - \ref DSet "Множество" \ref DTypes "символов", представленное (*заданное*) возвращаемым буквенным множеством.
+ *  - *Заголовочные файлы*, при подключении которых появляется возможность использовать выражение.
+ *  
+ *  В возвращаемом буквенном множестве сохраняются значения аргументов в момент его создания.
+ *  Если значения использованных аргументов изменяются после создания, то это не влияет на устройство созданного буквенного множества.
+ *  
+ *  <table>
+ *  <tr>
+ *    <th>Выражение
+ *    <th>Типы аргументов
+ *    <th>Задаваемое множество
+ *    <th colspan="2">Заголовочные файлы
+ *  <tr>
+ *    <td>make(c)
+ *    <td>char c
+ *    <td>{ c }
+ *    <td rowspan="5">
+ *      include/pm/creation/char_set/terminal.hpp
+ *    <td rowspan="21">
+ *      include/pm/creation/char_set.hpp
+ *      
+ *      include/pm/creation.hpp
+ *  <tr>
+ *    <td>make(cs)
+ *    <td>std::set\<char\> cs
+ *    <td>cs
+ *  <tr>
+ *    <td>range(bottom, top)
+ *    <td>
+ *      char bottom
+ *      
+ *      char top
+ *    <td>{ c | bottom <= c && c <= top}
+ *  <tr>
+ *    <td>total()
+ *    <td>
+ *    <td>Множество всех символов
+ *  <tr>
+ *    <td>empty()
+ *    <td>
+ *    <td>Пустое множество
+ *  <tr>
+ *    <td>land(css)
+ *    <td>
+ *      std::vector\<CharSet\> css
+ *    <td>Пересечение множеств, задаваемых элементами css
+ *    <td rowspan="8">
+ *      include/pm/creation/char_set/composition.hpp
+ *  <tr>
+ *    <td>cs1 & cs2
+ *    <td>
+ *      CharSet cs1
+ *      
+ *      CharSet cs2
+ *    <td>Пересечение множеств cs1, cs2
+ *  <tr>
+ *    <td>lor(css)
+ *    <td>
+ *      std::vector\<CharSet\> css
+ *    <td>Объединение множеств, задаваемых элементами css
+ *  <tr>
+ *    <td>cs1 | cs2
+ *    <td>
+ *      CharSet cs1
+ *      
+ *      CharSet cs2
+ *    <td>Объединение множеств cs1, cs2
+ *  <tr>
+ *    <td>lnot(cs)
+ *    <td rowspan="2">
+ *      CharSet cs
+ *    <td rowspan="2">Разность множества всех символов и множества cs
+ *  <tr>
+ *    <td>!cs
+ *  <tr>
+ *    <td>lxor(css)
+ *    <td>
+ *      std::vector\<CharSet\> css
+ *    <td>Симметрическая разность множеств, задаваемых элементами css
+ *  <tr>
+ *    <td>cs1 ^ cs2
+ *    <td>
+ *      CharSet cs1
+ *      
+ *      CharSet cs2
+ *    <td>Симметрическая разность множеств cs1, cs2
+ *  <tr>
+ *    <td>decimal()
+ *    <td>
+ *    <td>{ '0', '1', ..., '9' }
+ *    <td rowspan="7">
+ *      include/pm/creation/char_set/specific.hpp
+ *  <tr>
+ *    <td>underscore()
+ *    <td>
+ *    <td>{ '_' }
+ *  <tr>
+ *    <td>latin::lowercase()
+ *    <td>
+ *    <td>{ 'a', 'b', ..., 'z'}
+ *  <tr>
+ *    <td>latin::uppercase()
+ *    <td>
+ *    <td>{ 'A', 'B', ..., 'Z' }
+ *  <tr>
+ *    <td>latin::any()
+ *    <td>
+ *    <td>{ 'a', 'b', ..., 'z', 'A', 'B', ..., 'Z' }
+ *  <tr>
+ *    <td>c_id::head()
+ *    <td>
+ *    <td>{ 'a', 'b', ..., 'z', 'A', 'B', ..., 'Z', '_' }
+ *  <tr>
+ *    <td>c_id::tail()
+ *    <td>
+ *    <td>{ 'a', 'b', ..., 'z', 'A', 'B', ..., 'Z', '_', '0', '1', ..., '9' }
+ *  <tr>
+ *    <td>make(f)
+ *    <td>std::function<bool(char)> f
+ *    <td>{ c | f(c) }
+ *    <td>
+ *      include/pm/creation/char_set/functional.hpp
+ *  </table>
+ */

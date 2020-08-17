@@ -1,0 +1,3 @@
+/*! \file include/pm/creation/parser.hpp
+ *  \brief Подключает \ref CParser "интерфейс создания парсеров".
+ */

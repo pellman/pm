@@ -1,0 +1,3 @@
+/*! \file include/pm/creation/char_set/specific.hpp
+ *  \brief Подключает часть \ref CCharSet "интерфейса создания буквенных множеств".
+ */

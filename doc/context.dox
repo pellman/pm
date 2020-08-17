@@ -1,0 +1,92 @@
+/*! \file include/pm/context.hpp
+ *  \brief Содержит класс контекстов pm::Context.
+ */
+
+/*! \class pm::Context
+ *  \brief Класс контекстов.
+ *  
+ *  
+ *  *Контекст* - это набор \ref pm::Data "данных", пронумерованных всевозможными \ref DTypes "индексами".
+ *  
+ *  Для контекста con и индекса i:
+ *  записью con[i] в документации обозначаются i-е данные контекста con.
+ *  
+ *  Особые свойства класса
+ *  ==
+ *  
+ *  \ref DValidState "Стандартно-корректен".
+ *  
+ *  Специальные методы
+ *  ==
+ *  
+ *      Context()
+ *  
+ *  Инициализировать контекст, все данные которого пусты.
+ *  
+ *  
+ *      Context(const Context & con)
+ *  
+ *  \pre Для каждого индекса i: если данные con[i] непусты, то тип этих данных \ref DObjectModification "копируем".
+ *  
+ *  Инициализировать контекст, каждые данные \ref DSelf "self"[i] которого хранят новую копию опционального объекта \ref pm::Data "\<\p con[i]\>".
+ *  
+ *  
+ *      Context(Context && con)
+ *  
+ *  Инициализировать контекст, каждые данные \ref DSelf "self"[i] которого хранят опциональный объект \ref pm::Data "\<\p con[i]\>".
+ *  
+ *  Все данные контекста \p con становятся пустыми.
+ *  
+ *  
+ *      Context & operator =(const Context & con)
+ *  
+ *  \pre Для каждого индекса i: если данные con[i] непусты, то тип этих данных копируем.
+ *  
+ *  Перенаполнить каждые данные \ref DSelf "self"[i] новой \ref DObjectModification "копией" опционального объекта \ref pm::Data "\<\p con[i]\>".
+ *  
+ *  \return Self.
+ *  
+ *  
+ *      Context & operator =(Context && con)
+ *  
+ *  Перенаполнить каждые данные \ref DSelf "self"[i] опциональным объектом \ref pm::Data "\<\p con[i]\>".
+ *  
+ *  Все данные контекста \p con становятся пустыми.
+ *  
+ *  \return Self.
+ *  
+ *  
+ *      ~Context()
+ *  
+ *  Уничтожить контекст.
+ *  При этом уничтожаются все объекты, хранящиеся в данных контекста.
+ */
+
+/*! \fn pm::Context::Context(size_t max_index_hint)
+ *  \brief Инициализировать контекст, все данные которого пусты.
+ *  
+ *  \pre \p max_index_hint \< std::numeric_limits<size_t>::max().
+ *  
+ *  \p max_index_hint - предполагаемый максимальный индекс данных, к которым планируется обращаться при работе с контекстом.
+ *  Указание подходящего индекса позволяет избежать "лишних" перевыделений памяти, повысив эффективность программы.
+ */
+
+/*! \fn Data & pm::Context::operator [](size_t data_index)
+ *  \brief Вернуть ссылку на данные \ref DSelf "self"[\p data_index].
+ */
+
+/*! \fn const Data & pm::Context::operator [](size_t data_index) const
+ *  \brief Вернуть ссылку на данные \ref DSelf "self"[\p data_index].
+ */
+
+/*! \fn void pm::Context::swap(Context & con)
+ *  \brief Для каждого индекса i: обменять данные \ref DSelf "self"[i] с данными con[i].
+ */
+
+/*! \fn void pm::Context::swap(const std::vector<size_t> & data_indexes, Context & con)
+ *  \brief Для каждого (i-го) элемента j вектора \p data_indexes: обменять данные \ref DSelf "self"[j] с данными con[i].
+ */
+
+/*! \fn void pm::Context::clear()
+ *  \brief Опустошить все данные контекста.
+ */
